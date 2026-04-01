@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prakhar Gupta — Growth & Strategy PM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Epilogue:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — change colours here globally
+   ============================================================ */
+:root {
+  --clay:       #c9a882;
+  --sand:       #f0e6d3;
+  --parchment:  #faf6ef;
+  --bark:       #3b2e22;
+  --moss:       #4a5c3f;
+  --rust:       #b5471b;
+  --cream:      #fffdf8;
+  --warm-grey:  #8a7a6a;
+  --line:       rgba(59,46,34,0.12);
+  --line-light: rgba(59,46,34,0.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Epilogue', sans-serif;
+  background: var(--parchment);
+  color: var(--bark);
+  overflow-x: hidden;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9999; opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 4rem;
+  background: rgba(250,246,239,0.88); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; font-weight: 700; font-style: italic;
+  color: var(--bark); text-decoration: none;
+}
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+.nav-links a {
+  text-decoration: none; font-size: 0.73rem; font-weight: 500;
+  color: var(--warm-grey); letter-spacing: 0.09em; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--rust); }
+.nav-hire {
+  background: var(--bark) !important; color: var(--sand) !important;
+  padding: 0.48rem 1.25rem !important; border-radius: 2rem !important;
+  transition: background 0.2s !important;
+}
+.nav-hire:hover { background: var(--rust) !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; padding: 7rem 4rem 4rem;
+  display: grid; grid-template-columns: 1.1fr 0.9fr;
+  gap: 4rem; align-items: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: 'PG';
+  position: absolute; right: -1.5rem; top: 50%; transform: translateY(-58%);
+  font-family: 'Cormorant Garamond', serif; font-size: 28vw; font-weight: 700;
+  color: var(--clay); opacity: 0.065; pointer-events: none; line-height: 1; user-select: none;
+}
+.avail-badge {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  background: rgba(74,92,63,0.1); border: 1px solid rgba(74,92,63,0.25);
+  color: var(--moss); font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.38rem 1rem; border-radius: 2rem; margin-bottom: 1.75rem;
+}
+.avail-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--moss);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem,5.5vw,5.6rem); font-weight: 600;
+  line-height: 1.02; letter-spacing: -0.02em; color: var(--bark); margin-bottom: 1.6rem;
+}
+h1 .accent { color: var(--rust); font-style: italic; }
+.hero-desc { font-size: 0.97rem; line-height: 1.78; color: var(--warm-grey); font-weight: 300; max-width: 46ch; margin-bottom: 2.25rem; }
+.hero-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 2.25rem; }
+.chip { font-size: 0.7rem; font-weight: 500; padding: 0.32rem 0.85rem; border-radius: 2rem; border: 1px solid var(--line); background: var(--cream); color: var(--bark); }
+.chip.green { background: rgba(74,92,63,0.1); border-color: rgba(74,92,63,0.3); color: var(--moss); }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.85rem 1.8rem; border-radius: 3rem;
+  font-family: 'Epilogue', sans-serif; font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.04em; text-decoration: none; cursor: pointer; border: none; transition: all 0.25s;
+}
+.btn-bark { background: var(--bark); color: var(--sand); }
+.btn-bark:hover { background: var(--rust); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(181,71,27,.22); }
+.btn-out { background: transparent; color: var(--bark); border: 1.5px solid var(--bark); }
+.btn-out:hover { background: var(--bark); color: var(--sand); transform: translateY(-2px); }
+
+/* stat card */
+.stat-card {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 1.75rem; padding: 2.25rem;
+  box-shadow: 0 2px 0 var(--line), 0 20px 56px rgba(59,46,34,.07);
+}
+.sc-label {
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--warm-grey); font-weight: 600; margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.sc-label::after { content:''; flex:1; height:1px; background:var(--line); }
+.stat-rows { display: flex; flex-direction: column; gap: 0.85rem; }
+.stat-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0.9rem 1.1rem; background: var(--parchment); border-radius: 1rem; border: 1px solid var(--line-light);
+}
+.sr-num { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 700; color: var(--rust); line-height: 1; white-space: nowrap; }
+.sr-label { font-size: 0.74rem; color: var(--warm-grey); text-align: right; line-height: 1.4; font-weight: 300; }
+.stat-div { height: 1px; background: var(--line-light); }
+
+/* ── BANNER ── */
+.banner {
+  background: var(--bark); color: var(--sand); padding: 1.6rem 4rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+}
+.banner-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; opacity: .9; }
+.role-pills { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+.role-pill {
+  background: rgba(201,168,130,.15); border: 1px solid rgba(201,168,130,.3);
+  color: var(--clay); font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; padding: 0.38rem 0.95rem; border-radius: 2rem;
+}
+
+/* ── SECTION GLOBALS ── */
+section { padding: 5.5rem 4rem; }
+.s-label {
+  font-size: 0.63rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--rust); font-weight: 600; margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.7rem;
+}
+.s-label::before { content:''; display:block; width:1.6rem; height:1.5px; background:var(--rust); }
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem,3.8vw,3.2rem); font-weight: 600;
+  letter-spacing: -0.02em; line-height: 1.08; color: var(--bark); margin-bottom: 0.65rem;
+}
+.s-intro { font-size: 0.93rem; line-height: 1.75; color: var(--warm-grey); max-width: 58ch; font-weight: 300; margin-bottom: 3rem; }
+
+/* ── GROUP TABS ── */
+.group-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.gtab {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.45rem 1.1rem; border-radius: 2rem; cursor: pointer;
+  border: 1.5px solid var(--line); background: var(--cream); color: var(--warm-grey); transition: all 0.2s;
+}
+.gtab.active, .gtab:hover { background: var(--bark); color: var(--sand); border-color: var(--bark); }
+.case-group { display: none; }
+.case-group.visible { display: block; }
+
+/* ── FEATURED CASE (deep-dive) ── */
+.case-featured {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 2rem; overflow: hidden; margin-bottom: 1.5rem;
+  box-shadow: 0 1px 0 var(--line), 0 14px 44px rgba(59,46,34,.07);
+}
+.cf-header { padding: 2.25rem 2.75rem; position: relative; overflow: hidden; }
+.cf-header.bark { background: var(--bark); }
+.cf-header.brown { background: #4a3828; }
+.cf-header::before {
+  content: attr(data-num);
+  position: absolute; right: 2rem; top: 50%; transform: translateY(-50%);
+  font-family: 'Cormorant Garamond', serif; font-size: 8rem; font-weight: 700;
+  opacity: .07; line-height: 1; color: var(--sand); pointer-events: none;
+}
+.cf-tag-row { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.85rem; }
+.cf-badge { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.28rem 0.8rem; border-radius: 2rem; color: var(--sand); }
+.cf-badge.rust { background: var(--rust); }
+.cf-badge.moss { background: var(--moss); }
+.cf-period { font-size: 0.7rem; color: rgba(240,230,211,.45); }
+.cf-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem,2.8vw,2.2rem); font-weight: 600; color: var(--sand); line-height: 1.2; max-width: 50ch; }
+.cf-body { display: grid; grid-template-columns: 1.5fr 1fr; }
+.cf-narrative { padding: 2.25rem 2.75rem; border-right: 1px solid var(--line); }
+.cf-narrative p { font-size: 0.86rem; line-height: 1.75; color: var(--warm-grey); font-weight: 300; margin-bottom: 1.4rem; }
+.cf-narrative p:last-child { margin-bottom: 0; }
+.cf-narrative strong { color: var(--bark); font-weight: 600; }
+.nano-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--warm-grey); margin-bottom: 0.65rem; }
+.cf-metrics-col { padding: 2.25rem 1.75rem; display: flex; flex-direction: column; gap: 0.85rem; }
+.metric-block { padding: 1rem 1.2rem; background: var(--parchment); border: 1px solid var(--line-light); border-radius: 1rem; transition: all 0.2s; }
+.metric-block:hover { border-color: var(--clay); transform: translateX(3px); }
+.metric-num { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--rust); line-height: 1; margin-bottom: 0.15rem; }
+.metric-num.green { color: var(--moss); }
+.metric-lab { font-size: 0.7rem; color: var(--warm-grey); line-height: 1.4; }
+
+/* ================================================================
+   CASE CARD — with cover image + logo overlay
+   ================================================================
+
+   HOW TO ADD IMAGES TO A CARD:
+   1. Cover image  → set the style="--cover: url('YOUR_IMAGE_URL')" on .cc-top
+   2. Logo         → uncomment the <img class="cc-logo"> tag and set src=""
+   3. If no cover image is set, the fallback gradient colour shows instead.
+
+   You can use:
+     - A direct image URL:  url('https://...')
+     - A local file path:   url('images/blinkit.jpg')  (put images next to the HTML)
+
+   ================================================================ */
+
+.cards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+
+.case-card {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 1.5rem; overflow: hidden; transition: all 0.3s;
+  box-shadow: 0 1px 0 var(--line); display: flex; flex-direction: column;
+}
+.case-card:hover { transform: translateY(-5px); box-shadow: 0 1px 0 var(--line), 0 18px 44px rgba(59,46,34,.1); }
+
+/* The card top — set --cover to show a cover image */
+.cc-top {
+  position: relative; overflow: hidden;
+  min-height: 130px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.4rem 1.6rem 1.2rem;
+
+  /* Cover image (set via inline style --cover on the element) */
+  background-image: var(--cover, none);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Dark overlay — always shown so text is readable over any image */
+.cc-top::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.15) 0%,
+    rgba(0,0,0,0.72) 100%
+  );
+}
+
+/* Fallback solid colour when no cover image is set */
+.cc-top.bark-bg  { background-color: var(--bark); }
+.cc-top.moss-bg  { background-color: var(--moss); }
+.cc-top.clay-bg  { background-color: #7a5c3a; }
+.cc-top.rust-bg  { background-color: var(--rust); }
+.cc-top.wine-bg  { background-color: #5c2a1e; }
+.cc-top.slate-bg { background-color: #3a4a5c; }
+.cc-top.forest-bg{ background-color: #2e4a35; }
+.cc-top.umber-bg { background-color: #5c4a2a; }
+.cc-top.indigo-bg{ background-color: #2e3a5c; }
+
+/* Logo sits top-left, above the overlay */
+.cc-logo {
+  position: absolute; top: 1rem; left: 1.4rem; z-index: 2;
+  height: 28px; width: auto; max-width: 80px;
+  object-fit: contain;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(6px);
+  padding: 3px 6px;
+}
+
+/* Card number watermark */
+.cc-num {
+  position: absolute; right: 1.1rem; bottom: 0.8rem; z-index: 1;
+  font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 700;
+  color: rgba(255,255,255,0.1); line-height: 1; pointer-events: none;
+}
+
+/* Tag row and title sit above the overlay */
+.cc-tag-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.45rem; position: relative; z-index: 2; }
+.cc-badge {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.22rem 0.65rem; border-radius: 2rem; color: var(--sand);
+}
+.cc-badge.rust  { background: var(--rust); }
+.cc-badge.moss  { background: var(--moss); }
+.cc-badge.clay  { background: rgba(201,168,130,.45); }
+.cc-badge.bark  { background: rgba(59,46,34,.55); }
+.cc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.08rem; font-weight: 600; color: var(--sand); line-height: 1.3; position: relative; z-index: 2; }
+
+/* Card body */
+.cc-body { padding: 1.4rem 1.6rem; flex: 1; display: flex; flex-direction: column; }
+.cc-desc { font-size: 0.81rem; line-height: 1.7; color: var(--warm-grey); font-weight: 300; margin-bottom: 1rem; flex: 1; }
+.cc-chips { display: flex; flex-wrap: wrap; gap: 0.38rem; margin-bottom: 1rem; }
+.mc   { font-size: 0.67rem; font-weight: 600; padding: 0.25rem 0.7rem; border-radius: 2rem; background: rgba(181,71,27,.1); border: 1px solid rgba(181,71,27,.22); color: var(--rust); }
+.mc.g { background: rgba(74,92,63,.1); border-color: rgba(74,92,63,.22); color: var(--moss); }
+.mc.n { background: rgba(59,46,34,.07); border-color: var(--line); color: var(--bark); }
+.cc-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.73rem; font-weight: 600; color: var(--rust); text-decoration: none; transition: gap 0.2s; }
+.cc-link:hover { gap: 0.7rem; }
+.cc-link.disabled { color: var(--warm-grey); cursor: default; pointer-events: none; font-style: italic; }
+
+/* ── SKILLS ── */
+#skills { background: var(--parchment); }
+.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.1rem; margin-bottom: 2.5rem; }
+.sb { background: var(--cream); border: 1px solid var(--line); border-radius: 1.25rem; padding: 1.6rem; transition: all 0.25s; }
+.sb:hover { border-color: var(--clay); box-shadow: 0 8px 26px rgba(59,46,34,.08); }
+.sb-icon { font-size: 1.4rem; margin-bottom: 0.75rem; }
+.sb-title { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 700; color: var(--bark); margin-bottom: 0.75rem; }
+.sb-tags { display: flex; flex-wrap: wrap; gap: 0.38rem; }
+.s-tag { font-size: 0.66rem; font-weight: 500; padding: 0.22rem 0.65rem; border-radius: 2rem; background: var(--parchment); border: 1px solid var(--line); color: var(--bark); }
+.tools-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--warm-grey); margin-bottom: 1rem; }
+.tools-row { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+.tool-pill { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--cream); border: 1px solid var(--line); padding: 0.45rem 1rem; border-radius: 2rem; font-size: 0.76rem; font-weight: 500; color: var(--bark); transition: all 0.2s; }
+.tool-pill:hover { background: var(--bark); color: var(--sand); border-color: var(--bark); }
+.t-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--clay); flex-shrink: 0; }
+
+/* ── EXPERIENCE ── */
+#experience { background: var(--cream); border-top: 1px solid var(--line); }
+.exp-wrap { max-width: 800px; }
+.exp-entry { display: grid; grid-template-columns: 115px 1fr; gap: 2rem; padding-bottom: 3.25rem; position: relative; }
+.exp-entry:not(:last-child)::after {
+  content: ''; position: absolute; left: 115px; top: 0.45rem; bottom: 0;
+  width: 1px; background: linear-gradient(to bottom, var(--clay) 40%, transparent); margin-left: -0.5px;
+}
+.exp-entry::before {
+  content: ''; position: absolute; left: 115px; top: 0.38rem;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--rust);
+  transform: translateX(-3.5px); z-index: 1;
+  box-shadow: 0 0 0 3px var(--cream), 0 0 0 5px rgba(181,71,27,.18);
+}
+.exp-time { text-align: right; padding-right: 1.5rem; padding-top: 0.2rem; }
+.exp-date { font-size: 0.7rem; font-weight: 500; color: var(--warm-grey); line-height: 1.5; display: block; }
+.exp-co { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-weight: 700; color: var(--rust); display: block; margin-top: 0.2rem; }
+.exp-body { padding-left: 1.5rem; }
+.exp-role { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--bark); margin-bottom: 0.6rem; line-height: 1.3; }
+.exp-award { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.66rem; font-weight: 600; color: var(--moss); background: rgba(74,92,63,.1); border: 1px solid rgba(74,92,63,.2); padding: 0.22rem 0.7rem; border-radius: 2rem; margin-bottom: 0.75rem; }
+.exp-ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.exp-ul li { font-size: 0.845rem; line-height: 1.65; color: var(--warm-grey); font-weight: 300; padding-left: 1.2rem; position: relative; }
+.exp-ul li::before { content: '—'; position: absolute; left: 0; color: var(--clay); }
+.exp-ul li strong { color: var(--bark); font-weight: 600; }
+
+/* ── EDUCATION ── */
+#education { background: var(--sand); }
+.edu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.1rem; }
+.edu-card { background: var(--cream); border: 1px solid var(--line); border-radius: 1.25rem; padding: 1.6rem; position: relative; overflow: hidden; transition: all 0.25s; }
+.edu-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--clay); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+.edu-card:hover::after { transform: scaleX(1); }
+.edu-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(59,46,34,.09); }
+.edu-yr { font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-grey); font-weight: 600; margin-bottom: 0.7rem; }
+.edu-deg { font-family: 'Cormorant Garamond', serif; font-size: 0.97rem; font-weight: 700; color: var(--bark); line-height: 1.35; margin-bottom: 0.35rem; }
+.edu-school { font-size: 0.76rem; color: var(--rust); font-weight: 500; }
+.edu-note { font-size: 0.7rem; color: var(--warm-grey); margin-top: 0.5rem; font-style: italic; }
+
+/* Certificates row — sits below edu grid */
+.cert-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 1.75rem; }
+.cert-card { background: var(--cream); border: 1px solid var(--line); border-radius: 1rem; padding: 1.2rem 1.4rem; display: flex; gap: 0.8rem; align-items: flex-start; transition: all 0.25s; }
+.cert-card:hover { border-color: var(--clay); transform: translateY(-2px); }
+.cert-icon { font-size: 1.2rem; flex-shrink: 0; }
+.cert-name { font-size: 0.78rem; font-weight: 600; color: var(--bark); margin-bottom: 0.18rem; line-height: 1.3; }
+.cert-issuer { font-size: 0.68rem; color: var(--rust); font-weight: 500; }
+.cert-year { font-size: 0.65rem; color: var(--warm-grey); margin-top: 0.1rem; }
+
+.extras-row { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.1rem; margin-top: 1.75rem; }
+.extra-card { background: var(--cream); border: 1px solid var(--line); border-radius: 1rem; padding: 1.4rem; display: flex; gap: 0.9rem; align-items: flex-start; }
+.ex-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+.ex-title { font-size: 0.74rem; font-weight: 700; color: var(--bark); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.28rem; }
+.ex-text { font-size: 0.78rem; color: var(--warm-grey); line-height: 1.6; font-weight: 300; }
+
+/* ── CONTACT ── */
+#contact { background: var(--bark); padding: 5.5rem 4rem; position: relative; overflow: hidden; }
+#contact::before {
+  content: 'HIRE'; position: absolute; right: -1rem; bottom: -1.5rem;
+  font-family: 'Cormorant Garamond', serif; font-size: 18vw; font-weight: 700;
+  color: var(--clay); opacity: .055; pointer-events: none; line-height: 1;
+}
+#contact .s-label { color: rgba(201,168,130,.65); }
+#contact .s-label::before { background: rgba(201,168,130,.65); }
+#contact h2 { color: var(--sand); margin-bottom: 0.7rem; }
+.contact-sub { font-size: 0.95rem; color: rgba(240,230,211,.5); font-weight: 300; max-width: 50ch; line-height: 1.7; margin-bottom: 2.75rem; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+.contact-links { display: flex; flex-direction: column; gap: 0.85rem; }
+.c-link { display: flex; align-items: center; gap: 0.9rem; padding: 1rem 1.4rem; border: 1px solid rgba(201,168,130,.18); border-radius: 1rem; text-decoration: none; color: var(--sand); font-size: 0.86rem; font-weight: 400; transition: all 0.25s; background: rgba(255,255,255,.03); }
+.c-link:hover { background: var(--rust); border-color: var(--rust); transform: translateX(4px); }
+.c-link-icon { font-size: 1.05rem; }
+.c-link-lbl { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: .45; display: block; margin-bottom: 0.12rem; }
+.contact-note { background: rgba(201,168,130,.08); border: 1px solid rgba(201,168,130,.14); border-radius: 1.25rem; padding: 1.9rem; }
+.cn-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: var(--clay); margin-bottom: 0.85rem; }
+.cn-text { font-size: 0.82rem; color: rgba(240,230,211,.5); line-height: 1.75; font-weight: 300; }
+.cn-text strong { color: var(--clay); font-weight: 500; }
+
+footer { background: #231508; padding: 1.35rem 4rem; display: flex; align-items: center; justify-content: space-between; }
+footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
+.footer-mark { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-weight: 700; font-style: italic; color: rgba(201,168,130,.3); }
+
+/* animations */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+/* responsive */
+@media(max-width:1100px){ .cert-row{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:960px){
+  nav{ padding:1rem 1.5rem; }
+  .nav-links li:not(:last-child){ display:none; }
+  .hero{ grid-template-columns:1fr; padding:6rem 1.5rem 3rem; }
+  .hero-right, .hero::before{ display:none; }
+  section{ padding:4rem 1.5rem; }
+  .banner{ padding:1.4rem 1.5rem; }
+  .cf-body{ grid-template-columns:1fr; }
+  .cf-narrative{ border-right:none; border-bottom:1px solid var(--line); }
+  .cards-grid{ grid-template-columns:1fr 1fr; }
+  .skills-grid{ grid-template-columns:1fr 1fr; }
+  .edu-grid{ grid-template-columns:1fr; }
+  .cert-row{ grid-template-columns:repeat(2,1fr); }
+  .extras-row{ grid-template-columns:1fr; }
+  .contact-grid{ grid-template-columns:1fr; gap:2rem; }
+  footer{ flex-direction:column; gap:.4rem; text-align:center; }
+  .exp-entry{ grid-template-columns:85px 1fr; }
+}
+@media(max-width:600px){
+  .skills-grid, .cards-grid{ grid-template-columns:1fr; }
+  .cert-row{ grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-mark">Prakhar Gupta</a>
+  <ul class="nav-links">
+    <li><a href="#cases">Case Studies</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Background</a></li>
+    <li><a href="#contact" class="nav-hire">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="avail-badge"><span class="avail-dot"></span>Open to new roles</div>
+    <h1>Growth, Strategy<br>&amp; <span class="accent">Ops that scale.</span></h1>
+    <p class="hero-desc">I'm Prakhar — a Growth & Strategy PM with 5 years of turning large-scale, messy problems into measurable outcomes. From 0-to-1 channel builds to chain-wide rollouts across 2,000+ dark stores.</p>
+    <div class="hero-chips">
+      <span class="chip green">Growth PM</span>
+      <span class="chip green">Strategy & Ops</span>
+      <span class="chip">Quick Commerce</span>
+      <span class="chip">Mobility</span>
+      <span class="chip">D2C</span>
+      <span class="chip">Lifecycle CRM</span>
+      <span class="chip">Intl. Expansion</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#cases" class="btn btn-bark">View Case Studies →</a>
+      <a href="#contact" class="btn btn-out">Let's Talk</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-card">
+      <p class="sc-label">Impact at a glance</p>
+      <div class="stat-rows">
+        <div class="stat-row"><span class="sr-num">2,000+</span><span class="sr-label">Dark stores impacted<br>at Blinkit</span></div>
+        <div class="stat-div"></div>
+        <div class="stat-row"><span class="sr-num">80M+</span><span class="sr-label">User base worked<br>at Rapido</span></div>
+        <div class="stat-div"></div>
+        <div class="stat-row"><span class="sr-num">3</span><span class="sr-label">International markets<br>launched solo — CARS24</span></div>
+        <div class="stat-div"></div>
+        <div class="stat-row"><span class="sr-num">₹37L+</span><span class="sr-label">Annual turnover as<br>Founder, Dessic</span></div>
+        <div class="stat-div"></div>
+        <div class="stat-row"><span class="sr-num">76%</span><span class="sr-label">Drop in expiry<br>customer complaints</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BANNER -->
+<div class="banner">
+  <p class="banner-quote">"Looking for roles where problems are big, stakes are real, and there's room to build."</p>
+  <div class="role-pills">
+    <span class="role-pill">Growth PM</span>
+    <span class="role-pill">Strategy & Ops</span>
+    <span class="role-pill">Product Growth</span>
+    <span class="role-pill">Growth Manager</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     CASE STUDIES SECTION
+     ══════════════════════════════════════════════════ -->
+<section id="cases" style="background:var(--sand);">
+  <p class="s-label">All Work</p>
+  <h2>Case Studies</h2>
+  <p class="s-intro">Every case study grouped by type — from live work experience to academic business plans and industry research.</p>
+
+  <div class="group-tabs">
+    <button class="gtab active" onclick="showGroup('work',this)">💼 Work Experience</button>
+    <button class="gtab" onclick="showGroup('reallife',this)">🔍 Real Life Problems</button>
+    <button class="gtab" onclick="showGroup('biz',this)">📊 Business Plans</button>
+    <button class="gtab" onclick="showGroup('industry',this)">🏭 Industry Analysis</button>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════
+       GROUP 1 — WORK EXPERIENCE
+       ════════════════════════════════════════════ -->
+  <div class="case-group visible" id="group-work">
+
+    <!-- Deep-dive: BLINKIT -->
+    <div class="case-featured reveal">
+      <div class="cf-header bark" data-num="01">
+        <div class="cf-tag-row">
+          <span class="cf-badge rust">Blinkit · Zomato</span>
+          <span class="cf-period">Mar 2025 – Present</span>
+        </div>
+        <h3 class="cf-title">Dark Store Digitization & Unit Economics Redesign Across 2,000+ Stores</h3>
+      </div>
+      <div class="cf-body">
+        <div class="cf-narrative">
+          <p class="nano-label">The Problem</p>
+          <p>Blinkit's dark store network had grown fast — but layout logic, storage allocation, and replenishment flows hadn't kept pace. Stores had inconsistent layouts, no digitized location intelligence, and manual processes driving high expiry waste and unpredictable picking times.</p>
+          <p class="nano-label">My Approach</p>
+          <p>Field discovery across <strong>50+ dark stores</strong> to understand root causes. Authored a full PRD and designed the end-to-end digitization flow. Built a <strong>location intelligence framework</strong> and prioritization logic engine deployable at chain scale, with an execution dashboard to track rollout and variance in real time.</p>
+          <p class="nano-label">Storage & Inventory Logic</p>
+          <p>Introduced <strong>FEFO-aligned batch-level storage logic</strong> to address expiry waste. Built 4 diagnostic heatmap tools for item placement. Automated storage-to-replenishment integration, eliminating manual data flows entirely.</p>
+          <p class="nano-label">Rollout</p>
+          <p>Led a <strong>10-member cross-functional team</strong> — piloting, training, and standardizing the new operating model across <strong>90% of the network</strong>.</p>
+        </div>
+        <div class="cf-metrics-col">
+          <div class="metric-block"><div class="metric-num">90%</div><div class="metric-lab">Network digitization across 2,000+ stores</div></div>
+          <div class="metric-block"><div class="metric-num">1.5×</div><div class="metric-lab">Space utilisation via layout redesign</div></div>
+          <div class="metric-block"><div class="metric-num">18%</div><div class="metric-lab">GMV density uplift</div></div>
+          <div class="metric-block"><div class="metric-num">43%</div><div class="metric-lab">Reduction in operational variance</div></div>
+          <div class="metric-block"><div class="metric-num">76%</div><div class="metric-lab">Drop in expiry-related complaints</div></div>
+          <div class="metric-block"><div class="metric-num">7.5%</div><div class="metric-lab">Increase in daily order throughput</div></div>
+          <div class="metric-block"><div class="metric-num">90%</div><div class="metric-lab">Replenishment accuracy post-automation</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deep-dive: CARS24 -->
+    <div class="case-featured reveal">
+      <div class="cf-header brown" data-num="02">
+        <div class="cf-tag-row">
+          <span class="cf-badge moss">CARS24</span>
+          <span class="cf-period">Nov 2021 – Oct 2023</span>
+        </div>
+        <h3 class="cf-title">CRM Infrastructure, NLP Chatbot & 3-Market International Expansion</h3>
+      </div>
+      <div class="cf-body">
+        <div class="cf-narrative">
+          <p class="nano-label">The Scope</p>
+          <p>Owned CRM and automation for B2C users across <strong>four markets</strong> — India, Thailand, UAE, and Australia. The mandate: grow the user base, build new channels, find untapped levers, and independently stand up infrastructure in new geographies.</p>
+          <p class="nano-label">Chatbot: 0-to-1</p>
+          <p>Built and launched an <strong>NLP-powered WhatsApp & Web chatbot</strong> from scratch — scoping conversation flows, working with engineering on NLP integration, and iterating through testing. Grew to contribute <strong>4% of total monthly business volume</strong>.</p>
+          <p class="nano-label">International Expansion</p>
+          <p>Led end-to-end CRM product setup and GTM independently for <strong>Thailand, UAE, and Australia</strong>. Drove <strong>10% user growth across all markets</strong>.</p>
+          <p class="nano-label">Growth Levers</p>
+          <p>Identified a <strong>pricing gap on slow-moving inventory</strong> — surfaced through data, built the business case, and delivered a 39% improvement in engagement metrics.</p>
+        </div>
+        <div class="cf-metrics-col">
+          <div class="metric-block"><div class="metric-num green">4%</div><div class="metric-lab">Of monthly business volume from NLP chatbot</div></div>
+          <div class="metric-block"><div class="metric-num green">10%</div><div class="metric-lab">User growth across all 4 markets</div></div>
+          <div class="metric-block"><div class="metric-num green">3</div><div class="metric-lab">International markets launched independently</div></div>
+          <div class="metric-block"><div class="metric-num green">39%</div><div class="metric-lab">Engagement uplift via pricing gap fix</div></div>
+          <div class="metric-block"><div class="metric-num green">25+</div><div class="metric-lab">Monthly users converted C2B → B2C</div></div>
+          <div class="metric-block" style="background:rgba(74,92,63,.07);border-color:rgba(74,92,63,.18)">
+            <div class="metric-num" style="font-size:1rem;color:var(--moss)">🏆 ×2</div>
+            <div class="metric-lab">"Game Changer" (Nov 2022) &amp; "One Man Team" (Aug 2022)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────────────────────────────────────
+         WORK EXPERIENCE CARDS
+         ────────────────────────────────────────────────────────────
+         HOW TO ADD A COVER IMAGE + LOGO TO ANY CARD:
+
+         Step 1 — Cover image:
+           On the <div class="cc-top ..."> element, add:
+             style="--cover: url('YOUR_IMAGE_URL_HERE')"
+           Example:
+             <div class="cc-top moss-bg" style="--cover: url('https://i.imgur.com/abc123.jpg')">
+
+         Step 2 — Logo:
+           Find the <!-- LOGO --> comment inside the card's cc-top div.
+           Replace it with:
+             <img class="cc-logo" src="YOUR_LOGO_URL_HERE" alt="Brand logo">
+           Example:
+             <img class="cc-logo" src="https://logo.clearbit.com/rapido.bike" alt="Rapido">
+
+         Tip: Clearbit logo API gives clean transparent PNGs:
+           https://logo.clearbit.com/DOMAIN.com
+           e.g. https://logo.clearbit.com/blinkit.com
+                https://logo.clearbit.com/cars24.com
+         ──────────────────────────────────────────────────────────── -->
+
+    <div class="cards-grid" style="margin-top:1.5rem">
+
+      <!-- CARD: Rapido -->
+      <div class="case-card reveal">
+        <div class="cc-top moss-bg">
+          <!-- LOGO: replace with → <img class="cc-logo" src="https://logo.clearbit.com/rapido.bike" alt="Rapido"> -->
+          <div class="cc-num">03</div>
+          <div class="cc-tag-row">
+            <span class="cc-badge clay">Rapido</span>
+            <span style="font-size:.66rem;color:rgba(240,230,211,.4);position:relative;z-index:2">Dec 2023 – Jun 2024</span>
+          </div>
+          <p class="cc-title">0-to-1 Growth Channels & Lifecycle Engine — 80M+ Users</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Built WhatsApp and Email from scratch across India's largest bike taxi platform. Designed geo- and behaviour-based lifecycle flows to re-engage churned cohorts. Directed national GTM for IPL'24 and Elections'24 with BCCI & ECI.</p>
+          <div class="cc-chips">
+            <span class="mc">↑ 15% Transacting Users</span>
+            <span class="mc">7,000 Re-engaged</span>
+            <span class="mc">↑ 4% Activation Conv.</span>
+            <span class="mc">150+ CRM Campaigns</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD: Sugar Cosmetics -->
+      <div class="case-card reveal">
+        <div class="cc-top rust-bg">
+          <!-- LOGO: replace with → <img class="cc-logo" src="https://logo.clearbit.com/sugarcosmetics.com" alt="Sugar Cosmetics"> -->
+          <div class="cc-num">04</div>
+          <div class="cc-tag-row">
+            <span class="cc-badge bark">Sugar Cosmetics</span>
+            <span style="font-size:.66rem;color:rgba(240,230,211,.4);position:relative;z-index:2">Oct – Dec 2023</span>
+          </div>
+          <p class="cc-title">Retention Pod Build & Discount Strategy Redesign</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Established a Retention pod from scratch in 2 months. Diagnosed discounting inefficiency across 3 brands, redesigned the repeat-user discount model, and improved AOV by 10% via UI-led cross-sell journeys.</p>
+          <div class="cc-chips">
+            <span class="mc">₹1.5L+/mo Savings</span>
+            <span class="mc">₹15L+ Revenue</span>
+            <span class="mc">↑ 10% AOV</span>
+            <span class="mc">↑ 3% Conversion</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD: Dessic -->
+      <div class="case-card reveal">
+        <div class="cc-top clay-bg">
+          <!-- LOGO: add your brand logo here -->
+          <div class="cc-num">05</div>
+          <div class="cc-tag-row">
+            <span class="cc-badge rust">Dessic Patisserie</span>
+            <span style="font-size:.66rem;color:rgba(240,230,211,.4);position:relative;z-index:2">Nov 2020 – Oct 2022</span>
+          </div>
+          <p class="cc-title">0-to-1 D2C Vegan Brand — Founder</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Built a vegan dessert brand from concept to ₹37L+ annual turnover as sole founder — owning acquisition, retention, supply chain, and ops. Scaled to "Top Rated" on LBB in 3 months via data-driven marketing.</p>
+          <div class="cc-chips">
+            <span class="mc g">₹37L+ Revenue</span>
+            <span class="mc g">↓ 14% RTO</span>
+            <span class="mc g">1L+ Student Reach</span>
+            <span class="mc g">#1 on LBB</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /group-work -->
+
+
+  <!-- ════════════════════════════════════════════
+       GROUP 2 — REAL LIFE PROBLEMS
+       ════════════════════════════════════════════ -->
+  <div class="case-group" id="group-reallife">
+    <div class="cards-grid">
+
+      <!-- ────────────────────────────────────────────────────────────
+           HOW TO ADD A DRIVE LINK TO A CARD:
+           Find the <a class="cc-link disabled"> at the bottom of each card.
+           1. Remove the word "disabled" from class="cc-link disabled"
+           2. Replace href="#" with your actual Drive link
+           3. Change the text to "View Case Study →"
+           ──────────────────────────────────────────────────────────── -->
+
+      <div class="case-card reveal">
+        <div class="cc-top slate-bg">
+          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/marico.com" alt="Marico"> -->
+          <!-- COVER: add style="--cover: url('YOUR_COVER_IMG')" to the div above -->
+          <div class="cc-num">01</div>
+          <div class="cc-tag-row"><span class="cc-badge clay">Marico</span></div>
+          <p class="cc-title">Marico Supply Chain Optimization</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Analyzed Marico's supply chain inefficiencies across India's distribution network. Built a structured recommendation framework to optimize last-mile logistics and reduce inventory carrying costs.</p>
+          <div class="cc-chips"><span class="mc n">Supply Chain</span><span class="mc n">Operations</span><span class="mc n">FMCG</span></div>
+          <a href="https://drive.google.com/file/d/1iRqMTVm6CbPKRUS1afnBrCRtq5GC7kni/view" class="cc-link">🔗 View Case Study →</a>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="cc-top forest-bg">
+          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/excitel.com" alt="Excitel"> -->
+          <div class="cc-num">02</div>
+          <div class="cc-tag-row"><span class="cc-badge clay">Excitel</span></div>
+          <p class="cc-title">Excitel Customer Acquisition Analysis</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Diagnosed Excitel's customer acquisition funnel and identified friction points across channels. Proposed data-backed GTM strategies to improve conversion for broadband services in Tier 2 markets.</p>
+          <div class="cc-chips"><span class="mc n">GTM Strategy</span><span class="mc n">Acquisition</span><span class="mc n">Telecom</span></div>
+          <a href="https://drive.google.com/file/d/1lKG9dMPAnY06Mg0dMwQIBQNJqjhBqo9v/view" class="cc-link">🔗 View Case Study →</a>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="cc-top wine-bg">
+          <!-- LOGO: add logo here -->
+          <div class="cc-num">03</div>
+          <div class="cc-tag-row"><span class="cc-badge clay">Masters' Union</span></div>
+          <p class="cc-title">LeLuxe Transformation Strategy</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Developed a comprehensive transformation strategy for LeLuxe covering digital expansion, market positioning, and brand repositioning to capture the growing premium fashion segment in India.</p>
+          <div class="cc-chips"><span class="mc n">Brand Strategy</span><span class="mc n">Digital Expansion</span><span class="mc n">Fashion</span></div>
+          <a href="https://drive.google.com/file/d/1C33SbUfs5rthf8IimTmSXZJ5mXeqmTlF/view" class="cc-link">🔗 View Case Study →</a>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="cc-top umber-bg">
+          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/makemytrip.com" alt="MakeMyTrip"> -->
+          <div class="cc-num">04</div>
+          <div class="cc-tag-row"><span class="cc-badge clay">MakeMyTrip</span></div>
+          <p class="cc-title">Make My Trip — Analysis & Recommendation</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">One-day challenge: diagnosed user drop-off across MakeMyTrip's booking funnel, identified conversion gaps, and delivered a structured set of product and growth recommendations within 24 hours.</p>
+          <div class="cc-chips"><span class="mc n">Product Analysis</span><span class="mc n">Growth</span><span class="mc n">Travel</span></div>
+          <a href="https://drive.google.com/file/d/1rfEPyD-3o0LfUHRs-GkwMRYCb2APBkEO/view" class="cc-link">🔗 View Case Study →</a>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="cc-top moss-bg">
+          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/livspace.com" alt="Livspace"> -->
+          <div class="cc-num">05</div>
+          <div class="cc-tag-row"><span class="cc-badge clay">Livspace</span></div>
+          <p class="cc-title">Livspace Customer Acquisition in Delhi NCR</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Mapped Livspace's acquisition challenges in Delhi NCR. Proposed a geo-targeted growth strategy combining offline and digital channels to improve qualified lead generation in a high-competition urban market.</p>
+          <div class="cc-chips"><span class="mc n">Acquisition</span><span class="mc n">Geo Strategy</span><span class="mc n">Home Décor</span></div>
+          <a href="https://drive.google.com/file/d/1Dx3gNMASv_WCPMDjA44j2hxBwdXWzPru/view" class="cc-link">🔗 View Case Study →</a>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="cc-top indigo-bg">
+          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/flipkart.com" alt="Flipkart"> -->
+          <div class="cc-num">06</div>
+          <div class="cc-tag-row"><span class="cc-badge clay">Flipkart Wired 8.0</span></div>
+          <p class="cc-title">Flipkart Minutes — Product Strategy</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Campus case challenge: developed a product strategy for Flipkart Minutes addressing assortment, dark store rollout, and user acquisition to compete in the 10-minute delivery space.</p>
+          <div class="cc-chips"><span class="mc n">Product Strategy</span><span class="mc n">Quick Commerce</span><span class="mc n">E-commerce</span></div>
+          <a href="https://drive.google.com/file/d/1tnJ5-MHzsdA_jXwzxG-z3kqRCC0pJsPL/view" class="cc-link">🔗 View Case Study →</a>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /group-reallife -->
+
+
+  <!-- ════════════════════════════════════════════
+       GROUP 3 — BUSINESS PLANS
+       ════════════════════════════════════════════ -->
+  <div class="case-group" id="group-biz">
+    <div class="cards-grid">
+
+      <div class="case-card reveal">
+        <div class="cc-top clay-bg">
+          <!-- LOGO: add logo here -->
+          <div class="cc-num">01</div>
+          <div class="cc-tag-row"><span class="cc-badge rust">Masters' Union</span></div>
+          <p class="cc-title">Feen — Skincare GTM Strategy for Women</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Created a GTM strategy for Feen, a new sunscreen brand focused on the Indian lifestyle. Conducted consumer research, built the brand positioning model, and developed a launch plan for urban Indian women.</p>
+          <div class="cc-chips"><span class="mc n">GTM Strategy</span><span class="mc n">Brand Launch</span><span class="mc n">Skincare / D2C</span></div>
+          <a href="https://drive.google.com/file/d/1rsPD1XIt1vvxLs2YuODVAVbeIbLoWOZq/view" class="cc-link">🔗 View Case Study →</a>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="cc-top forest-bg">
+          <!-- LOGO: add logo here -->
+          <div class="cc-num">02</div>
+          <div class="cc-tag-row"><span class="cc-badge clay">IIM Udaipur Competition</span></div>
+          <p class="cc-title">Happy Pets — One Stop Pet Platform</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">For a business plan competition at IIM Udaipur, identified a gap in the Indian pet industry and developed a full plan — market sizing, product architecture, and GTM model — in 12 hours with data-backed research.</p>
+          <div class="cc-chips"><span class="mc n">Business Plan</span><span class="mc n">Market Research</span><span class="mc n">Pet Industry</span></div>
+          <a href="https://drive.google.com/file/d/1roE2D3VXNSNsAihZIXnP2kQ3SkKi-l67/view" class="cc-link">🔗 View Case Study →</a>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="cc-top slate-bg">
+          <!-- LOGO: add logo here -->
+          <div class="cc-num">03</div>
+          <div class="cc-tag-row"><span class="cc-badge clay">Masters' Union</span></div>
+          <p class="cc-title">Mavryk — Premium Skincare Brand for Men</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Talked to 150+ customers to validate a gap in Indian men's skincare. Developed a 3-year business plan — brand strategy, channel mix, pricing architecture, and consumer positioning for the premium segment.</p>
+          <div class="cc-chips"><span class="mc n">Consumer Research</span><span class="mc n">Business Plan</span><span class="mc n">Men's Grooming</span></div>
+          <a href="https://drive.google.com/file/d/1AAyhOiHwgJE8T0xhk2v1xahmSjUMr_NT/view" class="cc-link">🔗 View Case Study →</a>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /group-biz -->
+
+
+  <!-- ════════════════════════════════════════════
+       GROUP 4 — INDUSTRY ANALYSIS
+       ════════════════════════════════════════════ -->
+  <div class="case-group" id="group-industry">
+    <div class="cards-grid" style="grid-template-columns:repeat(2,1fr);max-width:840px">
+
+      <div class="case-card reveal">
+        <div class="cc-top indigo-bg">
+          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/goindigo.in" alt="IndiGo"> -->
+          <div class="cc-num">01</div>
+          <div class="cc-tag-row"><span class="cc-badge clay">Indigo Airlines</span></div>
+          <p class="cc-title">Indian Aviation Industry — Focus: IndiGo Airlines</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Deep-dive management strategy analysis of the Indian aviation industry. Focused on IndiGo's competitive positioning, cost structure, market share dynamics, and strategic recommendations for sustainable growth post-COVID.</p>
+          <div class="cc-chips"><span class="mc n">Management Strategy</span><span class="mc n">Industry Analysis</span><span class="mc n">Aviation</span></div>
+          <a href="https://drive.google.com/file/d/1w1ByvaG5RGVVBLR_SsgON2higKKok5tk/view" class="cc-link">🔗 View Case Study →</a>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="cc-top umber-bg">
+          <!-- LOGO: add logo here -->
+          <div class="cc-num">02</div>
+          <div class="cc-tag-row"><span class="cc-badge rust">Indian Coffee Industry</span></div>
+          <p class="cc-title">India's D2C Coffee Landscape</p>
+        </div>
+        <div class="cc-body">
+          <p class="cc-desc">Mapping India's rapidly growing D2C coffee market — brand positioning, consumer behaviour shifts, pricing strategies, and distribution plays across key players in one of India's hottest D2C categories.</p>
+          <div class="cc-chips"><span class="mc n">D2C Strategy</span><span class="mc n">Market Landscape</span><span class="mc n">Coffee / FMCG</span></div>
+          <a href="https://www.linkedin.com/posts/gupta-prakhar_spilling-the-beans-on-coffees-future-activity-7262343482319470592-2Loj" class="cc-link">🔗 View Case Study →</a>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /group-industry -->
+
+</section><!-- /cases -->
+
+
+<!-- ══════════════ SKILLS ══════════════ -->
+<section id="skills">
+  <p class="s-label">Capabilities</p>
+  <h2>Skills & Toolkit</h2>
+  <p class="s-intro">A full stack of growth, strategy, and operational skills — built across five years, four industries, and two continents.</p>
+  <div class="skills-grid">
+    <div class="sb reveal">
+      <div class="sb-icon">📈</div>
+      <div class="sb-title">Growth & Lifecycle</div>
+      <div class="sb-tags">
+        <span class="s-tag">Lifecycle CRM</span><span class="s-tag">User Segmentation</span>
+        <span class="s-tag">Behavioural Targeting</span><span class="s-tag">A/B Experimentation</span>
+        <span class="s-tag">Funnel Analysis</span><span class="s-tag">Cohort Analysis</span>
+        <span class="s-tag">CRO</span><span class="s-tag">Retention Strategy</span>
+        <span class="s-tag">Channel Expansion</span>
+      </div>
+    </div>
+    <div class="sb reveal">
+      <div class="sb-icon">🧭</div>
+      <div class="sb-title">Strategy & Ops</div>
+      <div class="sb-tags">
+        <span class="s-tag">Problem Structuring</span><span class="s-tag">Framework Design</span>
+        <span class="s-tag">Process Optimisation</span><span class="s-tag">Stakeholder Mgmt.</span>
+        <span class="s-tag">Business Case Dev.</span><span class="s-tag">Feasibility Assessment</span>
+        <span class="s-tag">GTM Strategy</span><span class="s-tag">Intl. Expansion</span>
+      </div>
+    </div>
+    <div class="sb reveal">
+      <div class="sb-icon">🛠️</div>
+      <div class="sb-title">Product</div>
+      <div class="sb-tags">
+        <span class="s-tag">PRD Writing</span><span class="s-tag">Roadmapping</span>
+        <span class="s-tag">Feature Prioritization</span><span class="s-tag">RICE / ICE</span>
+        <span class="s-tag">0-to-1 Builds</span><span class="s-tag">Product Strategy</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p class="tools-label">Tools & Platforms</p>
+    <div class="tools-row">
+      <span class="tool-pill"><span class="t-dot"></span>MoEngage</span>
+      <span class="tool-pill"><span class="t-dot"></span>CleverTap</span>
+      <span class="tool-pill"><span class="t-dot"></span>Mixpanel</span>
+      <span class="tool-pill"><span class="t-dot"></span>Looker</span>
+      <span class="tool-pill"><span class="t-dot"></span>SQL</span>
+      <span class="tool-pill"><span class="t-dot"></span>Python</span>
+      <span class="tool-pill"><span class="t-dot"></span>Figma</span>
+      <span class="tool-pill"><span class="t-dot"></span>JIRA</span>
+      <span class="tool-pill"><span class="t-dot"></span>Excel</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ EXPERIENCE ══════════════
+
+     HOW TO ADD A NEW EXPERIENCE ENTRY:
+     Copy the entire block below (between the CUT HERE lines)
+     and paste it BEFORE the closing </div> of .exp-wrap.
+     Then update the date, company, role, and bullet points.
+
+     ┌─── CUT HERE ──────────────────────────────────────────────┐
+     <div class="exp-entry">
+       <div class="exp-time">
+         <span class="exp-date">MON YYYY<br>MON YYYY</span>
+         <span class="exp-co">Company</span>
+       </div>
+       <div class="exp-body">
+         <p class="exp-role">Role Title — Company Name</p>
+         <!-- Optional award badge — delete if not needed:
+         <div class="exp-award">🏆 "Award Name" — Month Year</div>
+         -->
+         <ul class="exp-ul">
+           <li><strong>Key metric or action</strong> — description of what you did and the outcome</li>
+           <li>Another bullet point here</li>
+         </ul>
+       </div>
+     </div>
+     └─── CUT HERE ──────────────────────────────────────────────┘
+══════════════════════════════════════════════════════════════ -->
+<section id="experience">
+  <p class="s-label">Career</p>
+  <h2>Experience</h2>
+  <p class="s-intro">Five years building at scale — across stages, sectors, and geographies.</p>
+  <div class="exp-wrap">
+
+    <div class="exp-entry reveal">
+      <div class="exp-time">
+        <span class="exp-date">Mar 2025<br>Present</span>
+        <span class="exp-co">Blinkit</span>
+      </div>
+      <div class="exp-body">
+        <p class="exp-role">Program Manager – Growth & Operations</p>
+        <ul class="exp-ul">
+          <li><strong>90% layout digitization</strong> across 2,000+ dark stores via location intelligence framework</li>
+          <li><strong>1.5× space utilisation</strong> and 18% GMV density via store layout redesign</li>
+          <li><strong>43% reduction</strong> in operational variance via prioritization logic engine + execution dashboard</li>
+          <li><strong>76% drop</strong> in expiry complaints via FEFO-aligned batch-level inventory logic</li>
+          <li>Built 4 heatmap tools — <strong>22% improvement</strong> in item placement accuracy</li>
+          <li>Led 10-member cross-functional team; standardized models across <strong>90% of network</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-entry reveal">
+      <div class="exp-time">
+        <span class="exp-date">Dec 2023<br>Jun 2024</span>
+        <span class="exp-co">Rapido</span>
+      </div>
+      <div class="exp-body">
+        <p class="exp-role">Asst. Growth Manager – Martech & Lifecycle</p>
+        <div class="exp-award">🏆 "Customer First" Award — Feb 2024</div>
+        <ul class="exp-ul">
+          <li>Built <strong>WhatsApp & Email 0-to-1</strong> — 15% expansion in transacting users across 80M+ base</li>
+          <li>Re-engaged <strong>7,000 churned users</strong> in 2 months via behaviour- and geo-based lifecycle flows</li>
+          <li><strong>₹1.5L+ incremental revenue</strong> via 150+ CRM campaigns on product analytics</li>
+          <li>Directed national GTM for <strong>IPL'24 & Elections'24</strong> with BCCI and ECI</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-entry reveal">
+      <div class="exp-time">
+        <span class="exp-date">Oct 2023<br>Dec 2023</span>
+        <span class="exp-co">Sugar</span>
+      </div>
+      <div class="exp-body">
+        <p class="exp-role">Retention Strategy Consultant – Sugar Cosmetics</p>
+        <ul class="exp-ul">
+          <li>Built Retention pod from scratch in 2 months across acquisition, engagement, reactivation</li>
+          <li>Redesigned discount strategy → <strong>₹1.5L+/month savings</strong> and ₹15L+ incremental revenue</li>
+          <li><strong>10% AOV uplift</strong> via UI-led cross-sell and up-sell journeys</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-entry reveal">
+      <div class="exp-time">
+        <span class="exp-date">Nov 2021<br>Oct 2023</span>
+        <span class="exp-co">CARS24</span>
+      </div>
+      <div class="exp-body">
+        <p class="exp-role">Growth Manager – Martech, CRM & Intl. Expansion</p>
+        <div class="exp-award">🏆 "Game Changer" Nov 2022 &nbsp;·&nbsp; "One Man Team" Aug 2022</div>
+        <ul class="exp-ul">
+          <li>CRM & automation across <strong>India, Thailand, UAE, Australia</strong> — 10% user growth</li>
+          <li>Built & launched <strong>NLP chatbot 0-to-1</strong> — 4% of total monthly business volume</li>
+          <li>Set up CRM infrastructure & GTM independently for <strong>3 new international markets</strong></li>
+          <li>39% engagement uplift via <strong>pricing gap identification</strong> on slow-moving inventory</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-entry reveal">
+      <div class="exp-time">
+        <span class="exp-date">Nov 2020<br>Oct 2022</span>
+        <span class="exp-co">Dessic</span>
+      </div>
+      <div class="exp-body">
+        <p class="exp-role">Founder — Dessic Patisserie (D2C Vegan Brand)</p>
+        <ul class="exp-ul">
+          <li>Built 0-to-1 D2C brand to <strong>₹37L+ annual turnover</strong> as sole founder</li>
+          <li>Scaled to <strong>"Top Rated" on LBB within 3 months</strong>; 1L+ student reach via 6 partnerships</li>
+          <li>Reduced RTO & product damage by <strong>14%</strong> through supply chain controls</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ✏️ PASTE NEW EXPERIENCE ENTRIES ABOVE THIS LINE -->
+
+  </div>
+</section>
+
+
+<!-- ══════════════ EDUCATION & CERTS ══════════════
+
+     HOW TO ADD A NEW DEGREE:
+     Copy a .edu-card block below and paste it inside .edu-grid.
+     Update the year, degree name, school, and optional note.
+
+     HOW TO ADD A CERTIFICATE:
+     Copy a .cert-card block from the cert-row and paste another one.
+     Update the icon, cert name, issuer, and year.
+     The cert-row currently shows placeholder certs — replace with your real ones.
+
+═══════════════════════════════════════════════════════════ -->
+<section id="education">
+  <p class="s-label">Background</p>
+  <h2>Education & Beyond</h2>
+  <p class="s-intro">An eclectic academic path — hospitality, data science, then tech MBA — that shapes how I think about people, systems, and business.</p>
+
+  <!-- DEGREES — add more .edu-card blocks here -->
+  <div class="edu-grid">
+
+    <div class="edu-card reveal">
+      <p class="edu-yr">2024 – 2025</p>
+      <p class="edu-deg">MBA in Technology & Business Management</p>
+      <p class="edu-school">Masters' Union, Gurugram</p>
+      <p class="edu-note">Top 10 in Revenue — DropShipping Challenge</p>
+    </div>
+
+    <div class="edu-card reveal">
+      <p class="edu-yr">2021 – 2022</p>
+      <p class="edu-deg">PGDM in Data Science</p>
+      <p class="edu-school">IIIT Bengaluru</p>
+    </div>
+
+    <div class="edu-card reveal">
+      <p class="edu-yr">2019 – 2021</p>
+      <p class="edu-deg">M.Sc. Hospitality — Sales & Marketing</p>
+      <p class="edu-school">Institute of Hotel Management, Pusa — New Delhi</p>
+    </div>
+
+    <!-- ✏️ PASTE NEW DEGREE CARDS ABOVE THIS LINE
+    Example:
+    <div class="edu-card reveal">
+      <p class="edu-yr">YYYY – YYYY</p>
+      <p class="edu-deg">Degree Name</p>
+      <p class="edu-school">University / Institution Name</p>
+      <p class="edu-note">Optional note — honours, specialisation, etc.</p>
+    </div>
+    -->
+
+  </div>
+
+  <!-- CERTIFICATES — replace these placeholders with your real certs -->
+  <div class="cert-row">
+
+    <!-- ✏️ Replace each cert-card with your real certificates.
+         Icons: use any emoji or remove it.
+         Common cert issuers: Google, Coursera, LinkedIn Learning, HubSpot, Meta, AWS, etc. -->
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">📜</div>
+      <div>
+        <p class="cert-name">Certificate Name Here</p>
+        <p class="cert-issuer">Issuer — e.g. Google</p>
+        <p class="cert-year">Year</p>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">📜</div>
+      <div>
+        <p class="cert-name">Certificate Name Here</p>
+        <p class="cert-issuer">Issuer — e.g. Coursera</p>
+        <p class="cert-year">Year</p>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">📜</div>
+      <div>
+        <p class="cert-name">Certificate Name Here</p>
+        <p class="cert-issuer">Issuer — e.g. LinkedIn Learning</p>
+        <p class="cert-year">Year</p>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-icon">📜</div>
+      <div>
+        <p class="cert-name">Certificate Name Here</p>
+        <p class="cert-issuer">Issuer — e.g. HubSpot</p>
+        <p class="cert-year">Year</p>
+      </div>
+    </div>
+
+    <!-- ✏️ PASTE MORE CERT CARDS HERE IF NEEDED -->
+
+  </div>
+
+  <div class="extras-row">
+    <div class="extra-card reveal">
+      <div class="ex-icon">📄</div>
+      <div>
+        <p class="ex-title">Publications</p>
+        <p class="ex-text">"Growing Trend of Veganism in Metropolitan Cities" and "Haute Indian Cuisine: Instagrammable Food of India" — PUSA Journal of Hospitality & Applied Sciences, Mar 2020</p>
+      </div>
+    </div>
+    <div class="extra-card reveal">
+      <div class="ex-icon">🌍</div>
+      <div>
+        <p class="ex-title">Leadership & Volunteering</p>
+        <p class="ex-text">Chef volunteer — World Association of Chefs, "Feed the Planet" global hunger initiative. Trained 70+ street vendors in food safety under Swachh Bharat Mission.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="contact">
+  <p class="s-label">Get in Touch</p>
+  <h2>Let's work together.</h2>
+  <p class="contact-sub">Open to Growth PM, Strategy, and Product Growth roles where the problem is genuinely hard and there's room to build. Based in Gurugram — open to relocation or remote.</p>
+  <div class="contact-grid">
+    <div class="contact-links">
+      <a href="mailto:prakhar1997g@gmail.com" class="c-link">
+        <span class="c-link-icon">✉️</span>
+        <div><span class="c-link-lbl">Email</span>prakhar1997g@gmail.com</div>
+      </a>
+      <a href="tel:+919695609879" class="c-link">
+        <span class="c-link-icon">📞</span>
+        <div><span class="c-link-lbl">Phone</span>+91 96956 09879</div>
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="c-link">
+        <span class="c-link-icon">💼</span>
+        <div><span class="c-link-lbl">LinkedIn</span>linkedin.com/in/prakhargupta</div>
+      </a>
+    </div>
+    <div class="contact-note">
+      <p class="cn-title">"What I bring to a team"</p>
+      <p class="cn-text">I diagnose before I solve. I build frameworks that outlast me. I've operated as a team of one in international markets, and as a lead across 10-person cross-functional teams.<br><br>
+      Whether it's a <strong>growth problem, an ops problem, or a "we don't even know what the problem is" problem</strong> — I can structure it, prioritize ruthlessly, and ship something that moves numbers.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Prakhar Gupta</p>
+  <span class="footer-mark">Prakhar Gupta</span>
+  <p>Gurugram, India</p>
+</footer>
+
+<script>
+  function showGroup(id, btn) {
+    document.querySelectorAll('.case-group').forEach(g => g.classList.remove('visible'));
+    document.querySelectorAll('.gtab').forEach(t => t.classList.remove('active'));
+    document.getElementById('group-' + id).classList.add('visible');
+    btn.classList.add('active');
+    document.querySelectorAll('#group-' + id + ' .reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('in'), i * 70);
+    });
+  }
+
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+  ['skills-grid','edu-grid','cert-row','extras-row','cards-grid','stat-rows'].forEach(cls => {
+    document.querySelectorAll('.' + cls).forEach(container => {
+      container.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i * 0.07) + 's'; });
+    });
+  });
+</script>
+</body>
+</html>
