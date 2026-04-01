@@ -325,7 +325,7 @@ h2 {
 
 /* ── EXPERIENCE ── */
 #experience { background: var(--cream); border-top: 1px solid var(--line); }
-.exp-wrap { max-width: 800px; }
+.exp-wrap { max-width: 900px; }
 .exp-entry { display: grid; grid-template-columns: 115px 1fr; gap: 2rem; padding-bottom: 3.25rem; position: relative; }
 .exp-entry:not(:last-child)::after {
   content: ''; position: absolute; left: 115px; top: 0.45rem; bottom: 0;
@@ -582,30 +582,6 @@ footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
       </div>
     </div>
 
-    <!-- ────────────────────────────────────────────────────────────
-         WORK EXPERIENCE CARDS
-         ────────────────────────────────────────────────────────────
-         HOW TO ADD A COVER IMAGE + LOGO TO ANY CARD:
-
-         Step 1 — Cover image:
-           On the <div class="cc-top ..."> element, add:
-             style="--cover: url('YOUR_IMAGE_URL_HERE')"
-           Example:
-             <div class="cc-top moss-bg" style="--cover: url('https://i.imgur.com/abc123.jpg')">
-
-         Step 2 — Logo:
-           Find the <!-- LOGO --> comment inside the card's cc-top div.
-           Replace it with:
-             <img class="cc-logo" src="YOUR_LOGO_URL_HERE" alt="Brand logo">
-           Example:
-             <img class="cc-logo" src="https://logo.clearbit.com/rapido.bike" alt="Rapido">
-
-         Tip: Clearbit logo API gives clean transparent PNGs:
-           https://logo.clearbit.com/DOMAIN.com
-           e.g. https://logo.clearbit.com/blinkit.com
-                https://logo.clearbit.com/cars24.com
-         ──────────────────────────────────────────────────────────── -->
-
     <div class="cards-grid" style="margin-top:1.5rem">
 
       <!-- CARD: Rapido -->
@@ -683,14 +659,6 @@ footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
        ════════════════════════════════════════════ -->
   <div class="case-group" id="group-reallife">
     <div class="cards-grid">
-
-      <!-- ────────────────────────────────────────────────────────────
-           HOW TO ADD A DRIVE LINK TO A CARD:
-           Find the <a class="cc-link disabled"> at the bottom of each card.
-           1. Remove the word "disabled" from class="cc-link disabled"
-           2. Replace href="#" with your actual Drive link
-           3. Change the text to "View Case Study →"
-           ──────────────────────────────────────────────────────────── -->
 
       <div class="case-card reveal">
         <div class="cc-top slate-bg">
@@ -927,32 +895,7 @@ footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
 </section>
 
 
-<!-- ══════════════ EXPERIENCE ══════════════
-
-     HOW TO ADD A NEW EXPERIENCE ENTRY:
-     Copy the entire block below (between the CUT HERE lines)
-     and paste it BEFORE the closing </div> of .exp-wrap.
-     Then update the date, company, role, and bullet points.
-
-     ┌─── CUT HERE ──────────────────────────────────────────────┐
-     <div class="exp-entry">
-       <div class="exp-time">
-         <span class="exp-date">MON YYYY<br>MON YYYY</span>
-         <span class="exp-co">Company</span>
-       </div>
-       <div class="exp-body">
-         <p class="exp-role">Role Title — Company Name</p>
-         <!-- Optional award badge — delete if not needed:
-         <div class="exp-award">🏆 "Award Name" — Month Year</div>
-         -->
-         <ul class="exp-ul">
-           <li><strong>Key metric or action</strong> — description of what you did and the outcome</li>
-           <li>Another bullet point here</li>
-         </ul>
-       </div>
-     </div>
-     └─── CUT HERE ──────────────────────────────────────────────┘
-══════════════════════════════════════════════════════════════ -->
+<!-- ══════════════ EXPERIENCE ══════════════-->
 <section id="experience">
   <p class="s-label">Career</p>
   <h2>Experience</h2>
@@ -1047,18 +990,7 @@ footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
 </section>
 
 
-<!-- ══════════════ EDUCATION & CERTS ══════════════
-
-     HOW TO ADD A NEW DEGREE:
-     Copy a .edu-card block below and paste it inside .edu-grid.
-     Update the year, degree name, school, and optional note.
-
-     HOW TO ADD A CERTIFICATE:
-     Copy a .cert-card block from the cert-row and paste another one.
-     Update the icon, cert name, issuer, and year.
-     The cert-row currently shows placeholder certs — replace with your real ones.
-
-═══════════════════════════════════════════════════════════ -->
+<!-- ══════════════ EDUCATION & CERTS ══════════════ -->
 <section id="education">
   <p class="s-label">Background</p>
   <h2>Education & Beyond</h2>
@@ -1108,36 +1040,36 @@ footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
     <div class="cert-card reveal">
       <div class="cert-icon">📜</div>
       <div>
-        <p class="cert-name">Certificate Name Here</p>
-        <p class="cert-issuer">Issuer — e.g. Google</p>
-        <p class="cert-year">Year</p>
+        <p class="cert-name">Strategy Consulting Virtual Experience Program</p>
+        <p class="cert-issuer">Issuer — Boston Consulting Group (BCG)</p>
+        <p class="cert-year">2023</p>
       </div>
     </div>
 
     <div class="cert-card reveal">
       <div class="cert-icon">📜</div>
       <div>
-        <p class="cert-name">Certificate Name Here</p>
-        <p class="cert-issuer">Issuer — e.g. Coursera</p>
-        <p class="cert-year">Year</p>
+        <p class="cert-name">Omnichannel Marketing</p>
+        <p class="cert-issuer">Issuer — lululemon</p>
+        <p class="cert-year">2024</p>
       </div>
     </div>
 
     <div class="cert-card reveal">
       <div class="cert-icon">📜</div>
       <div>
-        <p class="cert-name">Certificate Name Here</p>
-        <p class="cert-issuer">Issuer — e.g. LinkedIn Learning</p>
-        <p class="cert-year">Year</p>
+        <p class="cert-name">Project Management</p>
+        <p class="cert-issuer">Issuer — Google</p>
+        <p class="cert-year">2024</p>
       </div>
     </div>
 
     <div class="cert-card reveal">
       <div class="cert-icon">📜</div>
       <div>
-        <p class="cert-name">Certificate Name Here</p>
-        <p class="cert-issuer">Issuer — e.g. HubSpot</p>
-        <p class="cert-year">Year</p>
+        <p class="cert-name">Marketing Automation Foundation</p>
+        <p class="cert-issuer">Issuer — Simplilearn</p>
+        <p class="cert-year">2022</p>
       </div>
     </div>
 
@@ -1149,9 +1081,19 @@ footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
     <div class="extra-card reveal">
       <div class="ex-icon">📄</div>
       <div>
-        <p class="ex-title">Publications</p>
-        <p class="ex-text">"Growing Trend of Veganism in Metropolitan Cities" and "Haute Indian Cuisine: Instagrammable Food of India" — PUSA Journal of Hospitality & Applied Sciences, Mar 2020</p>
-      </div>
+       <p class="ex-title">Publications</p>
+        <p class="ex-text">
+        <a href="http://ihmpusa.net/wp-content/uploads/2023/02/GROWING-TREND-OF-VEGANISM-IN-METROPOLITAN-CITIES-EMPHASIS-ON-BAKING-by-Kritika-Bose-Guha-and-Prakhar-Gupta.pdf" target="_blank">
+          "Growing Trend of Veganism in Metropolitan Cities"
+        </a>
+     <br>
+        <a href="http://ihmpusa.net/wp-content/uploads/2023/02/HAUTE-INDIAN-CUISINE-INSTAGRAMMABLE-FOOD-OF-INDIA-by-Gitanshu-Kumar-and-Prakhar-Gupta.pdf" target="_blank">
+          "Haute Indian Cuisine: Instagrammable Food of India"
+        </a>
+     <br>
+        PUSA Journal of Hospitality & Applied Sciences, Mar 2020
+      </p>
+     </div>
     </div>
     <div class="extra-card reveal">
       <div class="ex-icon">🌍</div>
