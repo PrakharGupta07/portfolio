@@ -7,10 +7,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Epilogue:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!--  GA4 — SWAP G-XXXXXXXXXX WITH YOUR REAL MEASUREMENT ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LZD5J1HCC9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LZD5J1HCC9', {
+    // Automatically tracks: page views, scroll depth, session duration
+    send_page_view: true
+  });
+</script>
+
 <style>
-/* ============================================================
-   DESIGN TOKENS — change colours here globally
-   ============================================================ */
 :root {
   --clay:       #c9a882;
   --sand:       #f0e6d3;
@@ -22,450 +32,519 @@
   --warm-grey:  #8a7a6a;
   --line:       rgba(59,46,34,0.12);
   --line-light: rgba(59,46,34,0.06);
+  --shadow-sm:  0 1px 0 var(--line), 0 4px 16px rgba(59,46,34,.06);
+  --shadow-md:  0 1px 0 var(--line), 0 12px 36px rgba(59,46,34,.1);
+  --shadow-lg:  0 2px 0 var(--line), 0 24px 64px rgba(59,46,34,.13);
+  --r-sm:.75rem; --r-md:1.25rem; --r-lg:1.75rem; --r-xl:2rem;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Epilogue',sans-serif;background:var(--parchment);color:var(--bark);overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:.022;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:multiply}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Epilogue', sans-serif;
-  background: var(--parchment);
-  color: var(--bark);
-  overflow-x: hidden;
-}
-body::after {
-  content: '';
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 9999; opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: multiply;
-}
+/* ══ NAV ══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:.9rem 4rem;background:rgba(250,246,239,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 4px 24px rgba(59,46,34,.08)}
+.nav-mark{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;font-style:italic;color:var(--bark);text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:.2rem;list-style:none}
+.nav-links a{text-decoration:none;font-size:.72rem;font-weight:500;color:var(--warm-grey);letter-spacing:.08em;text-transform:uppercase;transition:color .2s;padding:.4rem .75rem;border-radius:2rem}
+.nav-links a:hover{color:var(--rust);background:rgba(181,71,27,.06)}
+.nav-right{display:flex;align-items:center;gap:.7rem}
+.nav-cv{display:inline-flex;align-items:center;gap:.4rem;font-size:.72rem;font-weight:600;letter-spacing:.06em;color:var(--bark);text-decoration:none;border:1.5px solid var(--line);background:var(--cream);padding:.44rem 1rem;border-radius:2rem;transition:all .2s}
+.nav-cv:hover{border-color:var(--clay);background:var(--sand)}
+.nav-cv svg{width:11px;height:11px;fill:currentColor;flex-shrink:0}
+.nav-wwm{display:inline-flex;align-items:center;gap:.4rem;background:var(--bark);color:var(--sand);font-size:.72rem;font-weight:600;letter-spacing:.06em;text-decoration:none;padding:.48rem 1.25rem;border-radius:2rem;transition:all .2s;border:none;cursor:pointer;font-family:'Epilogue',sans-serif}
+.nav-wwm:hover{background:var(--rust);transform:translateY(-1px)}
 
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 4rem;
-  background: rgba(250,246,239,0.88); backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--line);
-}
-.nav-mark {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem; font-weight: 700; font-style: italic;
-  color: var(--bark); text-decoration: none;
-}
-.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
-.nav-links a {
-  text-decoration: none; font-size: 0.73rem; font-weight: 500;
-  color: var(--warm-grey); letter-spacing: 0.09em; text-transform: uppercase;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--rust); }
-.nav-hire {
-  background: var(--bark) !important; color: var(--sand) !important;
-  padding: 0.48rem 1.25rem !important; border-radius: 2rem !important;
-  transition: background 0.2s !important;
-}
-.nav-hire:hover { background: var(--rust) !important; }
+/* ══ FLOATING CV FAB ══ */
+.cv-fab{position:fixed;bottom:2rem;right:2rem;z-index:200;display:inline-flex;align-items:center;gap:.55rem;background:var(--bark);color:var(--sand);font-family:'Epilogue',sans-serif;font-size:.76rem;font-weight:600;letter-spacing:.05em;text-decoration:none;padding:.72rem 1.35rem;border-radius:3rem;box-shadow:0 4px 20px rgba(59,46,34,.25);transition:all .25s cubic-bezier(.34,1.56,.64,1)}
+.cv-fab:hover{background:var(--rust);transform:translateY(-3px) scale(1.04);box-shadow:0 8px 28px rgba(181,71,27,.35)}
+.cv-fab svg{width:13px;height:13px;fill:currentColor;flex-shrink:0}
 
-/* ── HERO ── */
-.hero {
-  min-height: 100vh; padding: 7rem 4rem 4rem;
-  display: grid; grid-template-columns: 1.1fr 0.9fr;
-  gap: 4rem; align-items: center;
-  position: relative; overflow: hidden;
-}
-.hero::before {
-  content: 'PG';
-  position: absolute; right: -1.5rem; top: 50%; transform: translateY(-58%);
-  font-family: 'Cormorant Garamond', serif; font-size: 28vw; font-weight: 700;
-  color: var(--clay); opacity: 0.065; pointer-events: none; line-height: 1; user-select: none;
-}
-.avail-badge {
-  display: inline-flex; align-items: center; gap: 0.55rem;
-  background: rgba(74,92,63,0.1); border: 1px solid rgba(74,92,63,0.25);
-  color: var(--moss); font-size: 0.7rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 0.38rem 1rem; border-radius: 2rem; margin-bottom: 1.75rem;
-}
-.avail-dot {
-  width: 6px; height: 6px; border-radius: 50%; background: var(--moss);
-  animation: blink 2s ease-in-out infinite;
-}
-@keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
-h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(3rem,5.5vw,5.6rem); font-weight: 600;
-  line-height: 1.02; letter-spacing: -0.02em; color: var(--bark); margin-bottom: 1.6rem;
-}
-h1 .accent { color: var(--rust); font-style: italic; }
-.hero-desc { font-size: 0.97rem; line-height: 1.78; color: var(--warm-grey); font-weight: 300; max-width: 46ch; margin-bottom: 2.25rem; }
-.hero-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 2.25rem; }
-.chip { font-size: 0.7rem; font-weight: 500; padding: 0.32rem 0.85rem; border-radius: 2rem; border: 1px solid var(--line); background: var(--cream); color: var(--bark); }
-.chip.green { background: rgba(74,92,63,0.1); border-color: rgba(74,92,63,0.3); color: var(--moss); }
-.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-.btn {
-  display: inline-flex; align-items: center; gap: 0.45rem;
-  padding: 0.85rem 1.8rem; border-radius: 3rem;
-  font-family: 'Epilogue', sans-serif; font-size: 0.8rem; font-weight: 600;
-  letter-spacing: 0.04em; text-decoration: none; cursor: pointer; border: none; transition: all 0.25s;
-}
-.btn-bark { background: var(--bark); color: var(--sand); }
-.btn-bark:hover { background: var(--rust); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(181,71,27,.22); }
-.btn-out { background: transparent; color: var(--bark); border: 1.5px solid var(--bark); }
-.btn-out:hover { background: var(--bark); color: var(--sand); transform: translateY(-2px); }
+/* ══ MODAL BASE (shared by both modals) ══ */
+.modal-bg{position:fixed;inset:0;z-index:500;background:rgba(20,12,5,.6);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal{background:var(--cream);border-radius:var(--r-xl);width:100%;max-width:540px;box-shadow:0 32px 80px rgba(20,12,5,.35);transform:translateY(28px) scale(.97);transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .3s;opacity:0;overflow:hidden}
+.modal-bg.open .modal{transform:translateY(0) scale(1);opacity:1}
+.modal-top{background:var(--bark);padding:2.25rem 2.5rem 2rem;position:relative}
+.modal-top::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rust),var(--clay))}
+.modal-close{position:absolute;top:1.1rem;right:1.25rem;background:rgba(255,255,255,.1);border:none;color:var(--sand);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .2s;line-height:1;font-family:'Epilogue',sans-serif}
+.modal-close:hover{background:rgba(255,255,255,.2)}
+.modal-eyebrow{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--clay);font-weight:700;margin-bottom:.6rem}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;color:var(--sand);line-height:1.1;margin-bottom:.5rem}
+.modal-sub{font-size:.84rem;color:rgba(240,230,211,.55);font-weight:300;line-height:1.6}
+.modal-body{padding:2rem 2.5rem 2.25rem}
+
+/* Work With Me modal links */
+.modal-links{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.75rem}
+.modal-link{display:flex;align-items:center;gap:1rem;padding:.95rem 1.25rem;border:1px solid var(--line);border-radius:var(--r-sm);text-decoration:none;color:var(--bark);transition:all .22s;background:var(--parchment)}
+.modal-link:hover{background:var(--sand);border-color:var(--clay);transform:translateX(4px)}
+.ml-icon{width:36px;height:36px;border-radius:.6rem;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.ml-icon.rust-bg{background:rgba(181,71,27,.12)}
+.ml-icon.moss-bg{background:rgba(74,92,63,.12)}
+.ml-icon.clay-bg{background:rgba(201,168,130,.18)}
+.ml-label{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--warm-grey);display:block;margin-bottom:.12rem}
+.ml-val{font-size:.88rem;font-weight:500;color:var(--bark)}
+.modal-note{background:rgba(74,92,63,.07);border:1px solid rgba(74,92,63,.15);border-radius:var(--r-sm);padding:1.1rem 1.3rem;font-size:.8rem;color:var(--moss);line-height:1.65}
+.modal-note strong{font-weight:700}
+
+/* ══ LEAD CAPTURE FORM MODAL ══ */
+/* Form fields */
+.lc-form{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.25rem}
+.lc-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.lc-field{display:flex;flex-direction:column;gap:.4rem}
+.lc-field label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--warm-grey)}
+.lc-field input,.lc-field textarea,.lc-field select{font-family:'Epilogue',sans-serif;font-size:.86rem;font-weight:400;color:var(--bark);background:var(--parchment);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.75rem 1rem;transition:border-color .2s,box-shadow .2s;outline:none;width:100%}
+.lc-field input:focus,.lc-field textarea:focus,.lc-field select:focus{border-color:var(--clay);box-shadow:0 0 0 3px rgba(201,168,130,.15)}
+.lc-field input::placeholder,.lc-field textarea::placeholder{color:rgba(138,122,106,.5)}
+.lc-field textarea{resize:vertical;min-height:90px;line-height:1.6}
+.lc-field select{cursor:pointer;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7a6a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center}
+
+.lc-submit{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.9rem 1.5rem;background:var(--bark);color:var(--sand);border:none;border-radius:3rem;font-family:'Epilogue',sans-serif;font-size:.84rem;font-weight:700;letter-spacing:.05em;cursor:pointer;transition:all .25s}
+.lc-submit:hover{background:var(--rust);transform:translateY(-1px);box-shadow:0 6px 20px rgba(181,71,27,.25)}
+.lc-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.lc-submit svg{width:14px;height:14px;fill:currentColor}
+
+.lc-disclaimer{font-size:.68rem;color:var(--warm-grey);text-align:center;line-height:1.5;opacity:.7}
+
+/* Success state */
+.lc-success{display:none;text-align:center;padding:1.5rem 0}
+.lc-success.show{display:block}
+.lc-success-icon{font-size:2.5rem;margin-bottom:1rem}
+.lc-success-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--bark);margin-bottom:.5rem}
+.lc-success-text{font-size:.84rem;color:var(--warm-grey);font-weight:300;line-height:1.6}
+
+/* Trigger button */
+.lc-trigger{display:inline-flex;align-items:center;gap:.5rem;background:rgba(74,92,63,.1);border:1.5px solid rgba(74,92,63,.28);color:var(--moss);font-family:'Epilogue',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.04em;padding:.6rem 1.2rem;border-radius:2rem;cursor:pointer;transition:all .22s}
+.lc-trigger:hover{background:rgba(74,92,63,.18);transform:translateY(-1px)}
+.lc-trigger svg{width:13px;height:13px;fill:currentColor}
+
+/* ══ AWARDS STRIP ══ */
+.awards-strip{background:linear-gradient(135deg,#2a1c0e 0%,var(--bark) 100%);padding:1.75rem 4rem;display:flex;align-items:center;gap:3rem;overflow-x:auto;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
+.awards-strip::-webkit-scrollbar{display:none}
+.awards-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:rgba(201,168,130,.45);white-space:nowrap;flex-shrink:0}
+.awards-divider{width:1px;height:2rem;background:rgba(255,255,255,.08);flex-shrink:0}
+.award-badge{display:flex;align-items:center;gap:.85rem;flex-shrink:0}
+.award-icon{width:40px;height:40px;border-radius:50%;background:rgba(200,151,42,.15);border:1px solid rgba(200,151,42,.3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.award-name{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:700;color:var(--clay);line-height:1.2}
+.award-co{font-size:.65rem;color:rgba(240,230,211,.4);font-weight:400;margin-top:.1rem}
+
+/* ══ HERO ══ */
+.hero{min-height:100vh;padding:7rem 4rem 5rem;display:grid;grid-template-columns:1.15fr .85fr;gap:5rem;align-items:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 70% 55% at 68% 38%,rgba(201,168,130,.09) 0%,transparent 70%)}
+.hero::before{content:'PG';position:absolute;right:-2rem;top:50%;transform:translateY(-56%);font-family:'Cormorant Garamond',serif;font-size:30vw;font-weight:700;color:var(--clay);opacity:.055;pointer-events:none;line-height:1;user-select:none}
+.avail-badge{display:inline-flex;align-items:center;gap:.55rem;background:rgba(74,92,63,.1);border:1px solid rgba(74,92,63,.25);color:var(--moss);font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.38rem 1rem;border-radius:2rem;margin-bottom:1.75rem}
+.avail-dot{width:7px;height:7px;border-radius:50%;background:var(--moss);animation:blink 2.2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.75)}}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5.5vw,5.8rem);font-weight:600;line-height:1;letter-spacing:-.025em;color:var(--bark);margin-bottom:1.6rem}
+h1 .accent{color:var(--rust);font-style:italic}
+.hero-desc{font-size:1rem;line-height:1.8;color:var(--warm-grey);font-weight:300;max-width:46ch;margin-bottom:2rem}
+.hero-chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:2.25rem}
+.chip{font-size:.7rem;font-weight:500;padding:.3rem .85rem;border-radius:2rem;border:1px solid var(--line);background:var(--cream);color:var(--bark);transition:all .2s}
+.chip:hover{border-color:var(--clay);background:var(--sand)}
+.chip.green{background:rgba(74,92,63,.08);border-color:rgba(74,92,63,.28);color:var(--moss)}
+.hero-actions{display:flex;gap:.9rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.8rem;border-radius:3rem;font-family:'Epilogue',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.04em;text-decoration:none;cursor:pointer;border:none;transition:all .25s}
+.btn-bark{background:var(--bark);color:var(--sand)}
+.btn-bark:hover{background:var(--rust);transform:translateY(-2px);box-shadow:0 8px 24px rgba(181,71,27,.25)}
+.btn-out{background:transparent;color:var(--bark);border:1.5px solid rgba(59,46,34,.28)}
+.btn-out:hover{background:var(--bark);color:var(--sand);transform:translateY(-2px)}
+.btn-cv{background:var(--sand);color:var(--bark);border:1.5px solid var(--line)}
+.btn-cv:hover{background:var(--clay);transform:translateY(-2px)}
+.btn svg{width:13px;height:13px;fill:currentColor;flex-shrink:0}
 
 /* stat card */
-.stat-card {
-  background: var(--cream); border: 1px solid var(--line);
-  border-radius: 1.75rem; padding: 2.25rem;
-  box-shadow: 0 2px 0 var(--line), 0 20px 56px rgba(59,46,34,.07);
-}
-.sc-label {
-  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--warm-grey); font-weight: 600; margin-bottom: 1.5rem;
-  display: flex; align-items: center; gap: 0.5rem;
-}
-.sc-label::after { content:''; flex:1; height:1px; background:var(--line); }
-.stat-rows { display: flex; flex-direction: column; gap: 0.85rem; }
-.stat-row {
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: 0.9rem 1.1rem; background: var(--parchment); border-radius: 1rem; border: 1px solid var(--line-light);
-}
-.sr-num { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 700; color: var(--rust); line-height: 1; white-space: nowrap; }
-.sr-label { font-size: 0.74rem; color: var(--warm-grey); text-align: right; line-height: 1.4; font-weight: 300; }
-.stat-div { height: 1px; background: var(--line-light); }
+.stat-card{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-lg);padding:2rem;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rust),var(--clay))}
+.sc-label{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--warm-grey);font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
+.sc-label::after{content:'';flex:1;height:1px;background:var(--line)}
+.stat-rows{display:flex;flex-direction:column;gap:.75rem}
+.stat-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 1.1rem;background:var(--parchment);border-radius:1rem;border:1px solid var(--line-light);transition:all .2s}
+.stat-row:hover{border-color:var(--clay);background:var(--sand)}
+.sr-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--rust);line-height:1;white-space:nowrap}
+.sr-label{font-size:.73rem;color:var(--warm-grey);text-align:right;line-height:1.4;font-weight:300}
+.stat-div{height:1px;background:var(--line-light)}
 
-/* ── BANNER ── */
-.banner {
-  background: var(--bark); color: var(--sand); padding: 1.6rem 4rem;
-  display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
-}
-.banner-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; opacity: .9; }
-.role-pills { display: flex; gap: 0.65rem; flex-wrap: wrap; }
-.role-pill {
-  background: rgba(201,168,130,.15); border: 1px solid rgba(201,168,130,.3);
-  color: var(--clay); font-size: 0.7rem; font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase; padding: 0.38rem 0.95rem; border-radius: 2rem;
-}
+/* ══ TICKER ══ */
+.ticker-wrap{background:var(--bark);overflow:hidden;padding:.78rem 0;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
+.ticker-track{display:flex;width:max-content;animation:marquee 32s linear infinite}
+.ticker-track:hover{animation-play-state:paused}
+.ticker-item{display:flex;align-items:center;gap:1.5rem;font-size:.67rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,230,211,.45);padding:0 2.5rem;white-space:nowrap}
+.ticker-item strong{color:var(--clay)}
+.ticker-dot{width:3px;height:3px;border-radius:50%;background:var(--clay);opacity:.45}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ── SECTION GLOBALS ── */
-section { padding: 5.5rem 4rem; }
-.s-label {
-  font-size: 0.63rem; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--rust); font-weight: 600; margin-bottom: 0.6rem;
-  display: flex; align-items: center; gap: 0.7rem;
-}
-.s-label::before { content:''; display:block; width:1.6rem; height:1.5px; background:var(--rust); }
-h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem,3.8vw,3.2rem); font-weight: 600;
-  letter-spacing: -0.02em; line-height: 1.08; color: var(--bark); margin-bottom: 0.65rem;
-}
-.s-intro { font-size: 0.93rem; line-height: 1.75; color: var(--warm-grey); max-width: 58ch; font-weight: 300; margin-bottom: 3rem; }
+/* ══ BANNER ══ */
+.banner{background:linear-gradient(135deg,var(--bark) 0%,#2a1f14 100%);color:var(--sand);padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.banner-quote{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;opacity:.88;max-width:55ch;line-height:1.5}
+.role-pills{display:flex;gap:.6rem;flex-wrap:wrap}
+.role-pill{background:rgba(201,168,130,.12);border:1px solid rgba(201,168,130,.28);color:var(--clay);font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.38rem .95rem;border-radius:2rem}
 
-/* ── GROUP TABS ── */
-.group-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
-.gtab {
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 0.45rem 1.1rem; border-radius: 2rem; cursor: pointer;
-  border: 1.5px solid var(--line); background: var(--cream); color: var(--warm-grey); transition: all 0.2s;
-}
-.gtab.active, .gtab:hover { background: var(--bark); color: var(--sand); border-color: var(--bark); }
-.case-group { display: none; }
-.case-group.visible { display: block; }
+/* ══ SECTION GLOBALS ══ */
+section{padding:5.5rem 4rem}
+.s-label{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--rust);font-weight:700;margin-bottom:.6rem;display:flex;align-items:center;gap:.7rem}
+.s-label::before{content:'';display:block;width:1.6rem;height:1.5px;background:var(--rust)}
+h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.8vw,3.2rem);font-weight:600;letter-spacing:-.02em;line-height:1.08;color:var(--bark);margin-bottom:.65rem}
+.s-intro{font-size:.92rem;line-height:1.76;color:var(--warm-grey);max-width:58ch;font-weight:300;margin-bottom:2.75rem}
 
-/* ── FEATURED CASE (deep-dive) ── */
-.case-featured {
-  background: var(--cream); border: 1px solid var(--line);
-  border-radius: 2rem; overflow: hidden; margin-bottom: 1.5rem;
-  box-shadow: 0 1px 0 var(--line), 0 14px 44px rgba(59,46,34,.07);
-}
-.cf-header { padding: 2.25rem 2.75rem; position: relative; overflow: hidden; }
-.cf-header.bark { background: var(--bark); }
-.cf-header.brown { background: #4a3828; }
-.cf-header::before {
-  content: attr(data-num);
-  position: absolute; right: 2rem; top: 50%; transform: translateY(-50%);
-  font-family: 'Cormorant Garamond', serif; font-size: 8rem; font-weight: 700;
-  opacity: .07; line-height: 1; color: var(--sand); pointer-events: none;
-}
-.cf-tag-row { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.85rem; }
-.cf-badge { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.28rem 0.8rem; border-radius: 2rem; color: var(--sand); }
-.cf-badge.rust { background: var(--rust); }
-.cf-badge.moss { background: var(--moss); }
-.cf-period { font-size: 0.7rem; color: rgba(240,230,211,.45); }
-.cf-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem,2.8vw,2.2rem); font-weight: 600; color: var(--sand); line-height: 1.2; max-width: 50ch; }
-.cf-body { display: grid; grid-template-columns: 1.5fr 1fr; }
-.cf-narrative { padding: 2.25rem 2.75rem; border-right: 1px solid var(--line); }
-.cf-narrative p { font-size: 0.86rem; line-height: 1.75; color: var(--warm-grey); font-weight: 300; margin-bottom: 1.4rem; }
-.cf-narrative p:last-child { margin-bottom: 0; }
-.cf-narrative strong { color: var(--bark); font-weight: 600; }
-.nano-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--warm-grey); margin-bottom: 0.65rem; }
-.cf-metrics-col { padding: 2.25rem 1.75rem; display: flex; flex-direction: column; gap: 0.85rem; }
-.metric-block { padding: 1rem 1.2rem; background: var(--parchment); border: 1px solid var(--line-light); border-radius: 1rem; transition: all 0.2s; }
-.metric-block:hover { border-color: var(--clay); transform: translateX(3px); }
-.metric-num { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; color: var(--rust); line-height: 1; margin-bottom: 0.15rem; }
-.metric-num.green { color: var(--moss); }
-.metric-lab { font-size: 0.7rem; color: var(--warm-grey); line-height: 1.4; }
+/* ══ CASE STUDIES ══ */
+#cases{background:var(--sand)}
+.tab-bar{display:flex;gap:.4rem;flex-wrap:wrap;background:rgba(59,46,34,.06);border:1px solid var(--line);border-radius:3rem;padding:.3rem;width:fit-content;margin-bottom:2.75rem}
+.gtab{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.5rem 1.2rem;border-radius:2rem;cursor:pointer;border:none;background:transparent;color:var(--warm-grey);transition:all .22s}
+.gtab.active{background:var(--bark);color:var(--sand);box-shadow:0 2px 8px rgba(59,46,34,.2)}
+.gtab:not(.active):hover{background:rgba(59,46,34,.08);color:var(--bark)}
+.case-group{display:none}
+.case-group.visible{display:block}
 
-/* ================================================================
-   CASE CARD — with cover image + logo overlay
-   ================================================================
+.case-featured{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;margin-bottom:1.5rem;box-shadow:var(--shadow-md);transition:box-shadow .3s}
+.case-featured:hover{box-shadow:var(--shadow-lg)}
+.cf-header{padding:2.25rem 2.75rem;position:relative;overflow:hidden}
+.cf-header.bark{background:var(--bark)}
+.cf-header.brown{background:#4a3828}
+.cf-header::after{content:attr(data-num);position:absolute;right:2rem;top:50%;transform:translateY(-50%);font-family:'Cormorant Garamond',serif;font-size:9rem;font-weight:700;opacity:.06;line-height:1;color:var(--sand);pointer-events:none}
+.cf-tag-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.85rem}
+.cf-badge{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.28rem .85rem;border-radius:2rem;color:var(--sand)}
+.cf-badge.rust{background:var(--rust)}
+.cf-badge.moss{background:var(--moss)}
+.cf-period{font-size:.7rem;color:rgba(240,230,211,.42)}
+.cf-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:600;color:var(--sand);line-height:1.2;max-width:52ch}
+.cf-body{display:grid;grid-template-columns:1.5fr 1fr}
+.cf-narrative{padding:2.25rem 2.75rem;border-right:1px solid var(--line)}
+.cf-narrative p{font-size:.86rem;line-height:1.76;color:var(--warm-grey);font-weight:300;margin-bottom:1.35rem}
+.cf-narrative p:last-child{margin-bottom:0}
+.cf-narrative strong{color:var(--bark);font-weight:600}
+.nano-label{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--clay);margin-bottom:.6rem}
+.cf-metrics-col{padding:2rem 1.75rem;display:flex;flex-direction:column;gap:.75rem}
+.metric-block{padding:.95rem 1.15rem;background:var(--parchment);border:1px solid var(--line-light);border-radius:1rem;transition:all .2s}
+.metric-block:hover{border-color:var(--clay);transform:translateX(4px);background:var(--sand)}
+.metric-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--rust);line-height:1;margin-bottom:.12rem}
+.metric-num.green{color:var(--moss)}
+.metric-lab{font-size:.69rem;color:var(--warm-grey);line-height:1.4}
 
-   HOW TO ADD IMAGES TO A CARD:
-   1. Cover image  → set the style="--cover: url('YOUR_IMAGE_URL')" on .cc-top
-   2. Logo         → uncomment the <img class="cc-logo"> tag and set src=""
-   3. If no cover image is set, the fallback gradient colour shows instead.
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.case-card{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;transition:all .3s;box-shadow:var(--shadow-sm);display:flex;flex-direction:column}
+.case-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.cc-top{position:relative;overflow:hidden;min-height:145px;display:flex;flex-direction:column;justify-content:flex-end;padding:1.4rem 1.6rem 1.2rem;background-image:var(--cover,none);background-size:cover;background-position:center}
+.cc-top::after{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(170deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.78) 100%)}
+.cc-top.bark-bg{background-color:var(--bark)}.cc-top.moss-bg{background-color:var(--moss)}.cc-top.clay-bg{background-color:#7a5c3a}.cc-top.rust-bg{background-color:var(--rust)}.cc-top.wine-bg{background-color:#5c2a1e}.cc-top.slate-bg{background-color:#3a4a5c}.cc-top.forest-bg{background-color:#2e4a35}.cc-top.umber-bg{background-color:#5c4a2a}.cc-top.indigo-bg{background-color:#2e3a5c}
+.cc-logo{position:absolute;top:.9rem;left:1.3rem;z-index:2;height:26px;width:auto;max-width:80px;object-fit:contain;border-radius:4px;background:rgba(255,255,255,.18);backdrop-filter:blur(8px);padding:3px 7px}
+.cc-num{position:absolute;right:1rem;bottom:.6rem;z-index:1;font-family:'Cormorant Garamond',serif;font-size:4.5rem;font-weight:700;color:rgba(255,255,255,.09);line-height:1;pointer-events:none}
+.cc-tag-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;position:relative;z-index:2}
+.cc-badge{font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .65rem;border-radius:2rem;color:var(--sand)}
+.cc-badge.rust{background:var(--rust)}.cc-badge.moss{background:var(--moss)}.cc-badge.clay{background:rgba(201,168,130,.45)}.cc-badge.bark{background:rgba(59,46,34,.55)}
+.cc-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--sand);line-height:1.3;position:relative;z-index:2}
+.cc-body{padding:1.35rem 1.6rem;flex:1;display:flex;flex-direction:column}
+.cc-desc{font-size:.8rem;line-height:1.72;color:var(--warm-grey);font-weight:300;margin-bottom:1rem;flex:1}
+.cc-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem}
+.mc{font-size:.66rem;font-weight:600;padding:.24rem .68rem;border-radius:2rem;background:rgba(181,71,27,.09);border:1px solid rgba(181,71,27,.2);color:var(--rust)}
+.mc.g{background:rgba(74,92,63,.09);border-color:rgba(74,92,63,.2);color:var(--moss)}
+.mc.n{background:rgba(59,46,34,.06);border-color:var(--line);color:var(--bark)}
+.cc-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.73rem;font-weight:600;color:var(--rust);text-decoration:none;transition:all .2s;border-bottom:1px solid transparent;padding-bottom:.1rem}
+.cc-link:hover{gap:.65rem;border-bottom-color:var(--rust)}
+.cc-link.disabled{color:var(--warm-grey);cursor:default;pointer-events:none;font-style:italic;border-bottom:none}
 
-   You can use:
-     - A direct image URL:  url('https://...')
-     - A local file path:   url('images/blinkit.jpg')  (put images next to the HTML)
+/* ══ SKILLS ══ */
+#skills{background:var(--parchment)}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-bottom:2.5rem}
+.sb{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-md);padding:1.6rem;transition:all .25s;position:relative;overflow:hidden}
+.sb::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--clay),transparent);opacity:0;transition:opacity .3s}
+.sb:hover{border-color:var(--clay);box-shadow:0 8px 26px rgba(59,46,34,.08);transform:translateY(-2px)}
+.sb:hover::before{opacity:1}
+.sb-icon{font-size:1.5rem;margin-bottom:.75rem}
+.sb-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--bark);margin-bottom:.75rem}
+.sb-tags{display:flex;flex-wrap:wrap;gap:.38rem}
+.s-tag{font-size:.65rem;font-weight:500;padding:.22rem .65rem;border-radius:2rem;background:var(--parchment);border:1px solid var(--line);color:var(--bark);transition:all .18s}
+.s-tag:hover{background:var(--sand);border-color:var(--clay)}
+.tools-label{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--warm-grey);margin-bottom:1rem}
+.tools-row{display:flex;flex-wrap:wrap;gap:.6rem}
+.tool-pill{display:inline-flex;align-items:center;gap:.45rem;background:var(--cream);border:1px solid var(--line);padding:.45rem 1rem;border-radius:2rem;font-size:.76rem;font-weight:500;color:var(--bark);transition:all .2s}
+.tool-pill:hover{background:var(--bark);color:var(--sand);border-color:var(--bark);transform:translateY(-1px)}
+.t-dot{width:5px;height:5px;border-radius:50%;background:var(--clay);flex-shrink:0}
 
-   ================================================================ */
+/* ══ EXPERIENCE ══ */
+#experience{background:var(--cream);border-top:1px solid var(--line)}
+.exp-wrap{max-width:900px}
+.exp-entry{display:grid;grid-template-columns:120px 1fr;gap:2rem;padding-bottom:3.25rem;position:relative}
+.exp-entry:not(:last-child)::after{content:'';position:absolute;left:120px;top:.45rem;bottom:0;width:1px;background:linear-gradient(to bottom,var(--clay) 30%,transparent);margin-left:-.5px}
+.exp-entry::before{content:'';position:absolute;left:120px;top:.38rem;width:9px;height:9px;border-radius:50%;background:var(--rust);transform:translateX(-4px);z-index:1;box-shadow:0 0 0 3px var(--cream),0 0 0 6px rgba(181,71,27,.15)}
+.exp-time{text-align:right;padding-right:1.5rem;padding-top:.2rem}
+.exp-date{font-size:.69rem;font-weight:500;color:var(--warm-grey);line-height:1.55;display:block}
+.exp-co{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:700;color:var(--rust);display:block;margin-top:.25rem}
+.exp-body{padding-left:1.5rem}
+.exp-role{font-family:'Cormorant Garamond',serif;font-size:1.12rem;font-weight:600;color:var(--bark);margin-bottom:.65rem;line-height:1.3}
+.exp-award{display:inline-flex;align-items:center;gap:.35rem;font-size:.65rem;font-weight:600;color:var(--moss);background:rgba(74,92,63,.09);border:1px solid rgba(74,92,63,.2);padding:.22rem .75rem;border-radius:2rem;margin-bottom:.8rem}
+.exp-ul{list-style:none;display:flex;flex-direction:column;gap:.52rem}
+.exp-ul li{font-size:.845rem;line-height:1.66;color:var(--warm-grey);font-weight:300;padding-left:1.2rem;position:relative}
+.exp-ul li::before{content:'—';position:absolute;left:0;color:var(--clay)}
+.exp-ul li strong{color:var(--bark);font-weight:600}
 
-.cards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+/* ══ EDUCATION ══ */
+#education{background:var(--sand)}
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.edu-card{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-md);padding:1.65rem;position:relative;overflow:hidden;transition:all .25s}
+.edu-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rust),var(--clay));transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.edu-card:hover::after{transform:scaleX(1)}
+.edu-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(59,46,34,.09)}
+.edu-yr{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--warm-grey);font-weight:600;margin-bottom:.7rem}
+.edu-deg{font-family:'Cormorant Garamond',serif;font-size:.97rem;font-weight:700;color:var(--bark);line-height:1.35;margin-bottom:.38rem}
+.edu-school{font-size:.76rem;color:var(--rust);font-weight:500}
+.edu-note{font-size:.69rem;color:var(--warm-grey);margin-top:.5rem;font-style:italic}
+.cert-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.75rem}
+.cert-card{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-sm);padding:1.15rem 1.3rem;display:flex;gap:.75rem;align-items:flex-start;transition:all .25s}
+.cert-card:hover{border-color:var(--clay);transform:translateY(-2px);box-shadow:0 6px 20px rgba(59,46,34,.08)}
+.cert-icon{font-size:1.2rem;flex-shrink:0}
+.cert-name{font-size:.77rem;font-weight:600;color:var(--bark);margin-bottom:.15rem;line-height:1.3}
+.cert-issuer{font-size:.67rem;color:var(--rust);font-weight:500}
+.cert-year{font-size:.64rem;color:var(--warm-grey);margin-top:.1rem}
+.extras-row{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem;margin-top:1.75rem}
+.extra-card{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-sm);padding:1.4rem;display:flex;gap:.9rem;align-items:flex-start}
+.ex-icon{font-size:1.3rem;flex-shrink:0;margin-top:.1rem}
+.ex-title{font-size:.73rem;font-weight:700;color:var(--bark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.28rem}
+.ex-text{font-size:.78rem;color:var(--warm-grey);line-height:1.62;font-weight:300}
+.ex-text a{color:var(--rust);text-decoration:none;border-bottom:1px solid rgba(181,71,27,.25);transition:border-color .2s}
+.ex-text a:hover{border-bottom-color:var(--rust)}
 
-.case-card {
-  background: var(--cream); border: 1px solid var(--line);
-  border-radius: 1.5rem; overflow: hidden; transition: all 0.3s;
-  box-shadow: 0 1px 0 var(--line); display: flex; flex-direction: column;
-}
-.case-card:hover { transform: translateY(-5px); box-shadow: 0 1px 0 var(--line), 0 18px 44px rgba(59,46,34,.1); }
+/* ══ CONTACT ══ */
+#contact{background:var(--bark);padding:6rem 4rem;position:relative;overflow:hidden}
+#contact::before{content:"LET'S";position:absolute;right:-1rem;bottom:-1.5rem;font-family:'Cormorant Garamond',serif;font-size:18vw;font-weight:700;color:var(--clay);opacity:.045;pointer-events:none;line-height:1}
+#contact .s-label{color:rgba(201,168,130,.6)}
+#contact .s-label::before{background:rgba(201,168,130,.6)}
+#contact h2{color:var(--sand);margin-bottom:.7rem}
+.contact-sub{font-size:.95rem;color:rgba(240,230,211,.48);font-weight:300;max-width:50ch;line-height:1.72;margin-bottom:3rem}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.contact-links{display:flex;flex-direction:column;gap:.8rem}
+.c-link{display:flex;align-items:center;gap:1rem;padding:1.05rem 1.4rem;border:1px solid rgba(201,168,130,.16);border-radius:var(--r-sm);text-decoration:none;color:var(--sand);font-size:.86rem;font-weight:400;transition:all .25s;background:rgba(255,255,255,.03)}
+.c-link:hover{background:var(--rust);border-color:var(--rust);transform:translateX(5px)}
+.c-link-icon{font-size:1.05rem}
+.c-link-lbl{font-size:.59rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;opacity:.42;display:block;margin-bottom:.12rem}
+.contact-cv-btn{display:inline-flex;align-items:center;gap:.55rem;margin-top:1.5rem;padding:.75rem 1.5rem;background:var(--clay);color:var(--bark);font-family:'Epilogue',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.05em;text-decoration:none;border-radius:2rem;transition:all .25s}
+.contact-cv-btn:hover{background:var(--sand);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.contact-cv-btn svg{width:14px;height:14px;fill:currentColor}
+.contact-note{background:rgba(201,168,130,.07);border:1px solid rgba(201,168,130,.13);border-radius:var(--r-md);padding:2rem}
+.cn-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--clay);margin-bottom:.9rem}
+.cn-text{font-size:.82rem;color:rgba(240,230,211,.48);line-height:1.76;font-weight:300}
+.cn-text strong{color:var(--clay);font-weight:500}
 
-/* The card top — set --cover to show a cover image */
-.cc-top {
-  position: relative; overflow: hidden;
-  min-height: 130px;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 1.4rem 1.6rem 1.2rem;
-
-  /* Cover image (set via inline style --cover on the element) */
-  background-image: var(--cover, none);
-  background-size: cover;
-  background-position: center;
-}
-
-/* Dark overlay — always shown so text is readable over any image */
-.cc-top::after {
-  content: '';
-  position: absolute; inset: 0; z-index: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.15) 0%,
-    rgba(0,0,0,0.72) 100%
-  );
-}
-
-/* Fallback solid colour when no cover image is set */
-.cc-top.bark-bg  { background-color: var(--bark); }
-.cc-top.moss-bg  { background-color: var(--moss); }
-.cc-top.clay-bg  { background-color: #7a5c3a; }
-.cc-top.rust-bg  { background-color: var(--rust); }
-.cc-top.wine-bg  { background-color: #5c2a1e; }
-.cc-top.slate-bg { background-color: #3a4a5c; }
-.cc-top.forest-bg{ background-color: #2e4a35; }
-.cc-top.umber-bg { background-color: #5c4a2a; }
-.cc-top.indigo-bg{ background-color: #2e3a5c; }
-
-/* Logo sits top-left, above the overlay */
-.cc-logo {
-  position: absolute; top: 1rem; left: 1.4rem; z-index: 2;
-  height: 28px; width: auto; max-width: 80px;
-  object-fit: contain;
-  border-radius: 5px;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(6px);
-  padding: 3px 6px;
-}
-
-/* Card number watermark */
-.cc-num {
-  position: absolute; right: 1.1rem; bottom: 0.8rem; z-index: 1;
-  font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 700;
-  color: rgba(255,255,255,0.1); line-height: 1; pointer-events: none;
-}
-
-/* Tag row and title sit above the overlay */
-.cc-tag-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.45rem; position: relative; z-index: 2; }
-.cc-badge {
-  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 0.22rem 0.65rem; border-radius: 2rem; color: var(--sand);
-}
-.cc-badge.rust  { background: var(--rust); }
-.cc-badge.moss  { background: var(--moss); }
-.cc-badge.clay  { background: rgba(201,168,130,.45); }
-.cc-badge.bark  { background: rgba(59,46,34,.55); }
-.cc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.08rem; font-weight: 600; color: var(--sand); line-height: 1.3; position: relative; z-index: 2; }
-
-/* Card body */
-.cc-body { padding: 1.4rem 1.6rem; flex: 1; display: flex; flex-direction: column; }
-.cc-desc { font-size: 0.81rem; line-height: 1.7; color: var(--warm-grey); font-weight: 300; margin-bottom: 1rem; flex: 1; }
-.cc-chips { display: flex; flex-wrap: wrap; gap: 0.38rem; margin-bottom: 1rem; }
-.mc   { font-size: 0.67rem; font-weight: 600; padding: 0.25rem 0.7rem; border-radius: 2rem; background: rgba(181,71,27,.1); border: 1px solid rgba(181,71,27,.22); color: var(--rust); }
-.mc.g { background: rgba(74,92,63,.1); border-color: rgba(74,92,63,.22); color: var(--moss); }
-.mc.n { background: rgba(59,46,34,.07); border-color: var(--line); color: var(--bark); }
-.cc-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.73rem; font-weight: 600; color: var(--rust); text-decoration: none; transition: gap 0.2s; }
-.cc-link:hover { gap: 0.7rem; }
-.cc-link.disabled { color: var(--warm-grey); cursor: default; pointer-events: none; font-style: italic; }
-
-/* ── SKILLS ── */
-#skills { background: var(--parchment); }
-.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.1rem; margin-bottom: 2.5rem; }
-.sb { background: var(--cream); border: 1px solid var(--line); border-radius: 1.25rem; padding: 1.6rem; transition: all 0.25s; }
-.sb:hover { border-color: var(--clay); box-shadow: 0 8px 26px rgba(59,46,34,.08); }
-.sb-icon { font-size: 1.4rem; margin-bottom: 0.75rem; }
-.sb-title { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 700; color: var(--bark); margin-bottom: 0.75rem; }
-.sb-tags { display: flex; flex-wrap: wrap; gap: 0.38rem; }
-.s-tag { font-size: 0.66rem; font-weight: 500; padding: 0.22rem 0.65rem; border-radius: 2rem; background: var(--parchment); border: 1px solid var(--line); color: var(--bark); }
-.tools-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--warm-grey); margin-bottom: 1rem; }
-.tools-row { display: flex; flex-wrap: wrap; gap: 0.65rem; }
-.tool-pill { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--cream); border: 1px solid var(--line); padding: 0.45rem 1rem; border-radius: 2rem; font-size: 0.76rem; font-weight: 500; color: var(--bark); transition: all 0.2s; }
-.tool-pill:hover { background: var(--bark); color: var(--sand); border-color: var(--bark); }
-.t-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--clay); flex-shrink: 0; }
-
-/* ── EXPERIENCE ── */
-#experience { background: var(--cream); border-top: 1px solid var(--line); }
-.exp-wrap { max-width: 1200px; }
-.exp-entry { display: grid; grid-template-columns: 115px 1fr; gap: 2rem; padding-bottom: 3.25rem; position: relative; }
-.exp-entry:not(:last-child)::after {
-  content: ''; position: absolute; left: 115px; top: 0.45rem; bottom: 0;
-  width: 1px; background: linear-gradient(to bottom, var(--clay) 40%, transparent); margin-left: -0.5px;
-}
-.exp-entry::before {
-  content: ''; position: absolute; left: 115px; top: 0.38rem;
-  width: 8px; height: 8px; border-radius: 50%; background: var(--rust);
-  transform: translateX(-3.5px); z-index: 1;
-  box-shadow: 0 0 0 3px var(--cream), 0 0 0 5px rgba(181,71,27,.18);
-}
-.exp-time { text-align: right; padding-right: 1.5rem; padding-top: 0.2rem; }
-.exp-date { font-size: 0.7rem; font-weight: 500; color: var(--warm-grey); line-height: 1.5; display: block; }
-.exp-co { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-weight: 700; color: var(--rust); display: block; margin-top: 0.2rem; }
-.exp-body { padding-left: 1.5rem; }
-.exp-role { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--bark); margin-bottom: 0.6rem; line-height: 1.3; }
-.exp-award { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.66rem; font-weight: 600; color: var(--moss); background: rgba(74,92,63,.1); border: 1px solid rgba(74,92,63,.2); padding: 0.22rem 0.7rem; border-radius: 2rem; margin-bottom: 0.75rem; }
-.exp-ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-.exp-ul li { font-size: 0.845rem; line-height: 1.65; color: var(--warm-grey); font-weight: 300; padding-left: 1.2rem; position: relative; }
-.exp-ul li::before { content: '—'; position: absolute; left: 0; color: var(--clay); }
-.exp-ul li strong { color: var(--bark); font-weight: 600; }
-
-/* ── EDUCATION ── */
-#education { background: var(--sand); }
-.edu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.1rem; }
-.edu-card { background: var(--cream); border: 1px solid var(--line); border-radius: 1.25rem; padding: 1.6rem; position: relative; overflow: hidden; transition: all 0.25s; }
-.edu-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--clay); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
-.edu-card:hover::after { transform: scaleX(1); }
-.edu-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(59,46,34,.09); }
-.edu-yr { font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-grey); font-weight: 600; margin-bottom: 0.7rem; }
-.edu-deg { font-family: 'Cormorant Garamond', serif; font-size: 0.97rem; font-weight: 700; color: var(--bark); line-height: 1.35; margin-bottom: 0.35rem; }
-.edu-school { font-size: 0.76rem; color: var(--rust); font-weight: 500; }
-.edu-note { font-size: 0.7rem; color: var(--warm-grey); margin-top: 0.5rem; font-style: italic; }
-
-/* Certificates row — sits below edu grid */
-.cert-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 1.75rem; }
-.cert-card { background: var(--cream); border: 1px solid var(--line); border-radius: 1rem; padding: 1.2rem 1.4rem; display: flex; gap: 0.8rem; align-items: flex-start; transition: all 0.25s; }
-.cert-card:hover { border-color: var(--clay); transform: translateY(-2px); }
-.cert-icon { font-size: 1.2rem; flex-shrink: 0; }
-.cert-name { font-size: 0.78rem; font-weight: 600; color: var(--bark); margin-bottom: 0.18rem; line-height: 1.3; }
-.cert-issuer { font-size: 0.68rem; color: var(--rust); font-weight: 500; }
-.cert-year { font-size: 0.65rem; color: var(--warm-grey); margin-top: 0.1rem; }
-
-.extras-row { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.1rem; margin-top: 1.75rem; }
-.extra-card { background: var(--cream); border: 1px solid var(--line); border-radius: 1rem; padding: 1.4rem; display: flex; gap: 0.9rem; align-items: flex-start; }
-.ex-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
-.ex-title { font-size: 0.74rem; font-weight: 700; color: var(--bark); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.28rem; }
-.ex-text { font-size: 0.78rem; color: var(--warm-grey); line-height: 1.6; font-weight: 300; }
-
-/* ── CONTACT ── */
-#contact { background: var(--bark); padding: 5.5rem 4rem; position: relative; overflow: hidden; }
-#contact::before {
-  content: 'HIRE'; position: absolute; right: -1rem; bottom: -1.5rem;
-  font-family: 'Cormorant Garamond', serif; font-size: 18vw; font-weight: 700;
-  color: var(--clay); opacity: .055; pointer-events: none; line-height: 1;
-}
-#contact .s-label { color: rgba(201,168,130,.65); }
-#contact .s-label::before { background: rgba(201,168,130,.65); }
-#contact h2 { color: var(--sand); margin-bottom: 0.7rem; }
-.contact-sub { font-size: 0.95rem; color: rgba(240,230,211,.5); font-weight: 300; max-width: 50ch; line-height: 1.7; margin-bottom: 2.75rem; }
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-.contact-links { display: flex; flex-direction: column; gap: 0.85rem; }
-.c-link { display: flex; align-items: center; gap: 0.9rem; padding: 1rem 1.4rem; border: 1px solid rgba(201,168,130,.18); border-radius: 1rem; text-decoration: none; color: var(--sand); font-size: 0.86rem; font-weight: 400; transition: all 0.25s; background: rgba(255,255,255,.03); }
-.c-link:hover { background: var(--rust); border-color: var(--rust); transform: translateX(4px); }
-.c-link-icon { font-size: 1.05rem; }
-.c-link-lbl { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: .45; display: block; margin-bottom: 0.12rem; }
-.contact-note { background: rgba(201,168,130,.08); border: 1px solid rgba(201,168,130,.14); border-radius: 1.25rem; padding: 1.9rem; }
-.cn-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: var(--clay); margin-bottom: 0.85rem; }
-.cn-text { font-size: 0.82rem; color: rgba(240,230,211,.5); line-height: 1.75; font-weight: 300; }
-.cn-text strong { color: var(--clay); font-weight: 500; }
-
-footer { background: #231508; padding: 1.35rem 4rem; display: flex; align-items: center; justify-content: space-between; }
-footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
-.footer-mark { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-weight: 700; font-style: italic; color: rgba(201,168,130,.3); }
+/* ══ FOOTER ══ */
+footer{background:#1e1208;padding:1.35rem 4rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.05)}
+footer p{font-size:.69rem;color:rgba(201,168,130,.28)}
+.footer-mark{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:700;font-style:italic;color:rgba(201,168,130,.28)}
 
 /* animations */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
-.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
 
 /* responsive */
-@media(max-width:1100px){ .cert-row{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:1100px){.cert-row{grid-template-columns:repeat(2,1fr)}.awards-strip{padding:1.5rem;gap:2rem}}
 @media(max-width:960px){
-  nav{ padding:1rem 1.5rem; }
-  .nav-links li:not(:last-child){ display:none; }
-  .hero{ grid-template-columns:1fr; padding:6rem 1.5rem 3rem; }
-  .hero-right, .hero::before{ display:none; }
-  section{ padding:4rem 1.5rem; }
-  .banner{ padding:1.4rem 1.5rem; }
-  .cf-body{ grid-template-columns:1fr; }
-  .cf-narrative{ border-right:none; border-bottom:1px solid var(--line); }
-  .cards-grid{ grid-template-columns:1fr 1fr; }
-  .skills-grid{ grid-template-columns:1fr 1fr; }
-  .edu-grid{ grid-template-columns:1fr; }
-  .cert-row{ grid-template-columns:repeat(2,1fr); }
-  .extras-row{ grid-template-columns:1fr; }
-  .contact-grid{ grid-template-columns:1fr; gap:2rem; }
-  footer{ flex-direction:column; gap:.4rem; text-align:center; }
-  .exp-entry{ grid-template-columns:85px 1fr; }
+  nav{padding:.9rem 1.5rem}.nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:6rem 1.5rem 3.5rem}.hero-right,.hero::before{display:none}
+  section{padding:4rem 1.5rem}.banner{padding:1.5rem}
+  .cf-body{grid-template-columns:1fr}.cf-narrative{border-right:none;border-bottom:1px solid var(--line)}
+  .cards-grid{grid-template-columns:1fr 1fr}.skills-grid{grid-template-columns:1fr 1fr}
+  .edu-grid{grid-template-columns:1fr}.cert-row{grid-template-columns:repeat(2,1fr)}
+  .extras-row{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr;gap:2rem}
+  footer{flex-direction:column;gap:.4rem;text-align:center}
+  .exp-entry{grid-template-columns:80px 1fr}
+  .tab-bar{border-radius:1rem;width:100%;justify-content:center}
+  .cv-fab{bottom:1.25rem;right:1.25rem;font-size:.72rem;padding:.65rem 1.1rem}
+  .awards-strip{flex-wrap:wrap}
+  .lc-row{grid-template-columns:1fr}
+  .modal{margin:.5rem}
 }
 @media(max-width:600px){
-  .skills-grid, .cards-grid{ grid-template-columns:1fr; }
-  .cert-row{ grid-template-columns:1fr; }
+  .skills-grid,.cards-grid{grid-template-columns:1fr}.cert-row{grid-template-columns:1fr}
+  .tab-bar{flex-direction:column;border-radius:var(--r-md)}.gtab{text-align:center}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-mark">Prakhar Gupta</a>
+<!-- ══ FLOATING CV BUTTON ══ -->
+<a href="https://drive.google.com/file/d/18vb_ePJV6JVR7Ai3hrb5f-_v3pVChTHT/view?usp=drive_link"
+   target="_blank" class="cv-fab" id="fab-cv">
+  <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+  Download CV
+</a>
+
+<!-- ════════════════════════════════════════════
+     MODAL 1 — WORK WITH ME (contact info)
+     ════════════════════════════════════════════ -->
+<div class="modal-bg" id="modal-wwm" onclick="closeModal('wwm',event)">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-top">
+      <button class="modal-close" onclick="closeModalDirect('wwm')">✕</button>
+      <p class="modal-eyebrow">Let's Build Something</p>
+      <h2 class="modal-title">Work With Me</h2>
+      <p class="modal-sub">Open to Growth PM, Strategy & Ops, and Product Growth roles. Based in Gurugram — open to relocation or remote.</p>
+    </div>
+    <div class="modal-body">
+      <div class="modal-links">
+        <a href="mailto:prakhar1997g@gmail.com" class="modal-link" data-track="email_click">
+          <div class="ml-icon rust-bg">✉️</div>
+          <div><span class="ml-label">Email</span><span class="ml-val">prakhar1997g@gmail.com</span></div>
+        </a>
+        <a href="tel:+919695609879" class="modal-link" data-track="phone_click">
+          <div class="ml-icon moss-bg">📞</div>
+          <div><span class="ml-label">Phone</span><span class="ml-val">+91 96956 09879</span></div>
+        </a>
+        <a href="https://linkedin.com/in/gupta-prakhar" target="_blank" class="modal-link" data-track="linkedin_click">
+          <div class="ml-icon clay-bg">💼</div>
+          <div><span class="ml-label">LinkedIn</span><span class="ml-val">linkedin.com/in/gupta-prakhar</span></div>
+        </a>
+        <a href="https://drive.google.com/file/d/18vb_ePJV6JVR7Ai3hrb5f-_v3pVChTHT/view?usp=drive_link"
+           target="_blank" class="modal-link" data-track="cv_download">
+          <div class="ml-icon rust-bg">📄</div>
+          <div><span class="ml-label">Resume / CV</span><span class="ml-val">Download full CV →</span></div>
+        </a>
+      </div>
+
+      <!-- Lead capture trigger inside WWM modal -->
+      <div style="text-align:center;padding-top:.5rem">
+        <button class="lc-trigger" onclick="closeModalDirect('wwm');openModal('lc')">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          Or — drop your contact &amp; I'll reach out →
+        </button>
+      </div>
+
+      <div class="modal-note" style="margin-top:1.25rem">
+        <strong>What I'm looking for —</strong> roles where the problem is genuinely hard, the team is sharp, and there's room to build things that last. Growth PM · Strategy & Ops · Product Growth.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     MODAL 2 — LEAD CAPTURE FORM
+     ════════════════════════════════════════════ -->
+<div class="modal-bg" id="modal-lc" onclick="closeModal('lc',event)">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-top">
+      <button class="modal-close" onclick="closeModalDirect('lc')">✕</button>
+      <p class="modal-eyebrow">Leave Your Details</p>
+      <h2 class="modal-title">I'll Reach Out</h2>
+      <p class="modal-sub">Drop your contact info and a short note — I'll get back to you within 24 hours.</p>
+    </div>
+    <div class="modal-body">
+
+      <!-- Success state (shown after submit) -->
+      <div class="lc-success" id="lc-success">
+        <div class="lc-success-icon">✅</div>
+        <p class="lc-success-title">Got it — I'll be in touch!</p>
+        <p class="lc-success-text">Thanks for reaching out. I'll get back to you within 24 hours.<br>In the meantime, feel free to connect on LinkedIn.</p>
+      </div>
+
+      <!-- ============================================================
+           FORMSPREE FORM
+           SWAP ACTION URL: replace https://formspree.io/f/YOUR_FORM_ID
+           with your real Formspree endpoint after signing up at formspree.io
+           Steps:
+             1. Go to formspree.io → New Form → give it a name
+             2. Copy the form endpoint URL (looks like https://formspree.io/f/xabcdefg)
+             3. Paste it in the action="" attribute below
+             4. Formspree will email you every submission
+           ============================================================ -->
+      <form class="lc-form" id="lc-form"
+            action="https://formspree.io/f/xpqooekd"
+            method="POST">
+
+        <div class="lc-row">
+          <div class="lc-field">
+            <label for="lc-name">Your Name *</label>
+            <input type="text" id="lc-name" name="name" placeholder="Rohan Sharma" required>
+          </div>
+          <div class="lc-field">
+            <label for="lc-company">Company / Role</label>
+            <input type="text" id="lc-company" name="company" placeholder="Acme Corp / Hiring Manager">
+          </div>
+        </div>
+
+        <div class="lc-row">
+          <div class="lc-field">
+            <label for="lc-email">Email</label>
+            <input type="email" id="lc-email" name="email" placeholder="rohan@company.com">
+          </div>
+          <div class="lc-field">
+            <label for="lc-phone">Phone / WhatsApp</label>
+            <input type="tel" id="lc-phone" name="phone" placeholder="+91 98765 43210">
+          </div>
+        </div>
+
+        <!-- Hidden field: at least one of email or phone required (validated in JS) -->
+
+        <div class="lc-field">
+          <label for="lc-context">What's this about?</label>
+          <select id="lc-context" name="context">
+            <option value="">Select a reason</option>
+            <option value="job-opportunity">Job Opportunity</option>
+            <option value="freelance-consulting">Freelance / Consulting</option>
+            <option value="collaboration">Collaboration / Project</option>
+            <option value="just-connecting">Just Connecting</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="lc-field">
+          <label for="lc-note">Quick note <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <textarea id="lc-note" name="message" placeholder="Tell me a little about what you have in mind..."></textarea>
+        </div>
+
+        <!-- Hidden fields for tracking context -->
+        <input type="hidden" name="_subject" value="New lead from portfolio">
+        <input type="hidden" name="_replyto" id="lc-replyto">
+        <!-- Honeypot spam filter (leave blank) -->
+        <input type="text" name="_gotcha" style="display:none">
+
+        <button type="submit" class="lc-submit" id="lc-submit-btn">
+          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          Send — I'll get back within 24hrs
+        </button>
+
+        <p class="lc-disclaimer">Your details are only used to contact you about this enquiry. No spam, ever.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav id="main-nav">
+  <a href="#" class="nav-mark" data-track="nav_logo">Prakhar Gupta</a>
   <ul class="nav-links">
-    <li><a href="#cases">Case Studies</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#education">Background</a></li>
-    <li><a href="#contact" class="nav-hire">Hire Me</a></li>
+    <li><a href="#cases" data-track="nav_cases">Case Studies</a></li>
+    <li><a href="#skills" data-track="nav_skills">Skills</a></li>
+    <li><a href="#experience" data-track="nav_experience">Experience</a></li>
+    <li><a href="#education" data-track="nav_education">Background</a></li>
   </ul>
+  <div class="nav-right">
+    <a href="https://drive.google.com/file/d/18vb_ePJV6JVR7Ai3hrb5f-_v3pVChTHT/view?usp=drive_link"
+       target="_blank" class="nav-cv" data-track="cv_download" id="nav-cv">
+      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>CV
+    </a>
+    <button class="nav-wwm" onclick="openModal('wwm')" data-track="wwm_open_nav">Work With Me</button>
+  </div>
 </nav>
 
-<!-- HERO -->
+<!-- ══ HERO ══ -->
 <section class="hero">
-  <div class="hero-left">
+  <div class="hero-left reveal">
     <div class="avail-badge"><span class="avail-dot"></span>Open to new roles</div>
     <h1>Growth, Strategy<br>&amp; <span class="accent">Ops that scale.</span></h1>
     <p class="hero-desc">I'm Prakhar — a Growth & Strategy PM with 5 years of turning large-scale, messy problems into measurable outcomes. From 0-to-1 channel builds to chain-wide rollouts across 2,000+ dark stores.</p>
     <div class="hero-chips">
-      <span class="chip green">Growth PM</span>
-      <span class="chip green">Strategy & Ops</span>
-      <span class="chip">Quick Commerce</span>
-      <span class="chip">Mobility</span>
-      <span class="chip">D2C</span>
-      <span class="chip">Lifecycle CRM</span>
-      <span class="chip">Intl. Expansion</span>
+      <span class="chip green">Growth PM</span><span class="chip green">Strategy & Ops</span>
+      <span class="chip">Quick Commerce</span><span class="chip">Mobility</span>
+      <span class="chip">D2C</span><span class="chip">Lifecycle CRM</span><span class="chip">Intl. Expansion</span>
     </div>
     <div class="hero-actions">
-      <a href="#cases" class="btn btn-bark">View Case Studies →</a>
-      <a href="#contact" class="btn btn-out">Let's Talk</a>
+      <a href="#cases" class="btn btn-bark" data-track="hero_case_studies">View Case Studies →</a>
+      <button class="btn btn-out" onclick="openModal('wwm')" data-track="wwm_open_hero">Work With Me</button>
+      <a href="https://drive.google.com/file/d/18vb_ePJV6JVR7Ai3hrb5f-_v3pVChTHT/view?usp=drive_link"
+         target="_blank" class="btn btn-cv" data-track="cv_download" id="hero-cv">
+        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>Download CV
+      </a>
     </div>
   </div>
-  <div class="hero-right">
+  <div class="hero-right reveal">
     <div class="stat-card">
       <p class="sc-label">Impact at a glance</p>
       <div class="stat-rows">
@@ -483,46 +562,75 @@ footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
   </div>
 </section>
 
-<!-- BANNER -->
-<div class="banner">
-  <p class="banner-quote">"Looking for roles where problems are big, stakes are real, and there's room to build."</p>
-  <div class="role-pills">
-    <span class="role-pill">Growth PM</span>
-    <span class="role-pill">Strategy & Ops</span>
-    <span class="role-pill">Product Growth</span>
-    <span class="role-pill">Growth Manager</span>
+<!-- ══ TICKER ══ -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <div class="ticker-item"><strong>Blinkit</strong><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><strong>Rapido</strong><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><strong>CARS24</strong><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><strong>Sugar Cosmetics</strong><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><strong>Dessic Patisserie</strong><span class="ticker-dot"></span></div>
+    <div class="ticker-item">Quick Commerce<span class="ticker-dot"></span></div>
+    <div class="ticker-item">Lifecycle CRM<span class="ticker-dot"></span></div>
+    <div class="ticker-item">0-to-1 Builds<span class="ticker-dot"></span></div>
+    <div class="ticker-item">GTM Strategy<span class="ticker-dot"></span></div>
+    <div class="ticker-item">Intl. Expansion<span class="ticker-dot"></span></div>
+    <div class="ticker-item"><strong>Blinkit</strong><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><strong>Rapido</strong><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><strong>CARS24</strong><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><strong>Sugar Cosmetics</strong><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><strong>Dessic Patisserie</strong><span class="ticker-dot"></span></div>
+    <div class="ticker-item">Quick Commerce<span class="ticker-dot"></span></div>
+    <div class="ticker-item">Lifecycle CRM<span class="ticker-dot"></span></div>
+    <div class="ticker-item">0-to-1 Builds<span class="ticker-dot"></span></div>
+    <div class="ticker-item">GTM Strategy<span class="ticker-dot"></span></div>
+    <div class="ticker-item">Intl. Expansion<span class="ticker-dot"></span></div>
   </div>
 </div>
 
+<!-- ══ AWARDS STRIP ══ -->
+<div class="awards-strip">
+  <span class="awards-label">Recognition</span>
+  <div class="awards-divider"></div>
+  <div class="award-badge"><div class="award-icon">🏆</div><div><div class="award-name">"Customer First"</div><div class="award-co">Rapido · Feb 2024</div></div></div>
+  <div class="awards-divider"></div>
+  <div class="award-badge"><div class="award-icon">🏆</div><div><div class="award-name">"Game Changer"</div><div class="award-co">CARS24 · Nov 2022</div></div></div>
+  <div class="awards-divider"></div>
+  <div class="award-badge"><div class="award-icon">🏆</div><div><div class="award-name">"One Man Team"</div><div class="award-co">CARS24 · Aug 2022</div></div></div>
+  <div class="awards-divider"></div>
+  <div class="award-badge"><div class="award-icon">🥇</div><div><div class="award-name">Top 10 in Revenue</div><div class="award-co">Masters' Union DropShipping Challenge</div></div></div>
+  <div class="awards-divider"></div>
+  <div class="award-badge"><div class="award-icon">📝</div><div><div class="award-name">2× Published Researcher</div><div class="award-co">PUSA Journal · Mar 2020</div></div></div>
+  <div class="awards-divider"></div>
+  <div class="award-badge"><div class="award-icon">⭐</div><div><div class="award-name">Top Rated on LBB</div><div class="award-co">Dessic Patisserie · 2021</div></div></div>
+</div>
 
-<!-- ══════════════════════════════════════════════════
-     CASE STUDIES SECTION
-     ══════════════════════════════════════════════════ -->
-<section id="cases" style="background:var(--sand);">
+<!-- ══ BANNER ══ -->
+<div class="banner">
+  <p class="banner-quote">"Looking for roles where problems are big, stakes are real, and there's room to build."</p>
+  <div class="role-pills">
+    <span class="role-pill">Growth PM</span><span class="role-pill">Strategy & Ops</span>
+    <span class="role-pill">Product Growth</span><span class="role-pill">Growth Manager</span>
+  </div>
+</div>
+
+<!-- ══ CASE STUDIES ══ -->
+<section id="cases">
   <p class="s-label">All Work</p>
   <h2>Case Studies</h2>
   <p class="s-intro">Every case study grouped by type — from live work experience to academic business plans and industry research.</p>
-
-  <div class="group-tabs">
-    <button class="gtab active" onclick="showGroup('work',this)">💼 Work Experience</button>
-    <button class="gtab" onclick="showGroup('reallife',this)">🔍 Real Life Problems</button>
-    <button class="gtab" onclick="showGroup('biz',this)">📊 Business Plans</button>
-    <button class="gtab" onclick="showGroup('industry',this)">🏭 Industry Analysis</button>
+  <div class="tab-bar">
+    <button class="gtab active" onclick="showGroup('work',this)" data-track="tab_work">💼 Work Experience</button>
+    <button class="gtab" onclick="showGroup('reallife',this)" data-track="tab_reallife">🔍 Real Life Problems</button>
+    <button class="gtab" onclick="showGroup('biz',this)" data-track="tab_biz">📊 Business Plans</button>
+    <button class="gtab" onclick="showGroup('industry',this)" data-track="tab_industry">🏭 Industry Analysis</button>
   </div>
 
-
-  <!-- ════════════════════════════════════════════
-       GROUP 1 — WORK EXPERIENCE
-       ════════════════════════════════════════════ -->
+  <!-- GROUP 1: WORK -->
   <div class="case-group visible" id="group-work">
-
-    <!-- Deep-dive: BLINKIT -->
     <div class="case-featured reveal">
       <div class="cf-header bark" data-num="01">
-        <div class="cf-tag-row">
-          <span class="cf-badge rust">Blinkit · Zomato</span>
-          <span class="cf-period">Mar 2025 – Present</span>
-        </div>
+        <div class="cf-tag-row"><span class="cf-badge rust">Blinkit · Zomato</span><span class="cf-period">Mar 2025 – Present</span></div>
         <h3 class="cf-title">Dark Store Digitization & Unit Economics Redesign Across 2,000+ Stores</h3>
       </div>
       <div class="cf-body">
@@ -548,13 +656,9 @@ footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
       </div>
     </div>
 
-    <!-- Deep-dive: CARS24 -->
     <div class="case-featured reveal">
       <div class="cf-header brown" data-num="02">
-        <div class="cf-tag-row">
-          <span class="cf-badge moss">CARS24</span>
-          <span class="cf-period">Nov 2021 – Oct 2023</span>
-        </div>
+        <div class="cf-tag-row"><span class="cf-badge moss">CARS24</span><span class="cf-period">Nov 2021 – Oct 2023</span></div>
         <h3 class="cf-title">CRM Infrastructure, NLP Chatbot & 3-Market International Expansion</h3>
       </div>
       <div class="cf-body">
@@ -583,558 +687,207 @@ footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
     </div>
 
     <div class="cards-grid" style="margin-top:1.5rem">
-
-      <!-- CARD: Rapido -->
       <div class="case-card reveal">
         <div class="cc-top moss-bg">
-          <!-- LOGO: replace with → <img class="cc-logo" src="https://logo.clearbit.com/rapido.bike" alt="Rapido"> -->
+          <img class="cc-logo" src="https://www.google.com/s2/favicons?sz=64&domain=rapido.bike" alt="Rapido" onerror="this.style.display='none'">
           <div class="cc-num">03</div>
-          <div class="cc-tag-row">
-            <span class="cc-badge clay">Rapido</span>
-            <span style="font-size:.66rem;color:rgba(240,230,211,.4);position:relative;z-index:2">Dec 2023 – Jun 2024</span>
-          </div>
+          <div class="cc-tag-row"><span class="cc-badge clay">Rapido</span><span style="font-size:.64rem;color:rgba(240,230,211,.38);position:relative;z-index:2">Dec 2023 – Jun 2024</span></div>
           <p class="cc-title">0-to-1 Growth Channels & Lifecycle Engine — 80M+ Users</p>
         </div>
         <div class="cc-body">
-          <p class="cc-desc">Built WhatsApp and Email from scratch across India's largest bike taxi platform. Designed geo- and behaviour-based lifecycle flows to re-engage churned cohorts. Directed national GTM for IPL'24 and Elections'24 with BCCI & ECI.</p>
-          <div class="cc-chips">
-            <span class="mc">↑ 15% Transacting Users</span>
-            <span class="mc">7,000 Re-engaged</span>
-            <span class="mc">↑ 4% Activation Conv.</span>
-            <span class="mc">150+ CRM Campaigns</span>
-          </div>
+          <p class="cc-desc">Built WhatsApp and Email from scratch across India's largest bike taxi platform. Designed geo- and behaviour-based lifecycle flows. Directed national GTM for IPL'24 and Elections'24 with BCCI & ECI.</p>
+          <div class="cc-chips"><span class="mc">↑ 15% Transacting Users</span><span class="mc">7,000 Re-engaged</span><span class="mc">↑ 4% Activation Conv.</span><span class="mc">150+ CRM Campaigns</span></div>
+          <span class="cc-link disabled">Work Experience — No external link</span>
         </div>
       </div>
-
-      <!-- CARD: Sugar Cosmetics -->
       <div class="case-card reveal">
         <div class="cc-top rust-bg">
-          <!-- LOGO: replace with → <img class="cc-logo" src="https://logo.clearbit.com/sugarcosmetics.com" alt="Sugar Cosmetics"> -->
+          <img class="cc-logo" src="https://www.google.com/s2/favicons?sz=64&domain=sugarcosmetics.com" alt="Sugar" onerror="this.style.display='none'">
           <div class="cc-num">04</div>
-          <div class="cc-tag-row">
-            <span class="cc-badge bark">Sugar Cosmetics</span>
-            <span style="font-size:.66rem;color:rgba(240,230,211,.4);position:relative;z-index:2">Oct – Dec 2023</span>
-          </div>
+          <div class="cc-tag-row"><span class="cc-badge bark">Sugar Cosmetics</span><span style="font-size:.64rem;color:rgba(240,230,211,.38);position:relative;z-index:2">Oct – Dec 2023</span></div>
           <p class="cc-title">Retention Pod Build & Discount Strategy Redesign</p>
         </div>
         <div class="cc-body">
           <p class="cc-desc">Established a Retention pod from scratch in 2 months. Diagnosed discounting inefficiency across 3 brands, redesigned the repeat-user discount model, and improved AOV by 10% via UI-led cross-sell journeys.</p>
-          <div class="cc-chips">
-            <span class="mc">₹1.5L+/mo Savings</span>
-            <span class="mc">₹15L+ Revenue</span>
-            <span class="mc">↑ 10% AOV</span>
-            <span class="mc">↑ 3% Conversion</span>
-          </div>
+          <div class="cc-chips"><span class="mc">₹1.5L+/mo Savings</span><span class="mc">₹15L+ Revenue</span><span class="mc">↑ 10% AOV</span><span class="mc">↑ 3% Conversion</span></div>
+          <span class="cc-link disabled">Work Experience — No external link</span>
         </div>
       </div>
-
-      <!-- CARD: Dessic -->
       <div class="case-card reveal">
         <div class="cc-top clay-bg">
-          <!-- LOGO: add your brand logo here -->
           <div class="cc-num">05</div>
-          <div class="cc-tag-row">
-            <span class="cc-badge rust">Dessic Patisserie</span>
-            <span style="font-size:.66rem;color:rgba(240,230,211,.4);position:relative;z-index:2">Nov 2020 – Oct 2022</span>
-          </div>
+          <div class="cc-tag-row"><span class="cc-badge rust">Dessic Patisserie</span><span style="font-size:.64rem;color:rgba(240,230,211,.38);position:relative;z-index:2">Nov 2020 – Oct 2022</span></div>
           <p class="cc-title">0-to-1 D2C Vegan Brand — Founder</p>
         </div>
         <div class="cc-body">
-          <p class="cc-desc">Built a vegan dessert brand from concept to ₹37L+ annual turnover as sole founder — owning acquisition, retention, supply chain, and ops. Scaled to "Top Rated" on LBB in 3 months via data-driven marketing.</p>
-          <div class="cc-chips">
-            <span class="mc g">₹37L+ Revenue</span>
-            <span class="mc g">↓ 14% RTO</span>
-            <span class="mc g">1L+ Student Reach</span>
-            <span class="mc g">#1 on LBB</span>
-          </div>
+          <p class="cc-desc">Built a vegan dessert brand from concept to ₹37L+ annual turnover as sole founder — owning acquisition, retention, supply chain, and ops. Scaled to "Top Rated" on LBB in 3 months.</p>
+          <div class="cc-chips"><span class="mc g">₹37L+ Revenue</span><span class="mc g">↓ 14% RTO</span><span class="mc g">1L+ Student Reach</span><span class="mc g">#1 on LBB</span></div>
+          <span class="cc-link disabled">Entrepreneurship — No external link</span>
         </div>
       </div>
-
     </div>
-  </div><!-- /group-work -->
+  </div>
 
-
-  <!-- ════════════════════════════════════════════
-       GROUP 2 — REAL LIFE PROBLEMS
-       ════════════════════════════════════════════ -->
+  <!-- GROUP 2: REAL LIFE -->
   <div class="case-group" id="group-reallife">
     <div class="cards-grid">
-
-      <div class="case-card reveal">
-        <div class="cc-top slate-bg">
-          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/marico.com" alt="Marico"> -->
-          <!-- COVER: add style="--cover: url('YOUR_COVER_IMG')" to the div above -->
-          <div class="cc-num">01</div>
-          <div class="cc-tag-row"><span class="cc-badge clay">Marico</span></div>
-          <p class="cc-title">Marico Supply Chain Optimization</p>
-        </div>
-        <div class="cc-body">
-          <p class="cc-desc">Analyzed Marico's supply chain inefficiencies across India's distribution network. Built a structured recommendation framework to optimize last-mile logistics and reduce inventory carrying costs.</p>
-          <div class="cc-chips"><span class="mc n">Supply Chain</span><span class="mc n">Operations</span><span class="mc n">FMCG</span></div>
-          <a href="https://drive.google.com/file/d/1iRqMTVm6CbPKRUS1afnBrCRtq5GC7kni/view" class="cc-link">🔗 View Case Study →</a>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <div class="cc-top forest-bg">
-          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/excitel.com" alt="Excitel"> -->
-          <div class="cc-num">02</div>
-          <div class="cc-tag-row"><span class="cc-badge clay">Excitel</span></div>
-          <p class="cc-title">Excitel Customer Acquisition Analysis</p>
-        </div>
-        <div class="cc-body">
-          <p class="cc-desc">Diagnosed Excitel's customer acquisition funnel and identified friction points across channels. Proposed data-backed GTM strategies to improve conversion for broadband services in Tier 2 markets.</p>
-          <div class="cc-chips"><span class="mc n">GTM Strategy</span><span class="mc n">Acquisition</span><span class="mc n">Telecom</span></div>
-          <a href="https://drive.google.com/file/d/1lKG9dMPAnY06Mg0dMwQIBQNJqjhBqo9v/view" class="cc-link">🔗 View Case Study →</a>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <div class="cc-top wine-bg">
-          <!-- LOGO: add logo here -->
-          <div class="cc-num">03</div>
-          <div class="cc-tag-row"><span class="cc-badge clay">Masters' Union</span></div>
-          <p class="cc-title">LeLuxe Transformation Strategy</p>
-        </div>
-        <div class="cc-body">
-          <p class="cc-desc">Developed a comprehensive transformation strategy for LeLuxe covering digital expansion, market positioning, and brand repositioning to capture the growing premium fashion segment in India.</p>
-          <div class="cc-chips"><span class="mc n">Brand Strategy</span><span class="mc n">Digital Expansion</span><span class="mc n">Fashion</span></div>
-          <a href="https://drive.google.com/file/d/1C33SbUfs5rthf8IimTmSXZJ5mXeqmTlF/view" class="cc-link">🔗 View Case Study →</a>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <div class="cc-top umber-bg">
-          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/makemytrip.com" alt="MakeMyTrip"> -->
-          <div class="cc-num">04</div>
-          <div class="cc-tag-row"><span class="cc-badge clay">MakeMyTrip</span></div>
-          <p class="cc-title">Make My Trip — Analysis & Recommendation</p>
-        </div>
-        <div class="cc-body">
-          <p class="cc-desc">One-day challenge: diagnosed user drop-off across MakeMyTrip's booking funnel, identified conversion gaps, and delivered a structured set of product and growth recommendations within 24 hours.</p>
-          <div class="cc-chips"><span class="mc n">Product Analysis</span><span class="mc n">Growth</span><span class="mc n">Travel</span></div>
-          <a href="https://drive.google.com/file/d/1rfEPyD-3o0LfUHRs-GkwMRYCb2APBkEO/view" class="cc-link">🔗 View Case Study →</a>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <div class="cc-top moss-bg">
-          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/livspace.com" alt="Livspace"> -->
-          <div class="cc-num">05</div>
-          <div class="cc-tag-row"><span class="cc-badge clay">Livspace</span></div>
-          <p class="cc-title">Livspace Customer Acquisition in Delhi NCR</p>
-        </div>
-        <div class="cc-body">
-          <p class="cc-desc">Mapped Livspace's acquisition challenges in Delhi NCR. Proposed a geo-targeted growth strategy combining offline and digital channels to improve qualified lead generation in a high-competition urban market.</p>
-          <div class="cc-chips"><span class="mc n">Acquisition</span><span class="mc n">Geo Strategy</span><span class="mc n">Home Décor</span></div>
-          <a href="https://drive.google.com/file/d/1Dx3gNMASv_WCPMDjA44j2hxBwdXWzPru/view" class="cc-link">🔗 View Case Study →</a>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <div class="cc-top indigo-bg">
-          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/flipkart.com" alt="Flipkart"> -->
-          <div class="cc-num">06</div>
-          <div class="cc-tag-row"><span class="cc-badge clay">Flipkart Wired 8.0</span></div>
-          <p class="cc-title">Flipkart Minutes — Product Strategy</p>
-        </div>
-        <div class="cc-body">
-          <p class="cc-desc">Campus case challenge: developed a product strategy for Flipkart Minutes addressing assortment, dark store rollout, and user acquisition to compete in the 10-minute delivery space.</p>
-          <div class="cc-chips"><span class="mc n">Product Strategy</span><span class="mc n">Quick Commerce</span><span class="mc n">E-commerce</span></div>
-          <a href="https://drive.google.com/file/d/1tnJ5-MHzsdA_jXwzxG-z3kqRCC0pJsPL/view" class="cc-link">🔗 View Case Study →</a>
-        </div>
-      </div>
-
+      <div class="case-card reveal"><div class="cc-top slate-bg"><img class="cc-logo" src="https://www.google.com/s2/favicons?sz=64&domain=marico.com" alt="Marico" onerror="this.style.display='none'"><div class="cc-num">01</div><div class="cc-tag-row"><span class="cc-badge clay">Marico</span></div><p class="cc-title">Marico Supply Chain Optimization</p></div><div class="cc-body"><p class="cc-desc">Analyzed Marico's supply chain inefficiencies across India's distribution network. Built a structured recommendation framework to optimize last-mile logistics and reduce inventory carrying costs.</p><div class="cc-chips"><span class="mc n">Supply Chain</span><span class="mc n">Operations</span><span class="mc n">FMCG</span></div><a href="https://drive.google.com/file/d/1iRqMTVm6CbPKRUS1afnBrCRtq5GC7kni/view" target="_blank" class="cc-link" data-track="case_marico">🔗 View Case Study →</a></div></div>
+      <div class="case-card reveal"><div class="cc-top forest-bg"><img class="cc-logo" src="https://www.google.com/s2/favicons?sz=64&domain=excitel.com" alt="Excitel" onerror="this.style.display='none'"><div class="cc-num">02</div><div class="cc-tag-row"><span class="cc-badge clay">Excitel</span></div><p class="cc-title">Excitel Customer Acquisition Analysis</p></div><div class="cc-body"><p class="cc-desc">Diagnosed Excitel's customer acquisition funnel and identified friction points across channels. Proposed data-backed GTM strategies to improve conversion for broadband services in Tier 2 markets.</p><div class="cc-chips"><span class="mc n">GTM Strategy</span><span class="mc n">Acquisition</span><span class="mc n">Telecom</span></div><a href="https://drive.google.com/file/d/1lKG9dMPAnY06Mg0dMwQIBQNJqjhBqo9v/view" target="_blank" class="cc-link" data-track="case_excitel">🔗 View Case Study →</a></div></div>
+      <div class="case-card reveal"><div class="cc-top wine-bg"><div class="cc-num">03</div><div class="cc-tag-row"><span class="cc-badge clay">Masters' Union</span></div><p class="cc-title">LeLuxe Transformation Strategy</p></div><div class="cc-body"><p class="cc-desc">Developed a comprehensive transformation strategy for LeLuxe covering digital expansion, market positioning, and brand repositioning to capture the growing premium fashion segment in India.</p><div class="cc-chips"><span class="mc n">Brand Strategy</span><span class="mc n">Digital Expansion</span><span class="mc n">Fashion</span></div><a href="https://drive.google.com/file/d/1C33SbUfs5rthf8IimTmSXZJ5mXeqmTlF/view" target="_blank" class="cc-link" data-track="case_leluxe">🔗 View Case Study →</a></div></div>
+      <div class="case-card reveal"><div class="cc-top umber-bg"><img class="cc-logo" src="https://www.google.com/s2/favicons?sz=64&domain=makemytrip.com" alt="MMT" onerror="this.style.display='none'"><div class="cc-num">04</div><div class="cc-tag-row"><span class="cc-badge clay">MakeMyTrip</span></div><p class="cc-title">Make My Trip — Analysis & Recommendation</p></div><div class="cc-body"><p class="cc-desc">One-day challenge: diagnosed user drop-off across MakeMyTrip's booking funnel, identified conversion gaps, and delivered a structured set of product and growth recommendations within 24 hours.</p><div class="cc-chips"><span class="mc n">Product Analysis</span><span class="mc n">Growth</span><span class="mc n">Travel</span></div><a href="https://drive.google.com/file/d/1rfEPyD-3o0LfUHRs-GkwMRYCb2APBkEO/view" target="_blank" class="cc-link" data-track="case_mmt">🔗 View Case Study →</a></div></div>
+      <div class="case-card reveal"><div class="cc-top moss-bg"><img class="cc-logo" src="https://www.google.com/s2/favicons?sz=64&domain=livspace.com" alt="Livspace" onerror="this.style.display='none'"><div class="cc-num">05</div><div class="cc-tag-row"><span class="cc-badge clay">Livspace</span></div><p class="cc-title">Livspace Customer Acquisition in Delhi NCR</p></div><div class="cc-body"><p class="cc-desc">Mapped Livspace's acquisition challenges in Delhi NCR. Proposed a geo-targeted growth strategy combining offline and digital channels to improve qualified lead generation in a high-competition urban market.</p><div class="cc-chips"><span class="mc n">Acquisition</span><span class="mc n">Geo Strategy</span><span class="mc n">Home Décor</span></div><a href="https://drive.google.com/file/d/1Dx3gNMASv_WCPMDjA44j2hxBwdXWzPru/view" target="_blank" class="cc-link" data-track="case_livspace">🔗 View Case Study →</a></div></div>
+      <div class="case-card reveal"><div class="cc-top indigo-bg"><img class="cc-logo" src="https://www.google.com/s2/favicons?sz=64&domain=flipkart.com" alt="Flipkart" onerror="this.style.display='none'"><div class="cc-num">06</div><div class="cc-tag-row"><span class="cc-badge clay">Flipkart Wired 8.0</span></div><p class="cc-title">Flipkart Minutes — Product Strategy</p></div><div class="cc-body"><p class="cc-desc">Campus case challenge: developed a product strategy for Flipkart Minutes addressing assortment, dark store rollout, and user acquisition to compete in the 10-minute delivery space.</p><div class="cc-chips"><span class="mc n">Product Strategy</span><span class="mc n">Quick Commerce</span><span class="mc n">E-commerce</span></div><a href="https://drive.google.com/file/d/1tnJ5-MHzsdA_jXwzxG-z3kqRCC0pJsPL/view" target="_blank" class="cc-link" data-track="case_flipkart">🔗 View Case Study →</a></div></div>
     </div>
-  </div><!-- /group-reallife -->
+  </div>
 
-
-  <!-- ════════════════════════════════════════════
-       GROUP 3 — BUSINESS PLANS
-       ════════════════════════════════════════════ -->
+  <!-- GROUP 3: BUSINESS PLANS -->
   <div class="case-group" id="group-biz">
     <div class="cards-grid">
-
-      <div class="case-card reveal">
-        <div class="cc-top clay-bg">
-          <!-- LOGO: add logo here -->
-          <div class="cc-num">01</div>
-          <div class="cc-tag-row"><span class="cc-badge rust">Masters' Union</span></div>
-          <p class="cc-title">Feen — Skincare GTM Strategy for Women</p>
-        </div>
-        <div class="cc-body">
-          <p class="cc-desc">Created a GTM strategy for Feen, a new sunscreen brand focused on the Indian lifestyle. Conducted consumer research, built the brand positioning model, and developed a launch plan for urban Indian women.</p>
-          <div class="cc-chips"><span class="mc n">GTM Strategy</span><span class="mc n">Brand Launch</span><span class="mc n">Skincare / D2C</span></div>
-          <a href="https://drive.google.com/file/d/1rsPD1XIt1vvxLs2YuODVAVbeIbLoWOZq/view" class="cc-link">🔗 View Case Study →</a>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <div class="cc-top forest-bg">
-          <!-- LOGO: add logo here -->
-          <div class="cc-num">02</div>
-          <div class="cc-tag-row"><span class="cc-badge clay">IIM Udaipur Competition</span></div>
-          <p class="cc-title">Happy Pets — One Stop Pet Platform</p>
-        </div>
-        <div class="cc-body">
-          <p class="cc-desc">For a business plan competition at IIM Udaipur, identified a gap in the Indian pet industry and developed a full plan — market sizing, product architecture, and GTM model — in 12 hours with data-backed research.</p>
-          <div class="cc-chips"><span class="mc n">Business Plan</span><span class="mc n">Market Research</span><span class="mc n">Pet Industry</span></div>
-          <a href="https://drive.google.com/file/d/1roE2D3VXNSNsAihZIXnP2kQ3SkKi-l67/view" class="cc-link">🔗 View Case Study →</a>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <div class="cc-top slate-bg">
-          <!-- LOGO: add logo here -->
-          <div class="cc-num">03</div>
-          <div class="cc-tag-row"><span class="cc-badge clay">Masters' Union</span></div>
-          <p class="cc-title">Mavryk — Premium Skincare Brand for Men</p>
-        </div>
-        <div class="cc-body">
-          <p class="cc-desc">Talked to 150+ customers to validate a gap in Indian men's skincare. Developed a 3-year business plan — brand strategy, channel mix, pricing architecture, and consumer positioning for the premium segment.</p>
-          <div class="cc-chips"><span class="mc n">Consumer Research</span><span class="mc n">Business Plan</span><span class="mc n">Men's Grooming</span></div>
-          <a href="https://drive.google.com/file/d/1AAyhOiHwgJE8T0xhk2v1xahmSjUMr_NT/view" class="cc-link">🔗 View Case Study →</a>
-        </div>
-      </div>
-
+      <div class="case-card reveal"><div class="cc-top clay-bg"><div class="cc-num">01</div><div class="cc-tag-row"><span class="cc-badge rust">Masters' Union</span></div><p class="cc-title">Feen — Skincare GTM Strategy for Women</p></div><div class="cc-body"><p class="cc-desc">Created a GTM strategy for Feen, a new sunscreen brand focused on the Indian lifestyle. Conducted consumer research, built the brand positioning model, and developed a launch plan for urban Indian women.</p><div class="cc-chips"><span class="mc n">GTM Strategy</span><span class="mc n">Brand Launch</span><span class="mc n">Skincare / D2C</span></div><a href="https://drive.google.com/file/d/1rsPD1XIt1vvxLs2YuODVAVbeIbLoWOZq/view" target="_blank" class="cc-link" data-track="case_feen">🔗 View Case Study →</a></div></div>
+      <div class="case-card reveal"><div class="cc-top forest-bg"><div class="cc-num">02</div><div class="cc-tag-row"><span class="cc-badge clay">IIM Udaipur Competition</span></div><p class="cc-title">Happy Pets — One Stop Pet Platform</p></div><div class="cc-body"><p class="cc-desc">For a business plan competition at IIM Udaipur, identified a gap in the Indian pet industry and developed a full plan — market sizing, product architecture, and GTM model — in 12 hours with data-backed research.</p><div class="cc-chips"><span class="mc n">Business Plan</span><span class="mc n">Market Research</span><span class="mc n">Pet Industry</span></div><a href="https://drive.google.com/file/d/1roE2D3VXNSNsAihZIXnP2kQ3SkKi-l67/view" target="_blank" class="cc-link" data-track="case_happypets">🔗 View Case Study →</a></div></div>
+      <div class="case-card reveal"><div class="cc-top slate-bg"><div class="cc-num">03</div><div class="cc-tag-row"><span class="cc-badge clay">Masters' Union</span></div><p class="cc-title">Mavryk — Premium Skincare Brand for Men</p></div><div class="cc-body"><p class="cc-desc">Talked to 150+ customers to validate a gap in Indian men's skincare. Developed a 3-year business plan — brand strategy, channel mix, pricing architecture, and consumer positioning for the premium segment.</p><div class="cc-chips"><span class="mc n">Consumer Research</span><span class="mc n">Business Plan</span><span class="mc n">Men's Grooming</span></div><a href="https://drive.google.com/file/d/1AAyhOiHwgJE8T0xhk2v1xahmSjUMr_NT/view" target="_blank" class="cc-link" data-track="case_mavryk">🔗 View Case Study →</a></div></div>
     </div>
-  </div><!-- /group-biz -->
+  </div>
 
-
-  <!-- ════════════════════════════════════════════
-       GROUP 4 — INDUSTRY ANALYSIS
-       ════════════════════════════════════════════ -->
+  <!-- GROUP 4: INDUSTRY -->
   <div class="case-group" id="group-industry">
     <div class="cards-grid" style="grid-template-columns:repeat(2,1fr);max-width:840px">
-
-      <div class="case-card reveal">
-        <div class="cc-top indigo-bg">
-          <!-- LOGO: <img class="cc-logo" src="https://logo.clearbit.com/goindigo.in" alt="IndiGo"> -->
-          <div class="cc-num">01</div>
-          <div class="cc-tag-row"><span class="cc-badge clay">Indigo Airlines</span></div>
-          <p class="cc-title">Indian Aviation Industry — Focus: IndiGo Airlines</p>
-        </div>
-        <div class="cc-body">
-          <p class="cc-desc">Deep-dive management strategy analysis of the Indian aviation industry. Focused on IndiGo's competitive positioning, cost structure, market share dynamics, and strategic recommendations for sustainable growth post-COVID.</p>
-          <div class="cc-chips"><span class="mc n">Management Strategy</span><span class="mc n">Industry Analysis</span><span class="mc n">Aviation</span></div>
-          <a href="https://drive.google.com/file/d/1w1ByvaG5RGVVBLR_SsgON2higKKok5tk/view" class="cc-link">🔗 View Case Study →</a>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <div class="cc-top umber-bg">
-          <!-- LOGO: add logo here -->
-          <div class="cc-num">02</div>
-          <div class="cc-tag-row"><span class="cc-badge rust">Indian Coffee Industry</span></div>
-          <p class="cc-title">India's D2C Coffee Landscape</p>
-        </div>
-        <div class="cc-body">
-          <p class="cc-desc">Mapping India's rapidly growing D2C coffee market — brand positioning, consumer behaviour shifts, pricing strategies, and distribution plays across key players in one of India's hottest D2C categories.</p>
-          <div class="cc-chips"><span class="mc n">D2C Strategy</span><span class="mc n">Market Landscape</span><span class="mc n">Coffee / FMCG</span></div>
-          <a href="https://www.linkedin.com/posts/gupta-prakhar_spilling-the-beans-on-coffees-future-activity-7262343482319470592-2Loj" class="cc-link">🔗 View Case Study →</a>
-        </div>
-      </div>
-
+      <div class="case-card reveal"><div class="cc-top indigo-bg"><img class="cc-logo" src="https://www.google.com/s2/favicons?sz=64&domain=goindigo.in" alt="IndiGo" onerror="this.style.display='none'"><div class="cc-num">01</div><div class="cc-tag-row"><span class="cc-badge clay">Indigo Airlines</span></div><p class="cc-title">Indian Aviation Industry — Focus: IndiGo Airlines</p></div><div class="cc-body"><p class="cc-desc">Deep-dive management strategy analysis of the Indian aviation industry. Focused on IndiGo's competitive positioning, cost structure, market share dynamics, and strategic recommendations for sustainable growth post-COVID.</p><div class="cc-chips"><span class="mc n">Management Strategy</span><span class="mc n">Industry Analysis</span><span class="mc n">Aviation</span></div><a href="https://drive.google.com/file/d/1w1ByvaG5RGVVBLR_SsgON2higKKok5tk/view" target="_blank" class="cc-link" data-track="case_indigo">🔗 View Case Study →</a></div></div>
+      <div class="case-card reveal"><div class="cc-top umber-bg"><div class="cc-num">02</div><div class="cc-tag-row"><span class="cc-badge rust">Indian Coffee Industry</span></div><p class="cc-title">India's D2C Coffee Landscape</p></div><div class="cc-body"><p class="cc-desc">Mapping India's rapidly growing D2C coffee market — brand positioning, consumer behaviour shifts, pricing strategies, and distribution plays across key players in one of India's hottest D2C categories.</p><div class="cc-chips"><span class="mc n">D2C Strategy</span><span class="mc n">Market Landscape</span><span class="mc n">Coffee / FMCG</span></div><a href="https://www.linkedin.com/posts/gupta-prakhar_spilling-the-beans-on-coffees-future-activity-7262343482319470592-2Loj" target="_blank" class="cc-link" data-track="case_coffee">🔗 View Case Study →</a></div></div>
     </div>
-  </div><!-- /group-industry -->
+  </div>
+</section>
 
-</section><!-- /cases -->
-
-
-<!-- ══════════════ SKILLS ══════════════ -->
+<!-- ══ SKILLS ══ -->
 <section id="skills">
   <p class="s-label">Capabilities</p>
   <h2>Skills & Toolkit</h2>
   <p class="s-intro">A full stack of growth, strategy, and operational skills — built across five years, four industries, and two continents.</p>
   <div class="skills-grid">
-    <div class="sb reveal">
-      <div class="sb-icon">📈</div>
-      <div class="sb-title">Growth & Lifecycle</div>
-      <div class="sb-tags">
-        <span class="s-tag">Lifecycle CRM</span><span class="s-tag">User Segmentation</span>
-        <span class="s-tag">Behavioural Targeting</span><span class="s-tag">A/B Experimentation</span>
-        <span class="s-tag">Funnel Analysis</span><span class="s-tag">Cohort Analysis</span>
-        <span class="s-tag">CRO</span><span class="s-tag">Retention Strategy</span>
-        <span class="s-tag">Channel Expansion</span>
-      </div>
-    </div>
-    <div class="sb reveal">
-      <div class="sb-icon">🧭</div>
-      <div class="sb-title">Strategy & Ops</div>
-      <div class="sb-tags">
-        <span class="s-tag">Problem Structuring</span><span class="s-tag">Framework Design</span>
-        <span class="s-tag">Process Optimisation</span><span class="s-tag">Stakeholder Mgmt.</span>
-        <span class="s-tag">Business Case Dev.</span><span class="s-tag">Feasibility Assessment</span>
-        <span class="s-tag">GTM Strategy</span><span class="s-tag">Intl. Expansion</span>
-      </div>
-    </div>
-    <div class="sb reveal">
-      <div class="sb-icon">🛠️</div>
-      <div class="sb-title">Product</div>
-      <div class="sb-tags">
-        <span class="s-tag">PRD Writing</span><span class="s-tag">Roadmapping</span>
-        <span class="s-tag">Feature Prioritization</span><span class="s-tag">RICE / ICE</span>
-        <span class="s-tag">0-to-1 Builds</span><span class="s-tag">Product Strategy</span>
-      </div>
-    </div>
+    <div class="sb reveal"><div class="sb-icon">📈</div><div class="sb-title">Growth & Lifecycle</div><div class="sb-tags"><span class="s-tag">Lifecycle CRM</span><span class="s-tag">User Segmentation</span><span class="s-tag">Behavioural Targeting</span><span class="s-tag">A/B Experimentation</span><span class="s-tag">Funnel Analysis</span><span class="s-tag">Cohort Analysis</span><span class="s-tag">CRO</span><span class="s-tag">Retention Strategy</span><span class="s-tag">Channel Expansion</span></div></div>
+    <div class="sb reveal"><div class="sb-icon">🧭</div><div class="sb-title">Strategy & Ops</div><div class="sb-tags"><span class="s-tag">Problem Structuring</span><span class="s-tag">Framework Design</span><span class="s-tag">Process Optimisation</span><span class="s-tag">Stakeholder Mgmt.</span><span class="s-tag">Business Case Dev.</span><span class="s-tag">Feasibility Assessment</span><span class="s-tag">GTM Strategy</span><span class="s-tag">Intl. Expansion</span></div></div>
+    <div class="sb reveal"><div class="sb-icon">🛠️</div><div class="sb-title">Product</div><div class="sb-tags"><span class="s-tag">PRD Writing</span><span class="s-tag">Roadmapping</span><span class="s-tag">Feature Prioritization</span><span class="s-tag">RICE / ICE</span><span class="s-tag">0-to-1 Builds</span><span class="s-tag">Product Strategy</span></div></div>
   </div>
-  <div>
-    <p class="tools-label">Tools & Platforms</p>
-    <div class="tools-row">
-      <span class="tool-pill"><span class="t-dot"></span>MoEngage</span>
-      <span class="tool-pill"><span class="t-dot"></span>CleverTap</span>
-      <span class="tool-pill"><span class="t-dot"></span>Mixpanel</span>
-      <span class="tool-pill"><span class="t-dot"></span>Looker</span>
-      <span class="tool-pill"><span class="t-dot"></span>SQL</span>
-      <span class="tool-pill"><span class="t-dot"></span>Python</span>
-      <span class="tool-pill"><span class="t-dot"></span>Figma</span>
-      <span class="tool-pill"><span class="t-dot"></span>JIRA</span>
-      <span class="tool-pill"><span class="t-dot"></span>Excel</span>
-    </div>
+  <div><p class="tools-label">Tools & Platforms</p>
+    <div class="tools-row"><span class="tool-pill"><span class="t-dot"></span>MoEngage</span><span class="tool-pill"><span class="t-dot"></span>CleverTap</span><span class="tool-pill"><span class="t-dot"></span>Mixpanel</span><span class="tool-pill"><span class="t-dot"></span>Looker</span><span class="tool-pill"><span class="t-dot"></span>SQL</span><span class="tool-pill"><span class="t-dot"></span>Python</span><span class="tool-pill"><span class="t-dot"></span>Figma</span><span class="tool-pill"><span class="t-dot"></span>JIRA</span><span class="tool-pill"><span class="t-dot"></span>Excel</span></div>
   </div>
 </section>
 
-
-<!-- ══════════════ EXPERIENCE ══════════════-->
+<!-- ══ EXPERIENCE ══ -->
 <section id="experience">
   <p class="s-label">Career</p>
   <h2>Experience</h2>
   <p class="s-intro">Five years building at scale — across stages, sectors, and geographies.</p>
   <div class="exp-wrap">
-
     <div class="exp-entry reveal">
-      <div class="exp-time">
-        <span class="exp-date">Mar 2025<br>Present</span>
-        <span class="exp-co">Blinkit</span>
-      </div>
-      <div class="exp-body">
-        <p class="exp-role">Program Manager – Growth & Operations</p>
+      <div class="exp-time"><span class="exp-date">Mar 2025<br>Present</span><span class="exp-co">Blinkit</span></div>
+      <div class="exp-body"><p class="exp-role">Program Manager – Growth & Operations</p>
         <ul class="exp-ul">
-           <li><strong>Owned strategy</strong> for dark store digitization across <strong>2,000+ stores; drove 90% digitization</strong> via location intelligence framework</li>
-           <li><strong>Ran field discovery</strong> across <strong>50+ dark stores; authored PRD</strong> and designed end-to-end digitization flow adopted chain-wide</li>
-           <li><strong>Redesigned layout product</strong> to optimize unit economics achieved <strong>1.5× space utilisation and 18% GMV density improvement</strong></li>
-           <li><strong>Built and shipped</strong> prioritization logic engine and execution dashboard across <strong>2,000+ stores</strong>, cutting operational <strong>variance by 43%</strong></li>
-           <li><strong>Defined batch-level inventory feature</strong> using FEFO-aligned storage logic, delivering <strong>76% decline</strong> in expiry customer complaints</li>
-           <li><strong>Improved picking workflow</strong> via layout changes– reduced per-item pick time by <strong>10%</strong> and lifted order throughput by <strong>7.5%</strong></li>
-           <li><strong>Automated storage-to-replenishment integration,</strong> eliminating manual flows and improving replenishment accuracy to <strong>90%</strong></li>
-           <li><strong>Developed 4 diagnostic heatmap tools</strong> for item placement– improved placement accuracy <strong>22%</strong> and cut complaints by <strong>23%</strong></li>
-           <li><strong>Led 10-member cross-functional team</strong> to pilot and standardize operating models across <strong>90% of the network</strong></li>
+          <li><strong>Owned strategy</strong> for dark store digitization across <strong>2,000+ stores; drove 90% digitization</strong> via location intelligence framework</li>
+          <li><strong>Ran field discovery</strong> across <strong>50+ dark stores; authored PRD</strong> and designed end-to-end digitization flow adopted chain-wide</li>
+          <li><strong>Redesigned layout product</strong> to optimize unit economics achieved <strong>1.5× space utilisation and 18% GMV density improvement</strong></li>
+          <li><strong>Built and shipped</strong> prioritization logic engine and execution dashboard across <strong>2,000+ stores</strong>, cutting operational <strong>variance by 43%</strong></li>
+          <li><strong>Defined batch-level inventory feature</strong> using FEFO-aligned storage logic, delivering <strong>76% decline</strong> in expiry customer complaints</li>
+          <li><strong>Improved picking workflow</strong> via layout changes– reduced per-item pick time by <strong>10%</strong> and lifted order throughput by <strong>7.5%</strong></li>
+          <li><strong>Automated storage-to-replenishment integration,</strong> eliminating manual flows and improving replenishment accuracy to <strong>90%</strong></li>
+          <li><strong>Developed 4 diagnostic heatmap tools</strong> for item placement– improved placement accuracy <strong>22%</strong> and cut complaints by <strong>23%</strong></li>
+          <li><strong>Led 10-member cross-functional team</strong> to pilot and standardize operating models across <strong>90% of the network</strong></li>
         </ul>
       </div>
     </div>
-
     <div class="exp-entry reveal">
-      <div class="exp-time">
-        <span class="exp-date">Dec 2023<br>Jun 2024</span>
-        <span class="exp-co">Rapido</span>
-      </div>
-      <div class="exp-body">
-        <p class="exp-role">Asst. Growth Manager – Martech & Lifecycle</p>
+      <div class="exp-time"><span class="exp-date">Dec 2023<br>Jun 2024</span><span class="exp-co">Rapido</span></div>
+      <div class="exp-body"><p class="exp-role">Asst. Growth Manager – Martech & Lifecycle</p>
         <div class="exp-award">🏆 "Customer First" Award — Feb 2024</div>
         <ul class="exp-ul">
-           <li><strong>Launched WhatsApp and Email product channels</strong>, expanding transacting user reach by <strong>15%</strong> across an <strong>80M+ user base</strong></li>
-           <li><strong>Designed behaviour- and geo-based lifecycle workflows to re-engage churned cohorts, retaining <strong>7,000 users in 2 months</strong></li>
-           <li><strong>Built pan-India lifecycle-stage segmentation logic</strong> across multiple services, improving activation-to-ride conversion by <strong>4%</strong></li>
-           <li><strong>Drove INR 1.5L+ incremental revenue</strong> through <strong>150+ CRM campaigns</strong> built on product analytics and behavioural data</li>
-           <li><strong>Improved conversion funnel by 4%</strong> via advanced user segmentation and <strong>A/B experimentation across acquisition flows</strong></li>
-           <li><strong>Spearheaded GTM</strong> for national <strong>IPL’24 and Elections’24 campaigns</strong> with BCCI & ECI, reinforcing brand equity</li>
-           <li><strong>Co-led feasibility discovery</strong> for E-rickshaw mobility service; synthesized data to enable a new product launch decision</li>
+          <li><strong>Launched WhatsApp and Email product channels</strong>, expanding transacting user reach by <strong>15%</strong> across an <strong>80M+ user base</strong></li>
+          <li><strong>Designed behaviour- and geo-based lifecycle workflows</strong> to re-engage churned cohorts, retaining <strong>7,000 users in 2 months</strong></li>
+          <li><strong>Built pan-India lifecycle-stage segmentation logic</strong> across multiple services, improving activation-to-ride conversion by <strong>4%</strong></li>
+          <li><strong>Drove INR 1.5L+ incremental revenue</strong> through <strong>150+ CRM campaigns</strong> built on product analytics and behavioural data</li>
+          <li><strong>Improved conversion funnel by 4%</strong> via advanced user segmentation and <strong>A/B experimentation across acquisition flows</strong></li>
+          <li><strong>Spearheaded GTM</strong> for national <strong>IPL'24 and Elections'24 campaigns</strong> with BCCI & ECI, reinforcing brand equity</li>
+          <li><strong>Co-led feasibility discovery</strong> for E-rickshaw mobility service; synthesized data to enable a new product launch decision</li>
         </ul>
       </div>
     </div>
-
     <div class="exp-entry reveal">
-      <div class="exp-time">
-        <span class="exp-date">Oct 2023<br>Dec 2023</span>
-        <span class="exp-co">Sugar</span>
-      </div>
-      <div class="exp-body">
-        <p class="exp-role">Retention Strategy Consultant – Sugar Cosmetics</p>
+      <div class="exp-time"><span class="exp-date">Oct 2023<br>Dec 2023</span><span class="exp-co">Sugar</span></div>
+      <div class="exp-body"><p class="exp-role">Retention Strategy Consultant – Sugar Cosmetics</p>
         <ul class="exp-ul">
           <li><strong>Established Retention pod from scratch</strong> in 2 months; delivered structured cadence across acquisition, engagement, and reactivation</li>
-          <li><strong>Diagnosed discounting inefficiency</strong>; redesigned repeat-user discount strategy, generating monthly savings of <strong>INR 1.5L+</li>
+          <li><strong>Diagnosed discounting inefficiency</strong>; redesigned repeat-user discount strategy, generating monthly savings of <strong>INR 1.5L+</strong></li>
           <li><strong>Developed and executed annual operating plan</strong> across 3 brands, unlocking <strong>INR 15L+ in incremental revenue</strong> during the engagement</li>
           <li><strong>Boosted average order value by 10%</strong> through UI improvements enabling effective cross-sell and up-sell journeys across the funnel</li>
           <li><strong>Improved conversion by 3%</strong> by mapping the customer journey and deploying targeted campaigns at each lifecycle stage</li>
         </ul>
       </div>
     </div>
-
     <div class="exp-entry reveal">
-      <div class="exp-time">
-        <span class="exp-date">Nov 2021<br>Oct 2023</span>
-        <span class="exp-co">CARS24</span>
-      </div>
-      <div class="exp-body">
-        <p class="exp-role">Growth Manager – Martech, CRM & Intl. Expansion</p>
+      <div class="exp-time"><span class="exp-date">Nov 2021<br>Oct 2023</span><span class="exp-co">CARS24</span></div>
+      <div class="exp-body"><p class="exp-role">Growth Manager – Martech, CRM & Intl. Expansion</p>
         <div class="exp-award">🏆 "Game Changer" Nov 2022 &nbsp;·&nbsp; "One Man Team" Aug 2022</div>
         <ul class="exp-ul">
-          <li><strong>Owned CRM and automation product</strong> for B2C users across <strong>India, Thailand, UAE, Australia; drove <strong>10% user growth</li>
+          <li><strong>Owned CRM and automation product</strong> for B2C users across <strong>India, Thailand, UAE, Australia; drove 10% user growth</strong></li>
           <li><strong>Identified pricing gaps</strong> on slow-moving inventory as a product opportunity, resulting in <strong>39% improvement in engagement metrics</strong></li>
           <li><strong>Designed cross-vertical conversion product</strong> converting <strong>25+ monthly users</strong> from C2B to B2C funnel, retaining <strong>3% of C2B base</strong></li>
-          <li><strong>>Built and launched NLP-powered WhatsApp Web chatbot</strong>, contributing to <strong>4% of monthly business volume</strong></li>
-          <li><strong>Led end-to-end CRM product setup and GTM</strong> for <strong>3 new international geographies</strong>– Thailand, UAE, and Australia</li>
+          <li><strong>Built and launched NLP-powered WhatsApp Web chatbot</strong>, contributing to <strong>4% of monthly business volume</strong></li>
+          <li><strong>Led end-to-end CRM product setup and GTM</strong> for <strong>3 new international geographies</strong> – Thailand, UAE, and Australia</li>
         </ul>
       </div>
     </div>
-
     <div class="exp-entry reveal">
-      <div class="exp-time">
-        <span class="exp-date">Nov 2020<br>Oct 2022</span>
-        <span class="exp-co">Dessic</span>
-      </div>
-      <div class="exp-body">
-        <p class="exp-role">Founder — Dessic Patisserie (D2C Vegan Brand)</p>
+      <div class="exp-time"><span class="exp-date">Nov 2020<br>Oct 2022</span><span class="exp-co">Dessic</span></div>
+      <div class="exp-body"><p class="exp-role">Founder — Dessic Patisserie (D2C Vegan Brand)</p>
         <ul class="exp-ul">
           <li><strong>Built 0-to-1 D2C e-commerce brand</strong> from concept to <strong>INR 37L+ annual turnover</strong>; owned product, ops, and logistics end-to-end</li>
-          <li>Scaled brand to <strong>“Top Rated” on LBB within 3 months</strong>; drove growth through data-driven marketing and strong QA processes</li>
-          <li>Drove brand reach to <strong>1L+ students via <strong>6 college sponsorships</strong>; secured <strong>4 media features</strong> to strengthen early brand credibility</li>
+          <li>Scaled brand to <strong>"Top Rated" on LBB within 3 months</strong>; drove growth through data-driven marketing and strong QA processes</li>
+          <li>Drove brand reach to <strong>1L+ students</strong> via <strong>6 college sponsorships</strong>; secured <strong>4 media features</strong> to strengthen early brand credibility</li>
           <li><strong>Reduced RTO rate and product damage by 14%;</strong> implemented supply chain timeline controls to improve delivery reliability</li>
         </ul>
       </div>
     </div>
-
-    <!-- ✏️ PASTE NEW EXPERIENCE ENTRIES ABOVE THIS LINE -->
-
   </div>
 </section>
 
-
-<!-- ══════════════ EDUCATION & CERTS ══════════════ -->
+<!-- ══ EDUCATION ══ -->
 <section id="education">
   <p class="s-label">Background</p>
   <h2>Education & Beyond</h2>
   <p class="s-intro">An eclectic academic path — hospitality, data science, then tech MBA — that shapes how I think about people, systems, and business.</p>
-
-  <!-- DEGREES — add more .edu-card blocks here -->
   <div class="edu-grid">
-
-    <div class="edu-card reveal">
-      <p class="edu-yr">2024 – 2025</p>
-      <p class="edu-deg">MBA in Technology & Business Management</p>
-      <p class="edu-school">Masters' Union, Gurugram</p>
-      <p class="edu-note">Top 10 in Revenue — DropShipping Challenge</p>
-    </div>
-
-    <div class="edu-card reveal">
-      <p class="edu-yr">2021 – 2022</p>
-      <p class="edu-deg">PGDM in Data Science</p>
-      <p class="edu-school">IIIT Bengaluru</p>
-    </div>
-
-    <div class="edu-card reveal">
-      <p class="edu-yr">2019 – 2021</p>
-      <p class="edu-deg">M.Sc. Hospitality — Sales & Marketing</p>
-      <p class="edu-school">Institute of Hotel Management, Pusa — New Delhi</p>
-    </div>
-
-    <!-- ✏️ PASTE NEW DEGREE CARDS ABOVE THIS LINE
-    Example:
-    <div class="edu-card reveal">
-      <p class="edu-yr">YYYY – YYYY</p>
-      <p class="edu-deg">Degree Name</p>
-      <p class="edu-school">University / Institution Name</p>
-      <p class="edu-note">Optional note — honours, specialisation, etc.</p>
-    </div>
-    -->
-
+    <div class="edu-card reveal"><p class="edu-yr">2024 – 2025</p><p class="edu-deg">MBA in Technology & Business Management</p><p class="edu-school">Masters' Union, Gurugram</p><p class="edu-note">Top 10 in Revenue — DropShipping Challenge</p></div>
+    <div class="edu-card reveal"><p class="edu-yr">2021 – 2022</p><p class="edu-deg">PGDM in Data Science</p><p class="edu-school">IIIT Bengaluru</p></div>
+    <div class="edu-card reveal"><p class="edu-yr">2019 – 2021</p><p class="edu-deg">M.Sc. Hospitality — Sales & Marketing</p><p class="edu-school">Institute of Hotel Management, Pusa — New Delhi</p></div>
   </div>
-
-  <!-- CERTIFICATES — replace these placeholders with your real certs -->
   <div class="cert-row">
-
-    <!-- ✏️ Replace each cert-card with your real certificates.
-         Icons: use any emoji or remove it.
-         Common cert issuers: Google, Coursera, LinkedIn Learning, HubSpot, Meta, AWS, etc. -->
-
-    <div class="cert-card reveal">
-      <div class="cert-icon">📜</div>
-      <div>
-        <p class="cert-name">Strategy Consulting Virtual Experience Program</p>
-        <p class="cert-issuer">Issuer — Boston Consulting Group (BCG)</p>
-        <p class="cert-year">2023</p>
-      </div>
-    </div>
-
-    <div class="cert-card reveal">
-      <div class="cert-icon">📜</div>
-      <div>
-        <p class="cert-name">Omnichannel Marketing</p>
-        <p class="cert-issuer">Issuer — lululemon</p>
-        <p class="cert-year">2024</p>
-      </div>
-    </div>
-
-    <div class="cert-card reveal">
-      <div class="cert-icon">📜</div>
-      <div>
-        <p class="cert-name">Project Management</p>
-        <p class="cert-issuer">Issuer — Google</p>
-        <p class="cert-year">2024</p>
-      </div>
-    </div>
-
-    <div class="cert-card reveal">
-      <div class="cert-icon">📜</div>
-      <div>
-        <p class="cert-name">Marketing Automation Foundation</p>
-        <p class="cert-issuer">Issuer — Simplilearn</p>
-        <p class="cert-year">2022</p>
-      </div>
-    </div>
-
-    <!-- ✏️ PASTE MORE CERT CARDS HERE IF NEEDED -->
-
+    <div class="cert-card reveal"><div class="cert-icon">📜</div><div><p class="cert-name">Strategy Consulting Virtual Experience Program</p><p class="cert-issuer">Boston Consulting Group (BCG)</p><p class="cert-year">2023</p></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">📜</div><div><p class="cert-name">Omnichannel Marketing</p><p class="cert-issuer">lululemon</p><p class="cert-year">2024</p></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">📜</div><div><p class="cert-name">Project Management</p><p class="cert-issuer">Google</p><p class="cert-year">2024</p></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">📜</div><div><p class="cert-name">Marketing Automation Foundation</p><p class="cert-issuer">Simplilearn</p><p class="cert-year">2022</p></div></div>
   </div>
-
   <div class="extras-row">
-    <div class="extra-card reveal">
-      <div class="ex-icon">📄</div>
-      <div>
-       <p class="ex-title">Publications</p>
-        <p class="ex-text">
-        <a href="http://ihmpusa.net/wp-content/uploads/2023/02/GROWING-TREND-OF-VEGANISM-IN-METROPOLITAN-CITIES-EMPHASIS-ON-BAKING-by-Kritika-Bose-Guha-and-Prakhar-Gupta.pdf" target="_blank">
-          "Growing Trend of Veganism in Metropolitan Cities"
-        </a>
-     <br>
-        <a href="http://ihmpusa.net/wp-content/uploads/2023/02/HAUTE-INDIAN-CUISINE-INSTAGRAMMABLE-FOOD-OF-INDIA-by-Gitanshu-Kumar-and-Prakhar-Gupta.pdf" target="_blank">
-          "Haute Indian Cuisine: Instagrammable Food of India"
-        </a>
-     <br>
-        PUSA Journal of Hospitality & Applied Sciences, Mar 2020
-      </p>
-     </div>
-    </div>
-    <div class="extra-card reveal">
-      <div class="ex-icon">🌍</div>
-      <div>
-        <p class="ex-title">Leadership & Volunteering</p>
-        <p class="ex-text">Chef volunteer — World Association of Chefs, "Feed the Planet" global hunger initiative. Trained 70+ street vendors in food safety under Swachh Bharat Mission.</p>
-      </div>
-    </div>
+    <div class="extra-card reveal"><div class="ex-icon">📄</div><div><p class="ex-title">Publications</p><p class="ex-text"><a href="http://ihmpusa.net/wp-content/uploads/2023/02/GROWING-TREND-OF-VEGANISM-IN-METROPOLITAN-CITIES-EMPHASIS-ON-BAKING-by-Kritika-Bose-Guha-and-Prakhar-Gupta.pdf" target="_blank">"Growing Trend of Veganism in Metropolitan Cities"</a><br><a href="http://ihmpusa.net/wp-content/uploads/2023/02/HAUTE-INDIAN-CUISINE-INSTAGRAMMABLE-FOOD-OF-INDIA-by-Gitanshu-Kumar-and-Prakhar-Gupta.pdf" target="_blank">"Haute Indian Cuisine: Instagrammable Food of India"</a><br>PUSA Journal of Hospitality &amp; Applied Sciences, Mar 2020</p></div></div>
+    <div class="extra-card reveal"><div class="ex-icon">🌍</div><div><p class="ex-title">Leadership & Volunteering</p><p class="ex-text">Chef volunteer — World Association of Chefs, "Feed the Planet" global hunger initiative. Trained 70+ street vendors in food safety under Swachh Bharat Mission.</p></div></div>
   </div>
-
 </section>
 
-
-<!-- ══════════════ CONTACT ══════════════ -->
+<!-- ══ CONTACT ══ -->
 <section id="contact">
   <p class="s-label">Get in Touch</p>
   <h2>Let's work together.</h2>
   <p class="contact-sub">Open to Growth PM, Strategy, and Product Growth roles where the problem is genuinely hard and there's room to build. Based in Gurugram — open to relocation or remote.</p>
   <div class="contact-grid">
     <div class="contact-links">
-      <a href="mailto:prakhar1997g@gmail.com" class="c-link">
-        <span class="c-link-icon">✉️</span>
-        <div><span class="c-link-lbl">Email</span>prakhar1997g@gmail.com</div>
-      </a>
-      <a href="tel:+919695609879" class="c-link">
-        <span class="c-link-icon">📞</span>
-        <div><span class="c-link-lbl">Phone</span>+91 96956 09879</div>
-      </a>
-      <a href="https://linkedin.com/in/prakhargupta" target="_blank" class="c-link">
-        <span class="c-link-icon">💼</span>
-        <div><span class="c-link-lbl">LinkedIn</span>linkedin.com/in/prakhargupta</div>
+      <a href="mailto:prakhar1997g@gmail.com" class="c-link" data-track="email_click"><span class="c-link-icon">✉️</span><div><span class="c-link-lbl">Email</span>prakhar1997g@gmail.com</div></a>
+      <a href="tel:+919695609879" class="c-link" data-track="phone_click"><span class="c-link-icon">📞</span><div><span class="c-link-lbl">Phone</span>+91 96956 09879</div></a>
+      <a href="https://linkedin.com/in/gupta-prakhar" target="_blank" class="c-link" data-track="linkedin_click"><span class="c-link-icon">💼</span><div><span class="c-link-lbl">LinkedIn</span>linkedin.com/in/gupta-prakhar</div></a>
+      <!-- Lead capture trigger in contact section -->
+      <button class="lc-trigger" onclick="openModal('lc')" style="width:100%;justify-content:center" data-track="lead_form_open_contact">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Leave your contact — I'll reach out
+      </button>
+      <a href="https://drive.google.com/file/d/18vb_ePJV6JVR7Ai3hrb5f-_v3pVChTHT/view?usp=drive_link" target="_blank" class="contact-cv-btn" data-track="cv_download">
+        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>Download Full CV
       </a>
     </div>
     <div class="contact-note">
@@ -1151,27 +904,218 @@ footer p { font-size: 0.7rem; color: rgba(201,168,130,.3); }
   <p>Gurugram, India</p>
 </footer>
 
+<!-- ============================================================
+  📊 ALL TRACKING + MODAL + FORM LOGIC
+  ============================================================ -->
 <script>
-  function showGroup(id, btn) {
-    document.querySelectorAll('.case-group').forEach(g => g.classList.remove('visible'));
-    document.querySelectorAll('.gtab').forEach(t => t.classList.remove('active'));
-    document.getElementById('group-' + id).classList.add('visible');
-    btn.classList.add('active');
-    document.querySelectorAll('#group-' + id + ' .reveal').forEach((el, i) => {
-      setTimeout(() => el.classList.add('in'), i * 70);
+
+/* ══════════════════════════════════════════
+   MODAL SYSTEM — works for both modals
+   ══════════════════════════════════════════ */
+function openModal(id) {
+  document.getElementById('modal-' + id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Track modal open
+  track('modal_open', { modal: id });
+}
+function closeModalDirect(id) {
+  document.getElementById('modal-' + id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModal(id, e) {
+  if (e.target === document.getElementById('modal-' + id)) closeModalDirect(id);
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    ['wwm','lc'].forEach(id => {
+      if (document.getElementById('modal-' + id).classList.contains('open')) {
+        closeModalDirect(id);
+      }
     });
   }
+});
 
-  const ro = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+/* ══════════════════════════════════════════
+   LEAD CAPTURE FORM — Formspree AJAX submit
+   ══════════════════════════════════════════ */
+const lcForm  = document.getElementById('lc-form');
+const lcBtn   = document.getElementById('lc-submit-btn');
+const lcSucc  = document.getElementById('lc-success');
 
-  ['skills-grid','edu-grid','cert-row','extras-row','cards-grid','stat-rows'].forEach(cls => {
-    document.querySelectorAll('.' + cls).forEach(container => {
-      container.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i * 0.07) + 's'; });
+lcForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  // Validate: at least email or phone must be filled
+  const email = document.getElementById('lc-email').value.trim();
+  const phone = document.getElementById('lc-phone').value.trim();
+  if (!email && !phone) {
+    alert('Please enter at least an email address or phone number.');
+    return;
+  }
+
+  // Set replyto for Formspree
+  document.getElementById('lc-replyto').value = email || '';
+
+  lcBtn.disabled = true;
+  lcBtn.textContent = 'Sending…';
+
+  const data = new FormData(lcForm);
+
+  try {
+    // ============================================================
+    // FORMSPREE: swap YOUR_FORM_ID with your real endpoint
+    // e.g. https://formspree.io/f/xabcdefg
+    // ============================================================
+    const res = await fetch(lcForm.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
     });
+
+    if (res.ok) {
+      lcForm.style.display = 'none';
+      lcSucc.classList.add('show');
+      // Track successful lead submission
+      track('lead_submitted', {
+        has_email: !!email,
+        has_phone: !!phone,
+        context: document.getElementById('lc-context').value
+      });
+    } else {
+      throw new Error('Form error');
+    }
+  } catch {
+    lcBtn.disabled = false;
+    lcBtn.innerHTML = '<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> Try again';
+    alert('Something went wrong — please email me directly at prakhar1997g@gmail.com');
+  }
+});
+
+/* ══════════════════════════════════════════
+   GA4 TRACKING — centralised track() helper
+   ══════════════════════════════════════════ */
+function track(eventName, params = {}) {
+  if (typeof gtag !== 'undefined') {
+    gtag('event', eventName, params);
+  }
+}
+
+/* ─────────────────────────────────────────
+   1. ALL data-track clicks (nav, buttons, links)
+   ───────────────────────────────────────── */
+document.addEventListener('click', function(e) {
+  const el = e.target.closest('[data-track]');
+  if (!el) return;
+  const label = el.dataset.track;
+
+  // Bucket into meaningful GA4 event names
+  if (label.includes('cv_download')) {
+    track('cv_download', { location: label });
+  } else if (label.includes('wwm_open')) {
+    track('wwm_modal_open', { location: label });
+  } else if (label.includes('lead_form_open')) {
+    track('lead_form_open', { location: label });
+  } else if (label.startsWith('case_')) {
+    track('case_study_click', { case_name: label.replace('case_', '') });
+  } else if (label.startsWith('tab_')) {
+    track('tab_switch', { tab: label.replace('tab_', '') });
+  } else if (label.includes('email_click')) {
+    track('contact_click', { method: 'email' });
+  } else if (label.includes('phone_click')) {
+    track('contact_click', { method: 'phone' });
+  } else if (label.includes('linkedin_click')) {
+    track('contact_click', { method: 'linkedin' });
+  } else {
+    track('click', { label });
+  }
+});
+
+/* ─────────────────────────────────────────
+   2. SCROLL DEPTH milestones (25/50/75/90/100%)
+   GA4 tracks scroll natively but this adds custom milestones
+   ───────────────────────────────────────── */
+const scrollMilestones = new Set();
+window.addEventListener('scroll', () => {
+  const pct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+  [25, 50, 75, 90, 100].forEach(m => {
+    if (pct >= m && !scrollMilestones.has(m)) {
+      scrollMilestones.add(m);
+      track('scroll_depth', { percent: m });
+    }
   });
+}, { passive: true });
+
+/* ─────────────────────────────────────────
+   3. TIME ON PAGE (30s, 60s, 120s, 300s)
+   ───────────────────────────────────────── */
+[30, 60, 120, 300].forEach(sec => {
+  setTimeout(() => track('time_on_page', { seconds: sec }), sec * 1000);
+});
+
+/* ─────────────────────────────────────────
+   4. SECTION VISIBILITY — tracks which sections were actually seen
+   ───────────────────────────────────────── */
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      track('section_viewed', { section: e.target.id });
+      sectionObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+['cases','skills','experience','education','contact'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) sectionObserver.observe(el);
+});
+
+/* ─────────────────────────────────────────
+   5. UTM PARAMETERS — read & store for session context
+   GA4 handles UTMs automatically, but this also logs them as an event
+   ───────────────────────────────────────── */
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const utm = {};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(k => {
+    if (params.get(k)) utm[k] = params.get(k);
+  });
+  if (Object.keys(utm).length > 0) {
+    track('utm_visit', utm);
+    // Also store in sessionStorage for lead form attribution
+    sessionStorage.setItem('utm', JSON.stringify(utm));
+  }
+})();
+
+/* ══════════════════════════════════════════
+   TABS
+   ══════════════════════════════════════════ */
+function showGroup(id, btn) {
+  document.querySelectorAll('.case-group').forEach(g => g.classList.remove('visible'));
+  document.querySelectorAll('.gtab').forEach(t => t.classList.remove('active'));
+  document.getElementById('group-' + id).classList.add('visible');
+  btn.classList.add('active');
+  document.querySelectorAll('#group-' + id + ' .reveal:not(.in)').forEach((el, i) => {
+    setTimeout(() => el.classList.add('in'), i * 65);
+  });
+}
+
+/* ══════════════════════════════════════════
+   SCROLL REVEAL
+   ══════════════════════════════════════════ */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+['skills-grid','edu-grid','cert-row','extras-row','stat-rows'].forEach(cls => {
+  document.querySelectorAll('.' + cls).forEach(c => {
+    c.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i * .07) + 's'; });
+  });
+});
+
+/* ══════════════════════════════════════════
+   NAV SHADOW
+   ══════════════════════════════════════════ */
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 30), { passive: true });
 </script>
 </body>
 </html>
