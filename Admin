@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Photo manager — Prakhar Gupta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--surface:#fff;--soft:#F3F2EE;--ink:#16181D;--ink-2:#2E3138;--muted:#5F636B;--faint:#6E727A;--line:#E8E6E0;--accent:#C2502D;--accent-soft:#F6E7E0;--ok:#2F6B4F;--ok-soft:#E4F0E9;--err:#A3321C}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Figtree',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;padding-bottom:120px}
+button{font:inherit;cursor:pointer;color:inherit;background:none;border:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+header{border-bottom:1px solid var(--line);background:var(--surface)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:64px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;text-decoration:none;color:var(--ink)}
+.brand .mk{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg);font-family:'Instrument Serif',serif;font-style:italic;font-size:17px}
+.status{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:#C9C6BE}
+.dot.on{background:var(--ok)}
+h1{font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(38px,5vw,56px);line-height:1.02;margin-top:56px}
+h1 em{color:var(--accent)}
+.lead{color:var(--muted);margin-top:12px;font-size:16px;line-height:1.6;max-width:640px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px;margin-top:32px}
+.card h2{font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:28px}
+.card .sub{color:var(--muted);font-size:14px;line-height:1.6;margin-top:6px}
+.row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+label{display:block;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+input[type=text],input[type=password]{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font:inherit;font-size:15px;color:var(--ink);transition:border-color .3s}
+input:focus{outline:0;border-color:var(--accent)}
+.check{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;background:var(--ink);color:var(--bg);font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;transition:background-color .3s,transform .3s}
+.btn:hover{background:var(--accent);transform:translateY(-1px)}
+.btn:disabled{background:var(--soft);color:var(--faint);cursor:default;transform:none}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent);background:transparent}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;align-items:center}
+.help{margin-top:18px;font-size:13.5px;color:var(--muted);line-height:1.7}
+.help summary{cursor:pointer;color:var(--ink);font-weight:600}
+.help ol{margin:10px 0 0 20px}
+.help code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--soft);padding:2px 6px;border-radius:6px}
+.drop{margin-top:20px;border:1.5px dashed var(--line);border-radius:20px;padding:40px 20px;text-align:center;color:var(--muted);transition:border-color .3s,background-color .3s;cursor:pointer}
+.drop.over,.drop:hover{border-color:var(--accent);background:var(--accent-soft)}
+.drop b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:22px}
+.ph{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+.ph .img{aspect-ratio:4/3;background:var(--soft) center/cover no-repeat;position:relative}
+.ph .badge{position:absolute;top:10px;left:10px;font-size:10px;font-weight:700;letter-spacing:.14em;padding:5px 9px;border-radius:999px;background:var(--accent);color:#fff}
+.ph .badge.del{background:var(--err)}
+.ph .num{position:absolute;top:10px;right:10px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 8px;border-radius:999px;background:rgba(22,24,29,.75);color:#fff}
+.ph .body{padding:14px;display:grid;gap:10px}
+.ph input{padding:9px 11px;font-size:14px;border-radius:10px}
+.ph .tools{display:flex;gap:6px;justify-content:space-between}
+.ph .tools button{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);display:grid;place-items:center;transition:border-color .25s,color .25s}
+.ph .tools button:hover{border-color:var(--accent);color:var(--accent)}
+.ph .tools svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ph.deleted .img{filter:grayscale(1);opacity:.45}
+.ph.deleted input{opacity:.5}
+.empty{margin-top:22px;padding:30px;text-align:center;color:var(--muted);border-radius:18px;background:var(--soft)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -10px 30px rgba(20,24,36,.06);transform:translateY(110%);transition:transform .5s cubic-bezier(.2,.7,.1,1);z-index:10}
+.bar.show{transform:none}
+.bar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:76px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.bar p{font-size:14px;color:var(--muted)}
+.bar p b{color:var(--ink)}
+.log{margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.8;color:var(--muted);white-space:pre-wrap}
+.log .ok{color:var(--ok)}.log .bad{color:var(--err)}
+.hidden{display:none!important}
+@media (max-width:720px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="./"><span class="mk" aria-hidden="true">P</span>Back to site</a>
+    <div class="status"><span class="dot" id="dot"></span><span id="statusText">Not connected</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Photo <em>manager</em></h1>
+  <p class="lead">Add, caption, reorder or remove the photos in the “Personal Space” strip. Changes save to your GitHub repo and show on the live site in about a minute.</p>
+
+  <!-- CONNECT -->
+  <section class="card" id="connectCard">
+    <h2>Connect to GitHub</h2>
+    <p class="sub">Uses a personal access token that only you hold. It stays in this browser and is never saved to the site.</p>
+    <div class="row">
+      <div><label for="owner">Owner</label><input type="text" id="owner" value="PrakharGupta07" autocomplete="off"></div>
+      <div><label for="repo">Repository</label><input type="text" id="repo" value="portfolio" autocomplete="off"></div>
+      <div><label for="branch">Branch</label><input type="text" id="branch" value="main" autocomplete="off"></div>
+    </div>
+    <div style="margin-top:14px"><label for="token">Access token</label><input type="password" id="token" placeholder="github_pat_…" autocomplete="off"></div>
+    <label class="check" style="text-transform:none;letter-spacing:0;font-weight:500;font-size:14px"><input type="checkbox" id="remember"> Remember on this device</label>
+    <div class="actions">
+      <button class="btn" id="connectBtn">Connect</button>
+      <span id="connectMsg" style="font-size:14px;color:var(--muted)"></span>
+    </div>
+    <details class="help">
+      <summary>How do I get a token? (one-time, 2 minutes)</summary>
+      <ol>
+        <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com → Settings → Fine-grained tokens → Generate new token</a>.</li>
+        <li>Name it <code>portfolio-photos</code>, set an expiry you're comfortable with.</li>
+        <li>Under <b>Repository access</b>, choose <b>Only select repositories</b> → <code>portfolio</code>.</li>
+        <li>Under <b>Permissions → Repository permissions</b>, set <b>Contents</b> to <b>Read and write</b>. Nothing else.</li>
+        <li>Generate, copy the token, paste it above.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- MANAGER -->
+  <section class="card hidden" id="managerCard">
+    <h2>Your photos</h2>
+    <p class="sub">Photos are resized automatically before upload. Captions show on the photo; the tag is the small label in the corner (e.g. TENNIS, TRAVEL).</p>
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="Add photos">
+      <b>Drop photos here, or click to choose</b>
+      JPG, PNG or WebP · several at once is fine
+      <input type="file" id="file" accept="image/*" multiple class="hidden">
+    </div>
+    <datalist id="tags"><option>TENNIS</option><option>PHOTOGRAPHY</option><option>BAKING</option><option>TRAVEL</option><option>FOUNDER</option><option>VOLUNTEERING</option></datalist>
+    <div class="grid" id="grid"></div>
+    <div class="empty hidden" id="empty">No photos yet — the site is showing coloured placeholders. Add a few above.</div>
+    <div class="log" id="log" aria-live="polite"></div>
+  </section>
+</main>
+
+<div class="bar" id="bar">
+  <div class="wrap">
+    <p id="barText"><b>Unsaved changes</b></p>
+    <div class="actions" style="margin:0">
+      <button class="btn ghost" id="discardBtn">Discard</button>
+      <button class="btn" id="publishBtn">Publish to site</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store = {
+  get(k){ try { return sessionStorage.getItem(k) ?? localStorage.getItem(k); } catch(e){ return null; } },
+  set(k, v, persist){ try { sessionStorage.setItem(k, v); if (persist) localStorage.setItem(k, v); } catch(e){} },
+  clear(k){ try { sessionStorage.removeItem(k); localStorage.removeItem(k); } catch(e){} }
+};
+const JSON_PATH = 'photos/photos.json';
+let cfg = {}, jsonSha = null, items = [], original = '';
+
+/* ── GitHub API ── */
+async function gh(path, opts = {}){
+  const res = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}${path}`, {
+    ...opts,
+    headers: { 'Accept':'application/vnd.github+json', 'Authorization':`Bearer ${cfg.token}`, 'X-GitHub-Api-Version':'2022-11-28', ...(opts.body ? {'Content-Type':'application/json'} : {}) }
+  });
+  if (res.status === 404 && opts.allow404) return null;
+  if (!res.ok){ let m = res.statusText; try { m = (await res.json()).message || m; } catch(e){} throw new Error(`${res.status} — ${m}`); }
+  return res.status === 204 ? {} : res.json();
+}
+const b64utf8 = str => btoa(String.fromCharCode(...new TextEncoder().encode(str)));
+const utf8b64 = b64 => new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\n/g, '')), c => c.charCodeAt(0)));
+const rawUrl = p => `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/${cfg.branch}/${p.split('/').map(encodeURIComponent).join('/')}`;
+
+/* ── Connect ── */
+['owner','repo','branch'].forEach(k => { const v = store.get('pm_' + k); if (v) $('#' + k).value = v; });
+if (store.get('pm_token')) { $('#token').value = store.get('pm_token'); $('#remember').checked = true; }
+$('#connectBtn').addEventListener('click', connect);
+async function connect(){
+  cfg = { owner:$('#owner').value.trim(), repo:$('#repo').value.trim(), branch:$('#branch').value.trim() || 'main', token:$('#token').value.trim() };
+  if (!cfg.token){ $('#connectMsg').textContent = 'Paste your access token first.'; return; }
+  $('#connectBtn').disabled = true; $('#connectMsg').textContent = 'Connecting…';
+  try {
+    const repo = await gh('');
+    if (!repo.permissions || !repo.permissions.push) throw new Error('This token can read but not write. Give it Contents: Read and write.');
+    const persist = $('#remember').checked;
+    ['owner','repo','branch'].forEach(k => store.set('pm_' + k, cfg[k], true));
+    if (persist) store.set('pm_token', cfg.token, true); else { store.clear('pm_token'); store.set('pm_token', cfg.token, false); }
+    await load();
+    $('#dot').classList.add('on'); $('#statusText').textContent = `${cfg.owner}/${cfg.repo} · ${cfg.branch}`;
+    $('#connectCard').classList.add('hidden'); $('#managerCard').classList.remove('hidden');
+  } catch(e){ $('#connectMsg').textContent = 'Could not connect: ' + e.message; }
+  $('#connectBtn').disabled = false;
+}
+
+async function load(){
+  const f = await gh(`/contents/${JSON_PATH}?ref=${encodeURIComponent(cfg.branch)}`, { allow404:true });
+  jsonSha = f ? f.sha : null;
+  const data = f ? JSON.parse(utf8b64(f.content) || '{}') : { photos: [] };
+  items = (data.photos || []).map(p => ({ ...p, preview: rawUrl(p.src) }));
+  original = JSON.stringify(serialise());
+  render(); dirtyCheck();
+}
+const serialise = () => items.filter(i => !i.deleted).map(({ src, label, tag, width, height }) => ({ src: src || '', label: label || '', tag: tag || '', width, height }));
+
+/* ── Render ── */
+const icon = d => `<svg viewBox="0 0 24 24"><path d="${d}"/></svg>`;
+function render(){
+  $('#grid').innerHTML = items.map((p, i) => `
+    <div class="ph${p.deleted ? ' deleted' : ''}">
+      <div class="img" style="background-image:url('${p.preview}')">
+        ${p.file ? '<span class="badge">NEW</span>' : ''}${p.deleted ? '<span class="badge del">WILL BE REMOVED</span>' : ''}
+        <span class="num">${String(i + 1).padStart(2, '0')}</span>
+      </div>
+      <div class="body">
+        <div><label for="cap${i}">Caption</label><input type="text" id="cap${i}" data-i="${i}" data-k="label" value="${esc(p.label)}" placeholder="e.g. Weekend rallies"></div>
+        <div><label for="tag${i}">Tag</label><input type="text" id="tag${i}" list="tags" data-i="${i}" data-k="tag" value="${esc(p.tag)}" placeholder="e.g. TENNIS"></div>
+        <div class="tools">
+          <button data-act="left" data-i="${i}" aria-label="Move earlier">${icon('M15 6l-6 6 6 6')}</button>
+          <button data-act="right" data-i="${i}" aria-label="Move later">${icon('M9 6l6 6-6 6')}</button>
+          <button data-act="del" data-i="${i}" aria-label="${p.deleted ? 'Keep photo' : 'Remove photo'}">${p.deleted ? icon('M4 12a8 8 0 1 0 2.3-5.7M4 4v4h4') : icon('M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12')}</button>
+        </div>
+      </div>
+    </div>`).join('');
+  $('#empty').classList.toggle('hidden', items.length > 0);
+}
+$('#grid').addEventListener('input', e => {
+  const t = e.target; if (!t.dataset.k) return;
+  items[+t.dataset.i][t.dataset.k] = t.dataset.k === 'tag' ? t.value.toUpperCase() : t.value;
+  if (t.dataset.k === 'tag') { const pos = t.selectionStart; t.value = t.value.toUpperCase(); t.setSelectionRange(pos, pos); }
+  dirtyCheck();
+});
+$('#grid').addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const i = +b.dataset.i, act = b.dataset.act;
+  if (act === 'left' && i > 0) [items[i - 1], items[i]] = [items[i], items[i - 1]];
+  if (act === 'right' && i < items.length - 1) [items[i + 1], items[i]] = [items[i], items[i + 1]];
+  if (act === 'del'){ if (items[i].file) items.splice(i, 1); else items[i].deleted = !items[i].deleted; }
+  render(); dirtyCheck();
+});
+
+/* ── Add photos (resized in the browser) ── */
+const drop = $('#drop'), fileIn = $('#file');
+drop.addEventListener('click', () => fileIn.click());
+drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileIn.click(); } });
+['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => addFiles(e.dataTransfer.files));
+fileIn.addEventListener('change', () => { addFiles(fileIn.files); fileIn.value = ''; });
+async function addFiles(list){
+  for (const f of [...list].filter(f => f.type.startsWith('image/'))){
+    try {
+      const { dataUrl, width, height } = await resize(f, 1800, .84);
+      const base = f.name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'photo';
+      items.push({ file:true, dataUrl, preview:dataUrl, width, height, label:'', tag:'', name:`${Date.now().toString(36)}-${base}.jpg` });
+    } catch(e){ log(`Couldn't read ${f.name}`, 'bad'); }
+  }
+  render(); dirtyCheck();
+}
+function resize(file, max, q){
+  return new Promise((ok, no) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+      const w = Math.round(img.naturalWidth * s), h = Math.round(img.naturalHeight * s);
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); ctx.drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url); ok({ dataUrl: c.toDataURL('image/jpeg', q), width: w, height: h });
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); no(new Error('bad image')); };
+    img.src = url;
+  });
+}
+
+/* ── Dirty state ── */
+function dirtyCheck(){
+  const adds = items.filter(i => i.file).length, dels = items.filter(i => i.deleted).length;
+  const dirty = adds || dels || JSON.stringify(serialise()) !== original;
+  $('#bar').classList.toggle('show', !!dirty);
+  const bits = []; if (adds) bits.push(`${adds} new`); if (dels) bits.push(`${dels} to remove`);
+  $('#barText').innerHTML = `<b>Unsaved changes</b>${bits.length ? ' · ' + bits.join(' · ') : ' · captions or order'}`;
+}
+$('#discardBtn').addEventListener('click', async () => { $('#log').innerHTML = ''; await load(); });
+window.addEventListener('beforeunload', e => { if ($('#bar').classList.contains('show')) { e.preventDefault(); e.returnValue = ''; } });
+
+/* ── Publish ── */
+function log(msg, cls){ $('#log').insertAdjacentHTML('beforeend', `<div class="${cls || ''}">${esc(msg)}</div>`); }
+$('#publishBtn').addEventListener('click', publish);
+async function publish(){
+  const btn = $('#publishBtn'); btn.disabled = true; $('#discardBtn').disabled = true; $('#log').innerHTML = '';
+  try {
+    for (const p of items.filter(i => i.file)){
+      const path = `photos/${p.name}`;
+      log(`Uploading ${p.name}…`);
+      await gh(`/contents/${path}`, { method:'PUT', body: JSON.stringify({ message:`Add photo ${p.name}`, content: p.dataUrl.split(',')[1], branch: cfg.branch }) });
+      p.src = path; delete p.file; delete p.dataUrl;
+    }
+    const removing = items.filter(i => i.deleted);
+    items = items.filter(i => !i.deleted);
+    const fresh = await gh(`/contents/${JSON_PATH}?ref=${encodeURIComponent(cfg.branch)}`, { allow404:true });
+    log('Saving photo list…');
+    await gh(`/contents/${JSON_PATH}`, { method:'PUT', body: JSON.stringify({
+      message:'Update portfolio photos', branch: cfg.branch, sha: fresh ? fresh.sha : undefined,
+      content: b64utf8(JSON.stringify({ photos: serialise() }, null, 2) + '\n') }) });
+    for (const p of removing){
+      if (!p.src || !p.src.startsWith('photos/')) continue;
+      const f = await gh(`/contents/${p.src}?ref=${encodeURIComponent(cfg.branch)}`, { allow404:true });
+      if (f){ log(`Removing ${p.src.split('/').pop()}…`); await gh(`/contents/${p.src}`, { method:'DELETE', body: JSON.stringify({ message:`Remove photo ${p.src}`, sha: f.sha, branch: cfg.branch }) }); }
+    }
+    log('✓ Published. Your site will update in about a minute.', 'ok');
+    await load();
+  } catch(e){
+    log('Something went wrong: ' + e.message + ' — nothing after this step was saved. Try Publish again.', 'bad');
+  }
+  btn.disabled = false; $('#discardBtn').disabled = false;
+}
+
+if ($('#token').value) connect();
+</script>
+</body>
+</html>
